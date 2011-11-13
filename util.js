@@ -74,13 +74,28 @@ String.prototype.toAllFirstCharsUppercase = function()
 String.prototype.toFormattedText = function()
 {
 	// makes sure phrases start with a capital based on '.' and are trimmed
+	// Phrases are strings ending with a dot or end of string of at least two words
 	
 	var sentences = this.split(".")
 	var ftext = ''
 	for(var c = 0; c < sentences.length; c++)
 	{
-		if(c > 0) ftext += '. '
-		ftext += trim(sentences[c]).toFirstCharUppercase();
+		if(c > 0)
+		{
+			if(trim(sentences[c]).match(/(\w\s\w){1,}/)) 
+			{
+				ftext += '. '
+			}
+			else
+				ftext += '.'
+		}
+		if(trim(sentences[c]).indexOf(' ') > 0)
+		{
+			ftext += trim(sentences[c]).toFirstCharUppercase()
+		}
+		else
+			ftext += trim(sentences[c])
+
 	}
 	return ftext
 }
@@ -233,3 +248,6 @@ Object.prototype.addListener = function(event, cb)
 
 //alert('fits <a href="javascript:showPage()">in</a> as many words. as possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
 //	.toLimitedFormattedHTML(120))
+
+//alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
+//	.toLimitedFormattedHTML(120))	
