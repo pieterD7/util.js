@@ -34,7 +34,7 @@ function trim(str)
 	var s = str.replace(/\s\s/g, ' ')
 	
 	// remove trailing and leading space
-	return s.replace(/^\s{1,}|\s{1,}$/, '')
+	return s.replace(/^\s|\s$/, '')
 }
 
 String.prototype.findFirstNonTagChar = function()
@@ -161,7 +161,7 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending)
 	if(finished)
 	{
 		if(isUndef(ending))
-			ending = ' ...'		
+			var ending = ' ...'		
 		return formatted + ending
 	}
 	return formatted
@@ -187,7 +187,7 @@ String.prototype.toLimitedFormattedText = function(limit, ending)
 	{	
 		limited = this.slice(0, limit)	
 	}
-	if(isUndef(ending)) ending = ' ...'
+	if(isUndef(ending)) var ending = ' ...'
 	var end = limit < this.length ? ending : ''
 	return limited.toFormattedText()+end
 }
