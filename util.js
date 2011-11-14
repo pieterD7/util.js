@@ -78,24 +78,29 @@ String.prototype.toFormattedText = function()
 	
 	var sentences = this.split(".")
 	var ftext = ''
+	var inAbb = false
 	for(var c = 0; c < sentences.length; c++)
 	{
 		if(c > 0)
 		{
-			if(trim(sentences[c]).match(/(\w\s\w){1,}/)) 
+			if(new String(sentences[c]).match(/(\s\w){1,}/)) 
 			{
 				ftext += '. '
 			}
 			else
+			{
+				inAbb = true
 				ftext += '.'
+			}
 		}
-		if(trim(sentences[c]).indexOf(' ') > 0)
+		if(trim(sentences[c]).indexOf(' ') > 0 && !inAbb)
 		{
 			ftext += trim(sentences[c]).toFirstCharUppercase()
 		}
 		else
 			ftext += trim(sentences[c])
-
+		if(new String(sentences[c]).indexOf(' ') > -1)
+			inAbb = false			
 	}
 	return ftext
 }
@@ -245,9 +250,6 @@ Object.prototype.addListener = function(event, cb)
 
 //alert('fits in as many words as possible when first word in string is shorter then limit'
 //	.toLimitedFormattedText(23))
-
-//alert('fits <a href="javascript:showPage()">in</a> as many words. as possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
-//	.toLimitedFormattedHTML(120))
 
 //alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
 //	.toLimitedFormattedHTML(120))	
