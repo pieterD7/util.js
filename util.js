@@ -194,7 +194,10 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
 	while(t = tags.pop())
 		formatted += '</' + t + '>'
 		
-	return formatted
+	if(!formatted.isEmpty() && ending && formatted != ending)		
+		return formatted
+	else
+		return this.toString()
 }
 
 String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
