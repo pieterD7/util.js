@@ -71,7 +71,7 @@ String.prototype.toAllFirstCharsUppercase = function()
 	return sentence
 }
 
-String.prototype.toFormattedText = function()
+String.prototype.toFormattedText = function(doFormat)
 {
 	// makes sure phrases start with a capital based on '.' and are trimmed
 	// Phrases are strings ending with a dot or end of string of at least two words
@@ -93,7 +93,7 @@ String.prototype.toFormattedText = function()
 				ftext += '.'
 			}
 		}
-		if(trim(sentences[c]).indexOf(' ') > 0 && !inAbb)
+		if(trim(sentences[c]).indexOf(' ') > 0 && !inAbb && (isUndef(doFormat) || isBool(doFormat) && doFormat))
 		{
 			ftext += trim(sentences[c]).toFirstCharUppercase()
 		}
@@ -125,20 +125,21 @@ function collectChildNodes(el)
 	return nodes
 }
 
-String.prototype.toLimitedFormattedHTML = function(limit, ending)
+String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
 {
 	// Limits valid html markup to limit display chars 
 	// adds ending or ' ...' when string is truncated
-
-	var div = this.toString().toFormattedText().parseAsHTML()
+	
+	var div = this.toString().toFormattedText(doFormat).parseAsHTML()
 	var formatted = ''
 	var text = ''
-	var tags = ['div']
+	var tags = []
 	var finished = false
 	var lastOpenTag = ''
 		
 	for(var c = 0; c < div.childNodes.length; c++)
 	{	
+		nodes = []
 		var nodes = collectChildNodes(div.childNodes[c])
 		for(var g = 0; g < nodes.length; g++)
 		{
@@ -157,7 +158,16 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending)
 			}
 			else if(nodes[g].nodeValue && !nodes[g].hasChildNodes())
 			{
-				if(text.length + nodes[g].nodeValue.length < limit)
+				if(nodes[g].nodeValue.length + text.length >= limit && !finished)
+				{
+					var left = limit - text.length
+					var add = new String(nodes[g].nodeValue).toLimitedFormattedText(left, '', false)
+					formatted += add
+					text += add
+					finished = true
+					lastOpenTag = new String(tags.pop())
+				}
+				else if(text.length + nodes[g].nodeValue.length < limit)
 				{
 					text += nodes[g].nodeValue
 					formatted += nodes[g].nodeValue
@@ -166,6 +176,12 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending)
 				else
 				{
 					finished = true
+				}
+				if(finished)
+				{
+					if(isUndef(ending))
+						var ending = ' ...'		
+					formatted += ending
 				}
 			}
 			if(lastOpenTag != '' && lastOpenTag != 'undefined' && g > 1)
@@ -178,16 +194,10 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending)
 	while(t = tags.pop())
 		formatted += '</' + t + '>'
 		
-	if(finished)
-	{
-		if(isUndef(ending))
-			var ending = ' ...'		
-		return formatted + ending
-	}
 	return formatted
 }
 
-String.prototype.toLimitedFormattedText = function(limit, ending)
+String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 {
 	// fits in as many words as possible when first word in string is shorter then limit
 	// else truncates string by limit 
@@ -209,7 +219,7 @@ String.prototype.toLimitedFormattedText = function(limit, ending)
 	}
 	if(isUndef(ending)) var ending = ' ...'
 	var end = limit < this.length ? ending : ''
-	return limited.toFormattedText()+end
+	return limited.toFormattedText(doFormat)+end
 }
 
 String.prototype.isEmpty = function()
