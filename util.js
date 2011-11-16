@@ -23,7 +23,7 @@ if(typeof sizzler === 'undefined')
 }
 
 //@return String
-function trim(str)
+function trim(str, eraseAllSpace)
 {	
 	if(isUndef(str)) str = ''
 		
@@ -32,6 +32,10 @@ function trim(str)
 		
 	// remove all double space
 	var s = str.replace(/\s\s/g, ' ')
+	
+	// remove all space
+	if(isBool(eraseAllSpace) && eraseAllSpace)
+		s = s.replace(/\s|\./g, '')
 	
 	// remove trailing and leading space
 	return s.replace(/^\s|\s$/, '')
@@ -207,7 +211,7 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 	// adds ending or ' ...' when string is truncated
 	
 	var limited = ''
-	if(this.indexOf(' ') < limit)
+	if(this.indexOf(' ') < limit && this.indexOf(' ') > 0)
 	{
 		var l = this.split(' ')
 		for(var c = 0; c < l.length && limited.length + l[c].length < limit; c++)
@@ -261,7 +265,7 @@ Object.prototype.addListener = function(event, cb)
 	this.addEventListener(event, cb, false)
 }
 
-//alert('fits in as many words as possible when first word in string is shorter then limit'
+//alert(trim('fits in.as many words as possible when first word in string is shorter then limit', true)
 //	.toLimitedFormattedText(23))
 
 //alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
