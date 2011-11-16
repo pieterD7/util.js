@@ -9,6 +9,10 @@ function _initLang(lang)
 	{
 		sel:'title',
 		html:lang.appName.toAllFirstCharsUppercase()
+	},
+	{
+		sel:'#editArea form input[type=submit]',
+		value:lang.btnNext
 	}]
 	return strings
 }
