@@ -45,9 +45,9 @@ function initLang()
 	{
 		var o = _s(strings[i].sel)			
 		if(isUndef(strings[i].value) && o)
-			o._html(strings[i].html)
+			o.html(strings[i].html)
 		else if(o)
-			o._val(strings[i].value)
+			o.val(strings[i].value)
 			
 	}
 }

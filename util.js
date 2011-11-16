@@ -328,7 +328,6 @@ Date.fromString = function(str) {
 
 
 
-
 String.prototype.isEmpty = function()
 {
 	return this.toString() == '' 
@@ -365,7 +364,17 @@ Object.prototype.addListener = function(event, cb)
 	this.addEventListener(event, cb, false)
 }
 
-//alert(trim('fits in.as many words as possible when first word in string is shorter then limit', true)
+if(isUndef(Object.prototype.html))
+	Object.prototype.html = function(html)
+	{
+		this.innerHTML = html
+	}
+if(isUndef(Object.prototype.val))
+	Object.prototype.val = function(value)
+	{
+		this.value = value
+	}
+//alert(trim('fits in.as many words as possible when first word in string is shorter then limit')
 //	.toLimitedFormattedText(23))
 
 //alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
