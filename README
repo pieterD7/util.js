@@ -1,11 +1,11 @@
 
 	String formatting:
 	
-	1) Capitalizes first non-tag string character of strings or dot terminated phrases
+	1) Capitalizes first non-tag string character of string or dot terminated phrases
 	2) Adds space after dot in not the first phrase
 	3) Removes double space
 	4) Leaves abbreviations as they are
-	5) Truncates to number of fitting characters and tries to round up on space
+	5) Truncates to number of characters and tries to round up on space
 	6) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
 
 
