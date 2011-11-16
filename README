@@ -1,4 +1,14 @@
 
+	String formatting:
+	
+	1) Capitalizes first non-tag string character of strings or dot terminated phrases
+	2) Adds space after dot in not the first phrase
+	3) Removes double space
+	4) Leaves abbreviations as they are
+	5) Truncates to number of fitting characters and tries to round up on space
+	6) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
+
+
 Copyright (C) 2011 by pieter@nr8.nl
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,9 +28,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-
-/**
- *  Utility functions for validation and string formatting, 
- *  written for Chrome apps (and W3C recommendations)
- */
