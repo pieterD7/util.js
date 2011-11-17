@@ -6,7 +6,11 @@ function toJson(str)
 {
 	
 	var inp = new String(str)
-		inp = inp.replace(/'/g, '"')
+		inp = inp
+				.replace(/{\s*'/g, '{"')
+				.replace(/:\s*'/g, ':"')
+				.replace(/'\s*:/g, '":')
+				.replace(/'\s*}/g, '"}')
 	var json = JSON.parse(inp)
 	return json
 }
@@ -30,4 +34,5 @@ if(isUndef(Object.prototype.val))
 		this.value = value
 	}
 
-//alert(typeof toJson("{'name':'pieter\\'s'}"))
+//alert(toJson("{'name':'pieter's'}").name)
+//alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'}]")[1].name)
