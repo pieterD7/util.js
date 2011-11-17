@@ -11,7 +11,6 @@ function toJson(str)
 				.replace(/:\s*'/g, ':"')
 				.replace(/'\s*:/g, '":')
 				.replace(/'\s*}/g, '"}')
-	alert(inp)
 	var json = JSON.parse(inp)
 	return json
 }
