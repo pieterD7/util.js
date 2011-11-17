@@ -4,12 +4,14 @@
 
 function toJson(str)
 {
+	
 	var inp = new String(str)
 		inp = inp
 				.replace(/{\s*'/g, '{"')
 				.replace(/:\s*'/g, ':"')
 				.replace(/'\s*:/g, '":')
 				.replace(/'\s*}/g, '"}')
+	alert(inp)
 	var json = JSON.parse(inp)
 	return json
 }
@@ -33,5 +35,7 @@ if(isUndef(Object.prototype.val))
 		this.value = value
 	}
 
+//alert(toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
+
 //alert(toJson("{'name':'pieter's'}").name)
-alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'}, {'name':'hei zei:\"Kilo\"'}]")[2].name)
+//alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)
