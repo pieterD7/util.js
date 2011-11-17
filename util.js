@@ -1,6 +1,6 @@
 /**
  *  Utility functions for validation and string formatting, 
- *  written for Chrome apps (and W3C recommendations)
+ *  written for the V8 engine
  */
 
 if(typeof sizzler === 'undefined')
@@ -326,54 +326,12 @@ Date.fromString = function(str) {
 
 //  CUT  ///////////////////////////////////////////////////////////////////
 
-
-
-String.prototype.isEmpty = function()
-{
-	return this.toString() == '' 
-}
-
-function isUndef(a)
-{
-	return typeof a === 'undefined'
-}
-
-function isObject(a)
-{
-	return typeof a === 'object'
-}
-
-function isString(a)
-{
-	return typeof a === 'string'
-}
-
-function isFunction(a)
-{
-	return typeof a === 'function'
-}
-
-function isBool(a)
-{
-	return typeof a === 'boolean'
-}
-
 Object.prototype.addListener = function(event, cb)
 {
 	// W3C style 
 	this.addEventListener(event, cb, false)
 }
 
-if(isUndef(Object.prototype.html))
-	Object.prototype.html = function(html)
-	{
-		this.innerHTML = html
-	}
-if(isUndef(Object.prototype.val))
-	Object.prototype.val = function(value)
-	{
-		this.value = value
-	}
 //alert(trim('fits in.as many words as possible when first word in string is shorter then limit')
 //	.toLimitedFormattedText(23))
 
