@@ -4,7 +4,6 @@
 
 function toJson(str)
 {
-	
 	var inp = new String(str)
 		inp = inp
 				.replace(/{\s*'/g, '{"')
@@ -35,4 +34,4 @@ if(isUndef(Object.prototype.val))
 	}
 
 //alert(toJson("{'name':'pieter's'}").name)
-//alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'}]")[1].name)
+alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'}, {'name':'hei zei:\"Kilo\"'}]")[2].name)
