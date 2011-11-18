@@ -16,5 +16,3 @@ var getCumulativeOffset = function (obj) {
         y : top
     };
 };
-
-util.screen = {}
