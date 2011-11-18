@@ -1,8 +1,7 @@
 /**
  * 
  */
-var _lang = {}
-var lang = ''
+util.lang = ''
 
 function getBestUserLang()
 {
@@ -28,10 +27,10 @@ function chooseLang()
 	switch(typeof _lang[ulang])
 	{
 		case 'undefined':
-			lang = _lang.nl
+			util.lang = _lang.nl
 			break;
 		default: 
-			lang = _lang[ulang]
+			util.lang = _lang[ulang]
 	}
 	return lang
 }

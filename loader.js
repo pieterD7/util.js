@@ -1,13 +1,15 @@
 /**
  *  
  */
-var _mods = [	'io', 'util', 'http', 'lang/nl/lang_nl', 
-             	'lang/initLang', 'lang/com_lang', 'screen']
+
+var util = {}
+
+var _mods = [	'validations', 'io', 'util', 'http', 
+             	'lang/nl/lang_nl', 'lang/initLang', 
+             	'lang/com_lang', 'screen']
 
 var _t = null
-var _initLang = null
 var _onloads = []
-var util = {}
 
 function loadScript(fileName)
 {
@@ -19,9 +21,7 @@ function loadScript(fileName)
 }
 
 function initUtil()
-{
-	loadScript('validations')
-	
+{	
 	for(var c = 0; c < _mods.length; c++)
 	{
 		loadScript(_mods[c])
@@ -47,8 +47,11 @@ function onLoadCompleted(cb)
 		cb()
 }
 
-function addOnLoad(cb)
+Object.prototype.ready = function(cb)
 {
-	_onloads.push(cb)
+	if(document.readyState == 'complete')
+		onLoadCompleted(cb)
+	else
+		_onloads.push(cb)
 }
 initUtil()
