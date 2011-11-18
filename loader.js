@@ -2,8 +2,11 @@
  * 
  */
 
-var _s = [	'validations', 'io', 'util', 'lang/initLang', 
+var _s = [	'validations', 'io', 'util', 'http', 'lang/initLang', 
           	'lang/nl/lang.nl', 'lang/com.lang', 'screen']
+
+var _t = null
+var _lang = null
 
 function loadScript(fileName)
 {
@@ -20,6 +23,21 @@ function initUtil()
 	{
 		loadScript(_s[c])
 	}
+	_t = setInterval("waitForLoadCompleted();", 50)
 }
 
-initUtil()
+function waitForLoadCompleted()
+{
+	if(document.readyState === 'complete' && typeof _lang != 'undefined')
+	{
+		clearInterval(_t)
+		onLoadCompleted(function(){init()}) 
+	}		
+}
+
+function onLoadCompleted(cb)
+{
+	if(isFunction(cb))
+		cb()
+}
+initUtil();
