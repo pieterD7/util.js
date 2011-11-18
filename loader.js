@@ -1,12 +1,13 @@
 /**
- * 
+ *  
  */
-
-var _s = [	'validations', 'io', 'util', 'http', 'lang/initLang', 
-          	'lang/nl/lang.nl', 'lang/com.lang', 'screen']
+var _mods = [	'io', 'util', 'http', 'lang/nl/lang_nl', 
+             	'lang/initLang', 'lang/com_lang', 'screen']
 
 var _t = null
-var _lang = null
+var _initLang = null
+var _onloads = []
+var util = {}
 
 function loadScript(fileName)
 {
@@ -19,25 +20,47 @@ function loadScript(fileName)
 
 function initUtil()
 {
-	for(var c = 0; c < _s.length; c++)
+	loadScript('validations')
+	
+	for(var c = 0; c < _mods.length; c++)
 	{
-		loadScript(_s[c])
+		loadScript(_mods[c])
 	}
+
 	_t = setInterval("waitForLoadCompleted();", 50)
+}
+
+function isUtil(level)
+{
+	var isLoaded = true
+	for (var c = 0; c < level.length; c++)
+	{
+		if(	typeof eval('util.' + level[c].replace(/\//g, '_')) == 'undefined')
+			isLoaded = false
+	}
+	return isLoaded
 }
 
 function waitForLoadCompleted()
 {
-	if(document.readyState === 'complete' && typeof _lang != 'undefined')
+	if(document.readyState == 'complete' && isUtil(_mods))
 	{
+		loadScript('lang/com_lang')	
 		clearInterval(_t)
-		onLoadCompleted(function(){init()}) 
+		initLang()
+		while(cb = _onloads.shift())
+			onLoadCompleted(cb)		
 	}		
 }
 
 function onLoadCompleted(cb)
 {
-	if(isFunction(cb))
+	if(typeof cb === 'function')
 		cb()
 }
-initUtil();
+
+function addOnLoad(cb)
+{
+	_onloads.push(cb)
+}
+initUtil()

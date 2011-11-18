@@ -50,3 +50,4 @@ function ajax(obj)
 	else
 		http.send(vars)
 }
+util.http = {}
