@@ -1,7 +1,6 @@
 /**
  *  Written for the V8 engine
  */
-
 String.prototype.isEmpty = function()
 {
 	return this.toString() == '' 
@@ -31,3 +30,5 @@ function isBool(a)
 {
 	return typeof a === 'boolean'
 }
+
+util.validation = {}
