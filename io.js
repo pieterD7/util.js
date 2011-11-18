@@ -22,16 +22,18 @@ function toXml(str)
    return xml;
 }
 
-Object.prototype.html = function(html)
-{
-	this.innerHTML = html
-}
+if(isUndef(Object.prototype.html))
+	Object.prototype.html = function(html)
+	{
+		this.innerHTML = html
+	}
 
-Object.prototype.val = function(value)
-{
-	this.value = value
-}
-util.io = {}
+if(isUndef(Object.prototype.val))
+	Object.prototype.val = function(value)
+	{
+		this.value = value
+	}
+
 //alert(toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
 
 //alert(toJson("{'name':'pieter's'}").name)
