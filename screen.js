@@ -16,3 +16,4 @@ var getCumulativeOffset = function (obj) {
         y : top
     };
 };
+

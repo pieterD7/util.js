@@ -336,4 +336,5 @@ Object.prototype.addListener = function(event, cb)
 //	.toLimitedFormattedText(23))
 
 //alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
-//	.toLimitedFormattedHTML(120))	
+//	.toLimitedFormattedHTML(120))
+
