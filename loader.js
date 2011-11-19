@@ -24,7 +24,7 @@ var util = util || {
            	(	typeof utilConfig != 'undefined' && typeof utilConfig.defLocale != 'undefined' ? 
            			utilConfig.defLocale : 
            				(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-           				utilConfig.local : 
+           				utilConfig.locale : 
            					'en')) + 
            	'/lang_' +
            	(	typeof utilConfig != 'undefined' && 
