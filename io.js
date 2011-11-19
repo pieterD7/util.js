@@ -2,7 +2,7 @@
  * 	Written for the V8 engine
  */
 
-function toJson(str)
+util.toJson = function(str)
 {
 	
 	var inp = new String(str)
@@ -15,7 +15,7 @@ function toJson(str)
 	return json
 }
 
-function toXml(str)
+util.toXml = function(str)
 {
    var p = new DOMParser();
    var xml = p.parseFromString(str, "text/xml");
@@ -33,5 +33,5 @@ Object.prototype.val = function(value)
 }
 //alert(toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
 
-//alert(toJson("{'name':'pieter's'}").name)
+//alert(util.toJson("{'name':'pieter's'}").name)
 //alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)

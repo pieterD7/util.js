@@ -40,7 +40,7 @@ var util = util || {
 	},
 	waitForLanguageLoaded: function()
 	{
-		if(isObject(util.lang))
+		if(this.isObject(util.lang))
 		{
 			clearInterval(util._t)
 			while(cb = util._onloads.shift())

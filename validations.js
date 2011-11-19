@@ -6,27 +6,27 @@ String.prototype.isEmpty = function()
 	return this.toString() == '' 
 }
 
-function isUndef(a)
+util.isUndef = function(a)
 {
 	return typeof a === 'undefined'
 }
 
-function isObject(a)
+util.isObject = function(a)
 {
 	return typeof a === 'object'
 }
 
-function isString(a)
+util.isString = function(a)
 {
 	return typeof a === 'string'
 }
 
-function isFunction(a)
+util.isFunction = function(a)
 {
 	return typeof a === 'function'
 }
 
-function isBool(a)
+util.isBool = function(a)
 {
 	return typeof a === 'boolean'
 }

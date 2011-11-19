@@ -20,15 +20,15 @@ util.HttpStatus = function(uri, cb)
 
 util.ajax = function(obj)
 {
-	if(isUndef(obj)) return
+	if(this.isUndef(obj)) return
 		
 	var url = obj.url
-	var method = isString(obj.method) ? obj.method : 'GET'
+	var method = this.isString(obj.method) ? obj.method : 'GET'
 		
 	var http = new XMLHttpRequest();
 	var vars = null
 	
-	if(!isUndef(obj.data))
+	if(!this.isUndef(obj.data))
 	{
 		vars = '';
 		for(var i in obj.data)
@@ -45,8 +45,8 @@ util.ajax = function(obj)
 	{
 		if(http.readyState == 4 &&  http.status == 200)
 		{
-			if(isFunction(obj.onSuccess))
-				if(isUndef(obj.dataType) || obj.dataType.match(/text/i))
+			if(util.isFunction(obj.onSuccess))
+				if(util.isUndef(obj.dataType) || obj.dataType.match(/text/i))
 					obj.onSuccess(http.responseText)
 				else if(obj.dataType.match(/json/i))
 					obj.onSuccess(toJson(http.responseText))

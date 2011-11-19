@@ -6,9 +6,11 @@ util.lang = ''
 String.prototype.format = function(ar, char)
 {
 	var ret = this.toString()
-	if(isUndef(char)) char = '%'
 	
-	if(isObject(ar))
+	/* Set default character to be replaced */
+	if(util.isUndef(char)) char = '%'
+	
+	if(util.isObject(ar))
 	for(var c = 0; c < ar.length; c++)
 	{
 		ret = ret.replace(new RegExp(char), ar[c])
@@ -46,7 +48,7 @@ util.initLang = function()
 				for(var i in strings)
 				{					
 					var o = _s(strings[i].sel)
-					if(isUndef(strings[i].value) && o)
+					if(util.isUndef(strings[i].value) && o)
 						o.html(strings[i].html)
 					else if(o)
 						o.val(strings[i].value)

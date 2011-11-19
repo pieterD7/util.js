@@ -23,18 +23,18 @@ if(typeof sizzler === 'undefined')
 }
 
 //@return String
-function trim(str, eraseAllSpace)
+util.trim = function(str, eraseAllSpace)
 {	
-	if(isUndef(str)) str = ''
+	if(util.isUndef(str)) str = ''
 		
-	if(!isString(str))
+	if(!util.isString(str))
 		str = new String(str)
 		
 	// remove all double space
 	var s = str.replace(/\s\s/g, ' ')
 	
 	// remove all space
-	if(isBool(eraseAllSpace) && eraseAllSpace)
+	if(this.isBool(eraseAllSpace) && eraseAllSpace)
 		s = s.replace(/\s|\./g, '')
 	
 	// remove trailing and leading space
@@ -97,12 +97,13 @@ String.prototype.toFormattedText = function(doFormat)
 				ftext += '.'
 			}
 		}
-		if(trim(sentences[c]).indexOf(' ') > 0 && !inAbb && (isUndef(doFormat) || isBool(doFormat) && doFormat))
+		if(util.trim(sentences[c]).indexOf(' ') > 0 && !inAbb && 
+			(util.isUndef(doFormat) || util.isBool(doFormat) && doFormat))
 		{
-			ftext += trim(sentences[c]).toFirstCharUppercase()
+			ftext += util.trim(sentences[c]).toFirstCharUppercase()
 		}
 		else
-			ftext += trim(sentences[c])
+			ftext += util.trim(sentences[c])
 		if(new String(sentences[c]).indexOf(' ') > -1)
 			inAbb = false			
 	}
@@ -117,16 +118,16 @@ String.prototype.parseAsHTML = function()
 	return html
 }
 
-var nodes = []
+util.nodes = []
 
-function collectChildNodes(el)
+util.collectChildNodes = function(el)
 {
-	nodes.push(el)
+	this.nodes.push(el)
 	for(var c = 0; c < el.childNodes.length; c++)
 	{
-		nodes.push(collectChildNodes(el.childNodes[c]))
+		this.nodes.push(this.collectChildNodes(el.childNodes[c]))
 	}
-	return nodes
+	return this.nodes
 }
 
 String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
@@ -143,38 +144,38 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
 		
 	for(var c = 0; c < div.childNodes.length; c++)
 	{	
-		nodes = []
-		var nodes = collectChildNodes(div.childNodes[c])
-		for(var g = 0; g < nodes.length; g++)
+		util.nodes = []
+		util.nodes = util.collectChildNodes(div.childNodes[c])
+		for(var g = 0; g < util.nodes.length; g++)
 		{
 			if (g == 0)continue;
-			if(nodes[g].tagName != null)
+			if(util.nodes[g].tagName != null)
 			{
-				formatted += "<" + nodes[g].tagName
-				if(nodes[g].attributes)
-					for(var f = 0; f < nodes[g].attributes.length; f++)
+				formatted += "<" + util.nodes[g].tagName
+				if(util.nodes[g].attributes)
+					for(var f = 0; f < util.nodes[g].attributes.length; f++)
 					{
-						formatted += ' ' + nodes[g].attributes[f].nodeName + 
-						"='" + nodes[g].attributes[f].nodeValue + "' "
+						formatted += ' ' + util.nodes[g].attributes[f].nodeName + 
+						"='" + util.nodes[g].attributes[f].nodeValue + "' "
 					}
 				formatted += ">"
-				tags.push(nodes[g].tagName)	
+				tags.push(util.nodes[g].tagName)	
 			}
-			else if(nodes[g].nodeValue && !nodes[g].hasChildNodes())
+			else if(util.nodes[g].nodeValue && !util.nodes[g].hasChildNodes())
 			{
-				if(nodes[g].nodeValue.length + text.length >= limit && !finished)
+				if(util.nodes[g].nodeValue.length + text.length >= limit && !finished)
 				{
 					var left = limit - text.length
-					var add = new String(nodes[g].nodeValue).toLimitedFormattedText(left, '', false)
+					var add = new String(util.nodes[g].nodeValue).toLimitedFormattedText(left, '', false)
 					formatted += add
 					text += add
 					finished = true
 					lastOpenTag = new String(tags.pop())
 				}
-				else if(text.length + nodes[g].nodeValue.length < limit)
+				else if(text.length + util.nodes[g].nodeValue.length < limit)
 				{
-					text += nodes[g].nodeValue
-					formatted += nodes[g].nodeValue
+					text += util.nodes[g].nodeValue
+					formatted += util.nodes[g].nodeValue
 					lastOpenTag = new String(tags.pop())
 				}
 				else
@@ -183,7 +184,7 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
 				}
 				if(finished)
 				{
-					if(isUndef(ending))
+					if(util.isUndef(ending))
 						var ending = ' ...'		
 					formatted += ending
 				}
@@ -224,7 +225,7 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 	{	
 		limited = this.slice(0, limit)	
 	}
-	if(isUndef(ending)) var ending = ' ...'
+	if(util.isUndef(ending)) var ending = ' ...'
 	var end = limit < this.length ? ending : ''
 	return limited.toFormattedText(doFormat)+end
 }
@@ -332,7 +333,7 @@ Object.prototype.addListener = function(event, cb)
 	this.addEventListener(event, cb, false)
 }
 
-//alert(trim('fits in.as many words as possible when first word in string is shorter then limit')
+//alert(util.trim('fits in.as many words as possible when first word in string is shorter then limit')
 //	.toLimitedFormattedText(23))
 
 //alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
