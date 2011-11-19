@@ -4,6 +4,10 @@
 
 var util = util || {
 
+	/* translations */
+	_lang: [],
+	
+	/* modules */
 	_mods: [
 	        
 	        /* core module */
@@ -41,8 +45,10 @@ var util = util || {
            ]
 	,
 
+	/* pointer to timer */
 	_t:null,
 
+	/* array with functions to be called after load */
 	_onloads:[],
 	
 	loadScript : function(fileName)
