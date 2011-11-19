@@ -3,6 +3,17 @@
  */
 util.lang = ''
 
+String.prototype.format = function(ar)
+{
+	var ret = this.toString()
+	if(isObject(ar))
+	for(var c = 0; c < ar.length; c++)
+	{
+		ret = ret.replace(/%/, ar[c])
+	}
+	return ret
+}
+	
 function getBestUserLang()
 {
 	    if ( navigator.language ) {
