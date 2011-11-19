@@ -4,10 +4,41 @@
 
 var util = util || {
 
-	_mods: ['validations', 'io', 
-           	'util', 'lang/nl/lang_nl', 
-           	'http', 'lang/initLang', 
-           	'lang/com_lang', 'display']
+	_mods: [
+	        
+	        /* core module */
+	        'validations', 
+	        
+	        /* other modules */
+	        'http', 'io', 
+	        
+	        /* util proper */
+	        'util', 
+	        
+	        /* default language based on utilConfig or 'en' */
+	        'lang/' + 
+           	(	typeof utilConfig != 'undefined' && typeof utilConfig.lang != 'undefined' ? 
+           			utilConfig.lang : 
+           				(typeof utilConfig != 'undefined' && typeof utilConfig.defLang != 'undefined' ? 
+           				utilConfig.defLang : 
+           					'en')) + 
+           	'/lang_' +
+           	(	typeof utilConfig != 'undefined' && 
+                typeof utilConfig.lang != 'undefined' ? 
+                	utilConfig.lang : 
+                	(typeof utilConfig != 'undefined' && typeof utilConfig.defLang != 'undefined' ? 
+                			utilConfig.defLang : 
+                				'en')),
+                			
+             /* init language */   			
+           	'lang/initLang',
+           	
+           	/* App language blueprint*/
+           	'lang/com_lang', 
+           	
+           	/* module for browsers */
+           	'display'
+           ]
 	,
 
 	_t:null,
@@ -21,6 +52,7 @@ var util = util || {
 		s.setAttribute('type', 'text/javascript')
 		document.getElementsByTagName('head')[0].appendChild(s)
 	},
+	
 	initUtil: function()
 	{	
 		for(var c = 0; c < util._mods.length; c++)
@@ -29,6 +61,7 @@ var util = util || {
 		}
 		util._t = setInterval("util.waitForLoadCompleted();", 50)
 	},
+	
 	waitForLoadCompleted: function()	
 	{
 		if(document.readyState == 'complete')
@@ -38,6 +71,7 @@ var util = util || {
 			_t = setInterval("util.waitForLanguageLoaded();", 50)	
 		}		
 	},
+	
 	waitForLanguageLoaded: function()
 	{
 		if(this.isObject(util.lang))
@@ -47,6 +81,7 @@ var util = util || {
 				this.onLoadCompleted(cb)
 		}
 	},
+	
 	onLoadCompleted: function(cb)
 	{
 		if(typeof cb === 'function')
