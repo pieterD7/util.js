@@ -21,17 +21,17 @@ var util = util || {
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 
-           	(	typeof utilConfig != 'undefined' && typeof utilConfig.lang != 'undefined' ? 
-           			utilConfig.lang : 
-           				(typeof utilConfig != 'undefined' && typeof utilConfig.defLang != 'undefined' ? 
-           				utilConfig.defLang : 
+           	(	typeof utilConfig != 'undefined' && typeof utilConfig.defLocale != 'undefined' ? 
+           			utilConfig.defLocale : 
+           				(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
+           				utilConfig.local : 
            					'en')) + 
            	'/lang_' +
            	(	typeof utilConfig != 'undefined' && 
-                typeof utilConfig.lang != 'undefined' ? 
-                	utilConfig.lang : 
-                	(typeof utilConfig != 'undefined' && typeof utilConfig.defLang != 'undefined' ? 
-                			utilConfig.defLang : 
+                typeof utilConfig.defLocale != 'undefined' ? 
+                	utilConfig.defLocale : 
+                	(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
+                			utilConfig.locale : 
                 				'en')),
                 			
              /* init language */   			
