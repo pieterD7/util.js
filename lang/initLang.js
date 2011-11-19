@@ -3,18 +3,20 @@
  */
 util.lang = ''
 
-String.prototype.format = function(ar)
+String.prototype.format = function(ar, char)
 {
 	var ret = this.toString()
+	if(isUndef(char)) char = '%'
+	
 	if(isObject(ar))
 	for(var c = 0; c < ar.length; c++)
 	{
-		ret = ret.replace(/%/, ar[c])
+		ret = ret.replace(new RegExp(char), ar[c])
 	}
 	return ret
 }
 	
-function getBestUserLang()
+util.getBestUserLang = function()
 {
 	    if ( navigator.language ) {
 	        return navigator.language;
@@ -31,11 +33,11 @@ function getBestUserLang()
 	    return ''
 }
 
-function initLang()
+util.initLang = function()
 {
-	var ulang = getBestUserLang()
+	var ulang = this.getBestUserLang()
 	
-	HttpStatus('lang/' + ulang + '/lang_' + ulang + '.js', 
+	this.HttpStatus('lang/' + ulang + '/lang_' + ulang + '.js', 
 		function(stat)
 		{
 			if(stat == 200)

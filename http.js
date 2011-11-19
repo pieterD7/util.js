@@ -2,7 +2,7 @@
  * 
  */
 
-function HttpStatus(uri, cb)
+util.HttpStatus = function(uri, cb)
 {
 	var opt = {
 		url: uri,
@@ -15,10 +15,10 @@ function HttpStatus(uri, cb)
 			cb(200)
 		}
 	}
-	ajax(opt)
+	this.ajax(opt)
 }
 
-function ajax(obj)
+util.ajax = function(obj)
 {
 	if(isUndef(obj)) return
 		

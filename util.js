@@ -60,7 +60,7 @@ String.prototype.toFirstCharUppercase = function()
 	var pre = ''
 	if(pos > 0)
 		pre = this.slice(0,pos)
-	return pre + this.toString().charAt(pos).toUpperCase() + this.slice(pos+1)
+	return pre + this.toString().charAt(pos).toLocaleUpperCase() + this.slice(pos+1)
 }
 
 String.prototype.toAllFirstCharsUppercase = function()

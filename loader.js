@@ -2,58 +2,56 @@
  *  
  */
 
-var util = {}
+var util = util || {
 
-var _mods = [	'validations', 'io', 
-             	'util', 'lang/nl/lang_nl', 
-             	'http', 'lang/initLang', 
-             	'lang/com_lang', 'screen']
+	_mods: ['validations', 'io', 
+           	'util', 'lang/nl/lang_nl', 
+           	'http', 'lang/initLang', 
+           	'lang/com_lang', 'display']
+	,
 
-var _t = null
-var _onloads = []
+	_t:null,
 
-function loadScript(fileName)
-{
-	var s = document.createElement('script')
-	s.setAttribute('src', fileName + '.js')
-	s.setAttribute('type', 'text/javascript')
-	document.getElementsByTagName('head')[0].appendChild(s)
-}
-
-function initUtil()
-{	
-	for(var c = 0; c < _mods.length; c++)
+	_onloads:[],
+	
+	loadScript : function(fileName)
 	{
-		loadScript(_mods[c])
+		var s = document.createElement('script')
+		s.setAttribute('src', fileName + '.js')
+		s.setAttribute('type', 'text/javascript')
+		document.getElementsByTagName('head')[0].appendChild(s)
+	},
+	initUtil: function()
+	{	
+		for(var c = 0; c < util._mods.length; c++)
+		{
+			this.loadScript(util._mods[c])
+		}
+		util._t = setInterval("util.waitForLoadCompleted();", 50)
+	},
+	waitForLoadCompleted: function()	
+	{
+		if(document.readyState == 'complete')
+		{
+			clearInterval(util._t)
+			this.initLang()
+			_t = setInterval("util.waitForLanguageLoaded();", 50)	
+		}		
+	},
+	waitForLanguageLoaded: function()
+	{
+		if(isObject(util.lang))
+		{
+			clearInterval(util._t)
+			while(cb = util._onloads.shift())
+				this.onLoadCompleted(cb)
+		}
+	},
+	onLoadCompleted: function(cb)
+	{
+		if(typeof cb === 'function')
+			cb()
 	}
-
-	_t = setInterval("waitForLoadCompleted();", 50)
-}
-
-function waitForLoadCompleted()
-{
-	if(document.readyState == 'complete')
-	{
-		clearInterval(_t)
-		initLang()
-		_t = setInterval("waitForLanguageLoaded();", 50)	
-	}		
-}
-
-function waitForLanguageLoaded()
-{
-	if(isObject(util.lang))
-	{
-		clearInterval(_t)
-		while(cb = _onloads.shift())
-			onLoadCompleted(cb)
-	}
-}
-
-function onLoadCompleted(cb)
-{
-	if(typeof cb === 'function')
-		cb()
 }
 
 Object.prototype.ready = function(cb)
@@ -61,6 +59,7 @@ Object.prototype.ready = function(cb)
 	if(document.readyState == 'complete')
 		onLoadCompleted(cb)
 	else
-		_onloads.push(cb)
+		util._onloads.push(cb)
 }
-initUtil()
+
+util.initUtil()

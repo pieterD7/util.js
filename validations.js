@@ -30,3 +30,4 @@ function isBool(a)
 {
 	return typeof a === 'boolean'
 }
+

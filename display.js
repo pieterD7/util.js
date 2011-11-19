@@ -2,18 +2,22 @@
  * 
  */
 
-var getCumulativeOffset = function (obj) {
+util.getCumulativeOffset = function(obj) 
+{
     var left, top;
     left = top = 0;
-    if (obj.offsetParent) {
-        do {
+    if (obj.offsetParent) 
+    {
+        do 
+        {
             left += obj.offsetLeft;
             top  += obj.offsetTop;
         } while (obj = obj.offsetParent);
     }
-    return {
+    return 
+    {
         x : left,
         y : top
-    };
-};
+    }
+}
 
