@@ -2,6 +2,22 @@
  * 
  */
 
+function HttpStatus(uri, cb)
+{
+	var opt = {
+		url: uri,
+		onError: function(err)
+		{
+			cb(err.status)
+		},
+		onSuccess: function()
+		{
+			cb(200)
+		}
+	}
+	ajax(opt)
+}
+
 function ajax(obj)
 {
 	if(isUndef(obj)) return

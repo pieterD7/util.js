@@ -8,67 +8,67 @@ function _initLang(lang)
 	var strings = [
 	{
 		sel:'title',
-		html:util.lang.appName.toAllFirstCharsUppercase()
+		html:lang.appName.toAllFirstCharsUppercase()
 	},
 	{
 		sel:'#editArea p',
-		html:util.lang.pEditArea.toFirstCharUppercase()
+		html:lang.pEditArea.toFirstCharUppercase()
 	},
 	{	
 		sel:'#editArea table td:nth-child(1)',
-		html:util.lang.lblQ + ' :'
+		html:lang.lblQ + ' :'
 	},
 	{
 		sel:'#editArea table tr:nth-child(2) td',
-		html:util.lang.lblSelectType + ' :'
+		html:lang.lblSelectType + ' :'
 	},
 	{
 		sel:'#settings form table tr td:nth-child(1)',
-		html:util.lang.lblPinCode + ' :'
+		html:lang.lblPinCode + ' :'
 	},
 	{
 		sel:'#login form table tr td:nth-child(1)',
-		html:util.lang.lblPinCode + ' :'
+		html:lang.lblPinCode + ' :'
 	},
 	{
 		sel:'#settings form table tr:nth-child(2) td',
-		html:util.lang.lblNewPinCode + ' :'		
+		html:lang.lblNewPinCode + ' :'		
 	},
 	{
 		sel:'#editArea form select option[value=first]',
-		html:util.lang.optFirst
+		html:lang.optFirst
 	},
 	{
 		sel:'#editArea form select option[value=openVraag]',
-		html:util.lang.optOpenQ
+		html:lang.optOpenQ
 	},
 	{
 		sel:'#editArea form select option[value=multiChoice]',
-		html:util.lang.optMultiQ
+		html:lang.optMultiQ
 	},
 	{
 		sel:'#editArea form select option[value=totaalIs100]',
-		html:util.lang.opt100Q
+		html:lang.opt100Q
 	},
 	{
 		sel:'#editArea form select option[value=sectieHeader]',
-		html:util.lang.optHeader
+		html:lang.optHeader
 	},
 	{
 		sel:'#editArea form input[type=submit]',
-		value:util.lang.btnNext
+		value:lang.btnNext
 	},	
 	{
 		sel:'#tbDashboard',
-		html:util.lang.tbDashboard.toFirstCharUppercase()
+		html:lang.tbDashboard.toFirstCharUppercase()
 	},
 	{	
 		sel:'#tbSettings',
-		html:util.lang.tbSettings.toFirstCharUppercase()
+		html:lang.tbSettings.toFirstCharUppercase()
 	},
 	{
 		sel:'#hideLink',
-		html:util.lang.tbLess
+		html:lang.tbLess
 	}]
 	return strings
 }

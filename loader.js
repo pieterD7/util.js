@@ -4,8 +4,9 @@
 
 var util = {}
 
-var _mods = [	'validations', 'io', 'util', 'http', 
-             	'lang/nl/lang_nl', 'lang/initLang', 
+var _mods = [	'validations', 'io', 
+             	'util', 'lang/nl/lang_nl', 
+             	'http', 'lang/initLang', 
              	'lang/com_lang', 'screen']
 
 var _t = null
@@ -13,7 +14,6 @@ var _onloads = []
 
 function loadScript(fileName)
 {
-	var fileName = new String(fileName)
 	var s = document.createElement('script')
 	s.setAttribute('src', fileName + '.js')
 	s.setAttribute('type', 'text/javascript')
@@ -36,9 +36,18 @@ function waitForLoadCompleted()
 	{
 		clearInterval(_t)
 		initLang()
-		while(cb = _onloads.shift())
-			onLoadCompleted(cb)		
+		_t = setInterval("waitForLanguageLoaded();", 50)	
 	}		
+}
+
+function waitForLanguageLoaded()
+{
+	if(isObject(util.lang))
+	{
+		clearInterval(_t)
+		while(cb = _onloads.shift())
+			onLoadCompleted(cb)
+	}
 }
 
 function onLoadCompleted(cb)
