@@ -13,22 +13,24 @@ Number.prototype.format = function(as, locale)
 
 	if(as.match(/precision/i))
 	{
-		n = new Number(this.valueOf()).toPrecision(arg)
+		n = Number(this.valueOf()).toPrecision(arg)
+		
 	}
-	if(as.match(/float/i))
+	else if(as.match(/float/i))
 	{
-		n = new Number(this.valueOf()).toFixed(arg)
+		n = Number(this.valueOf()).toFixed(arg)
 	}	
 	else
-		n = new Number(this.valueOf())
-	return util._formatNumber(n, '.', ',')
+		n = Number(this.valueOf())
+	return util._formatNumber(n, locale.thousandSeparator, locale.decimalSeparator)
 }
 util._formatNumber = function(number, thousand, decimal)
 {
 	var _s = new String(number)
 	var decimalPos = _s.length - _s.indexOf(".")
 	
-	if(util.isString(decimal)) _s = _s.replace(/\./, decimal)
+	if(util.isString(decimal)) 
+		_s = _s.replace(/\./, decimal)
 	
 	var s = ''
 	for(var c = _s.length - 1; c > -1; c--)
