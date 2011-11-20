@@ -19,7 +19,8 @@ var util = util || {
 	        'validations', 'number', 
 	        
 	        /* other modules */
-	        'http', 'io', 'date',
+	        'http', 'io', 
+	        'date', 'time',
 	        
 	        /* util proper */
 	        'util', 
