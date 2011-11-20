@@ -58,6 +58,12 @@ var util = util || {
 	/* array with functions to be called after load */
 	_onloads:[],
 	
+	storeString: function(string, lang)
+	{
+		this._lang[lang][string.store] = string.html
+
+	},
+	
 	loadScript : function(fileName)
 	{
 		var s = document.createElement('script')

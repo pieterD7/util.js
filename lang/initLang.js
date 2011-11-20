@@ -3,7 +3,7 @@
  */
 util.lang = ''
 
-String.prototype.format = function(ar, char, as)
+String.prototype.format = function(ar, as, char)
 {
 	var ret = this.toString()
 	
@@ -16,8 +16,8 @@ String.prototype.format = function(ar, char, as)
 	if(util.isObject(ar))
 	for(var c = 0; c < ar.length; c++)
 	{
-		if(util.isNumber(parseFloat(ar[c]) || parseInt(ar[c])))
-		ret = ret.replace(new RegExp(char), new Number(ar[c]).format(as, util.locale))
+		if(util.isNumber(parseFloat(ar[c])))
+			ret = ret.replace(RegExp(char), Number(ar[c]).format(as, util.locale))
 	}
 	return ret
 }
@@ -51,11 +51,13 @@ util.initLang = function()
 				var strings = _initLang(util._lang[ulang])
 				for(var i in strings)
 				{					
-					var o = _s(strings[i].sel)
-					if(util.isUndef(strings[i].value) && o)
+					var o = _s(strings[i].sel) || 'store'
+					if(util.isUndef(strings[i].value) && o != 'store')
 						o.html(strings[i].html)
-					else if(o)
+					else if(o != 'store')
 						o.val(strings[i].value)
+					else if(o == 'store')
+						util.storeString(strings[i], ulang)
 						
 				}			
 				util.lang = util._lang[ulang]

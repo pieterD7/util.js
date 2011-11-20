@@ -10,7 +10,10 @@ function _initLang(lang)
 		sel:'title',
 		html:lang.appName.toAllFirstCharsUppercase()
 	},
-
+	{
+		store:'lblQHint',
+		html:lang.lblQHint.toLowerCase()
+	},
 	{
 		sel:'#editArea form input[type=submit]',
 		value:lang.btnNext
