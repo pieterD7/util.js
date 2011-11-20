@@ -7,14 +7,19 @@ var util = util || {
 	/* translations */
 	_lang: [],
 	
+	_defaultStrings: [],
+	
+	/* regional formats */
+	_locale: [],
+	
 	/* modules */
 	_mods: [
 	        
-	        /* core module */
-	        'validations', 
+	        /* core modules */
+	        'validations', 'number', 
 	        
 	        /* other modules */
-	        'http', 'io', 
+	        'http', 'io', 'date',
 	        
 	        /* util proper */
 	        'util', 
@@ -33,7 +38,9 @@ var util = util || {
                 	(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
                 			utilConfig.locale : 
                 				'en')),
-                			
+             
+             'lang/nl/locale_nl', 'lang/nl/def_nl', 				
+                				
              /* init language */   			
            	'lang/initLang',
            	
