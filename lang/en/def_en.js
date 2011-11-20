@@ -20,8 +20,8 @@ util._defaultStrings.en =
 
 	past: '% ago',	
 		
-	month1: 'januari',
-	month2: 'februari',
+	month1: 'january',
+	month2: 'february',
 	month3: 'march',
 	month4: 'april',
 	month5: 'may',
@@ -51,7 +51,7 @@ util._defaultStrings.en =
 	day3short: 'tu',
 	day4short: 'we',
 	day5short: 'th',
-	day6short: 'vr',
+	day6short: 'fr',
 	day7short: 'sa',
 	
 	day1: 'sunday',
