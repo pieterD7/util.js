@@ -31,3 +31,7 @@ util.isBool = function(a)
 	return typeof a === 'boolean'
 }
 
+util.isNumber = function(a)
+{
+	return typeof a === 'number' && isFinite(a)
+}
