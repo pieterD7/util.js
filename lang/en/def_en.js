@@ -4,21 +4,16 @@
 
 util._defaultStrings.en = 
 {
-	year: 'year',
-	years: 'years',
-	month: 'month',
-	months: 'months',
-	week: 'week',
-	weeks: 'weeks',
-	day: 'day',
-	days: 'days',
-	hour: 'hour',
-	hours: 'hours',
-	minute: 'minute',
-	minutes: 'minutes',
-	seconds: 'seconds',
+	year: 		{s:'year',p:'+s'},
+	month:		{s:'month',p:'+s'},
+	week: 		{s:'week',p:'+s'},
+	day:  		{s:'day',p:'+s'},
+	hour: 		{s:'hour',p:'+s'},
+	minute:		{s:'minute',p:'+s'},
+	seconds:	{s:'second',p:'+s'},
 
-	past: '% ago',	
+	pastFromNow: '% ago',	
+	pastTimeRef: 'last %',
 		
 	month1: 'january',
 	month2: 'february',
