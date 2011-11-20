@@ -31,10 +31,10 @@ util._formatNumber = function(number, thousand, decimal)
 	var expos = _s.indexOf("e+") > -1 ? true : false
 			
 	var decimalPos = _s.length  
-	if(decpos)
-		decimalPos = _s.indexOf(".")
-	else if(expos)
+	if(expos)
 		decimalPos = _s.length - _s.indexOf('e+')
+	else if(decpos)
+		decimalPos = _s.indexOf(".")
 		
 	if(util.isString(decimal)) 
 		_s = _s.replace(/\./, decimal)
