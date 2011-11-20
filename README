@@ -1,3 +1,4 @@
+	
 	Util proper is the two files validations.js and util.js 
 
 	String formatting (util proper):
@@ -13,8 +14,10 @@
 	
 	document.ready(function() // If using the loader
 	{
-		'fits in.as many words as possible when first word in string is shorter then limit'
+		var msg = 'fits in as many words as possible when first word in string is shorter then limit'
 			.toLimitedFormattedHTML(23)
+			
+		// msg now eq: 'Fits in as many words ...'
 	})
 
 
