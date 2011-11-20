@@ -32,7 +32,7 @@ util._formatNumber = function(number, thousand, decimal)
 			
 	var decimalPos = _s.length  
 	if(expos)
-		decimalPos = _s.length - _s.indexOf('e+')
+		decimalPos = _s.length - _s.indexOf('e')
 	else if(decpos)
 		decimalPos = _s.indexOf(".")
 		
