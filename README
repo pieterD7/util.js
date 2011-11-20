@@ -1,5 +1,6 @@
+	Util proper is the two files validations.js and util.js 
 
-	String formatting:
+	String formatting (util proper):
 	
 	1) Capitalizes first non-tag string character of string or dot terminated phrases
 	2) Adds space after dot in a phrase
