@@ -27,22 +27,30 @@ Number.prototype.format = function(as, locale)
 util._formatNumber = function(number, thousand, decimal)
 {
 	var _s = new String(number)
-	var decimalPos = _s.length - _s.indexOf(".")
-	
+	var decpos = _s.indexOf(".") > -1 ? true : false
+	var expos = _s.indexOf("e+") > -1 ? true : false
+			
+	var decimalPos = _s.length  
+	if(decpos)
+		decimalPos = _s.indexOf(".")
+	else if(expos)
+		decimalPos = _s.length - _s.indexOf('e+')
+		
 	if(util.isString(decimal)) 
 		_s = _s.replace(/\./, decimal)
 	
 	var s = ''
-	for(var c = _s.length - 1; c > -1; c--)
+	for(var c = 0; c < decimalPos; c++)
 	{
-		if( c > decimalPos && 
-			(_s.length - c - 1) % 3 == 0 && 
-			_s.length != (c + 1))
+		if( c % 3 == 0 && c > 0)
 		{
 			s = thousand + s
 		}
-		s = _s[c] + s
+		s = _s[decimalPos - c - 1] + s
 	}
+	if(decpos)
+		s += _s.slice(decimalPos, _s.length)
+
 	return s
 }
 
