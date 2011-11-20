@@ -2,7 +2,7 @@
  * 
  */
 
-util.defaultStrings = 
+util._defaultStrings.en = 
 {
 	year: 'year',
 	years: 'years',
