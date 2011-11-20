@@ -32,7 +32,7 @@ util._formatNumber = function(number, thousand, decimal)
 			
 	var decimalPos = _s.length  
 	if(expos)
-		decimalPos = _s.length - _s.indexOf('e')
+		decimalPos =  _s.indexOf('e')
 	else if(decpos)
 		decimalPos = _s.indexOf(".")
 		
@@ -48,7 +48,7 @@ util._formatNumber = function(number, thousand, decimal)
 		}
 		s = _s[decimalPos - c - 1] + s
 	}
-	if(decpos)
+	if(decpos || expos)
 		s += _s.slice(decimalPos, _s.length)
 
 	return s
