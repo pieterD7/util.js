@@ -18,7 +18,7 @@ util._defaultStrings.en =
 	minutes: 'minutes',
 	seconds: 'seconds',
 
-	past: 'ago',	
+	past: '% ago',	
 		
 	month1: 'januari',
 	month2: 'februari',
