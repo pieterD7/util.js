@@ -28,7 +28,7 @@ util._formatNumber = function(number, thousand, decimal)
 {
 	var _s = new String(number)
 	var decpos = _s.indexOf(".") > -1 ? true : false
-	var expos = _s.indexOf("e+|e-") > -1 ? true : false
+	var expos = _s.indexOf("e") > -1 ? true : false
 			
 	var decimalPos = _s.length  
 	if(expos)
