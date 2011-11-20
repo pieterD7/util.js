@@ -3,17 +3,21 @@
  */
 util.lang = ''
 
-String.prototype.format = function(ar, char)
+String.prototype.format = function(ar, char, as)
 {
 	var ret = this.toString()
 	
-	/* Set default character to be replaced */
-	if(util.isUndef(char)) char = '%'
+	/* Set default character for translations to be replaced */
+	if(!util.isString(char)) var char = '%'
+
+	/* Set default number type:arg */	
+	if(!util.isString(as)) var as = 'integer'
 	
 	if(util.isObject(ar))
 	for(var c = 0; c < ar.length; c++)
 	{
-		ret = ret.replace(new RegExp(char), ar[c])
+		if(util.isNumber(parseFloat(ar[c]) || parseInt(ar[c])))
+		ret = ret.replace(new RegExp(char), new Number(ar[c]).format(as, util.locale))
 	}
 	return ret
 }
@@ -44,7 +48,7 @@ util.initLang = function()
 		{
 			if(stat == 200)
 			{
-				var strings = _initLang(_lang[ulang])
+				var strings = _initLang(util._lang[ulang])
 				for(var i in strings)
 				{					
 					var o = _s(strings[i].sel)
@@ -54,7 +58,9 @@ util.initLang = function()
 						o.val(strings[i].value)
 						
 				}			
-				util.lang = _lang[ulang]
+				util.lang = util._lang[ulang]
+				util.locale = util._locale[ulang]
+				util.defaultStrings = util._defaultStrings[ulang]
 			}
 		})
 }
