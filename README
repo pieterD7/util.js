@@ -9,6 +9,14 @@
 	5) Truncates to number of characters and tries to round up on space
 	6) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
 
+	eg. 
+	
+	document.ready(function() // If using the loader
+	{
+		'fits in.as many words as possible when first word in string is shorter then limit'
+			.toLimitedFormattedHTML(23)
+	})
+
 
 Copyright (C) 2011 by pieter@nr8.nl
 
