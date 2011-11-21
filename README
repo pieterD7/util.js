@@ -19,6 +19,11 @@
 			
 		// msg now eq: 'Fits in as many words ...'
 	})
+	
+	or with a struct:
+	
+		var msg = new util.struct([String], {hoi:'lopu', enzo:' kaldizia en to'})
+		var m = msg.toLimitedFormattedText.apply(msg.data.enzo, [9])
 
 
 Copyright (C) 2011 by pieter@nr8.nl

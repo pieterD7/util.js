@@ -5,7 +5,10 @@
 util.struct = function(baseObject, data)
 {
 	this.data = data
-	util.extend(this,baseObject.prototype)	
+	for(var c = 0; c < baseObject.length; c++)
+	{
+		util.extend(this,baseObject[c].prototype)
+	}
 	return this
 }
 
