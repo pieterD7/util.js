@@ -16,8 +16,8 @@
 	5) Truncates to number of characters and tries to round up on space
 	6) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
 
-	eg. 
-	
+==================================================================================	
+
 	document.ready(function() // If using the loader
 	{
 		var msg = 'fits in as many words as possible when first word in string is shorter then limit'
@@ -34,15 +34,17 @@
 
 	// handle input			
 		util.trim(null).isEmpty()
+
+	// no parser, just the ones builtin (json and xml)
+		util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name		
 	
-	// or with a struct:	
-		var msg = new util.struct([String], {msg1:'Hi there %', msg2:'Bye '})
-		var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:4'])
+	// with a struct:	
+		var msg = new util.struct([String], {msg1:'total %', msg2:'Bye '})
+		var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:2'])
 		var m = msg.toLimitedFormattedText.apply(d, [15])
 
-	// no parser, just the one builtin (json and xml)
-		util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name		
 
+==================================================================================
 Copyright (C) 2011 by pieter@nr8.nl
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
