@@ -29,6 +29,9 @@
 	// strip all dots and space:
 		util.trim('1000 AA', true)
 		
+	// makeup numbers
+		var res = 'average of %'.format([1.5], 'precision:1', '%')
+
 	// handle input			
 		util.trim(null).isEmpty()
 	
