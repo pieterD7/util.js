@@ -36,7 +36,10 @@
 		util.trim(null).isEmpty()
 
 	// no parser, just the ones builtin (json and xml)
-		util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name		
+		util.toJson("[
+			{'name':'pieter\'s'},
+			{'name':'lo  \\\\  pi'},
+			{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name		
 	
 	// with a struct:	
 		var msg = new util.struct([String], {msg1:'total %', msg2:'Bye '})
