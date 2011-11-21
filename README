@@ -39,7 +39,9 @@
 		var msg = new util.struct([String], {msg1:'Hi there %', msg2:'Bye '})
 		var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:4'])
 		var m = msg.toLimitedFormattedText.apply(d, [15])
-		
+
+	// no parser, just the one builtin (json and xml)
+		util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name		
 
 Copyright (C) 2011 by pieter@nr8.nl
 
