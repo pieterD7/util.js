@@ -29,7 +29,7 @@
 	// strip all dots and space:
 		util.trim('1000 AA', true)
 		
-	// format numbers
+	// format numbers to type and locale
 		var res = 'average of &%'.format([1.5], 'precision:1', '&')
 
 	// handle input			
