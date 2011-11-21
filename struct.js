@@ -7,12 +7,14 @@ util.struct = function(baseObject, data)
 	this.data = data
 	for(var c = 0; c < baseObject.length; c++)
 	{
-		util.extend(this,baseObject[c].prototype)
+		if(baseObject[c].prototype)
+			util.extend(this,baseObject[c].prototype)
+		else
+			util.extend(this,baseObject[c])
 	}
 	return this
 }
 
-//util.struct.prototype = new String()
 util.extend = function(destination, source) 
 {
 	for (var k in source) 

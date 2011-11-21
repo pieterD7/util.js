@@ -20,7 +20,8 @@ var util = util || {
 	        
 	        /* other modules */
 	        'http', 'io', 
-	        'date', 'time',
+	        'date', 'time', 
+	        'struct',
 	        
 	        /* util proper */
 	        'util', 
@@ -116,5 +117,4 @@ Object.prototype.ready = function(cb)
 	else
 		util._onloads.push(cb)
 }
-
 util.initUtil()
