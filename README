@@ -22,9 +22,10 @@
 	
 	or with a struct:
 	
-		var msg = new util.struct([String], {hoi:'lopu', enzo:' kaldizia en to'})
-		var m = msg.toLimitedFormattedText.apply(msg.data.enzo, [9])
-
+		var msg = new util.struct([String], {msg1:'Hi there %', msg2:'Bye '})
+		var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:4'])
+		var m = msg.toLimitedFormattedText.apply(d, [15])
+		
 
 Copyright (C) 2011 by pieter@nr8.nl
 
