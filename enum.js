@@ -2,27 +2,25 @@
  * 
  */
 
-util.enum = function(from, to, step)
+util.enum = function(from, to, step, regexp)
 {
-	from = util.paddLeft(from, '0', to.length)
 	var ret = [from]
 	var max = from.length 
 	var s = from
 	var c = 0
-	if(max == to.length)
 		do
 		{	
 			/* Take step times */
 			s = util.enumNext(s)
 			if(s == to)
 				break
-			if(++c % step == 0)
+			if(++c % step == 0 && (typeof regexp == 'undefined' || s.match(regexp)))
 				ret.push(s)
 			c++
 		}
 		while(s != to)
-		
-	return ret.join('|')
+	ret.push(to)
+	return ret
 }
 util.enumNext = function(str)
 {
@@ -32,7 +30,7 @@ util.enumNext = function(str)
 	/* Count digits from the right that need to be changed */
 	for(c; c <= max; c++)
 	{
-		if(str.charCodeAt(max - c) + 1 % ('a'.charCodeAt(0)-1) > 'z'.charCodeAt(0))
+		if(str.charCodeAt(max - c) + 1 % ('z'.charCodeAt(0)-1) > 'z'.charCodeAt(0))
 			continue
 		else break 
 	}
@@ -64,13 +62,13 @@ util._enumNext = function(str, index)
 		code = "0".charCodeAt(0)
 	return code
 }
-util.paddLeft = function(str, ch, n)
-{
-	var ret = str
-	for(var c = 0; c < n - str.length; c++)
-	{
-		ret = ch + ret
-	}
-	return ret
-}
 
+util.write = function(str)
+{
+	document.getElementsByTagName('body')[0].innerHTML += '<textarea>' + str + '</textarea>'
+}
+util.alert = function(str)
+{
+	alert(str)
+}
+	util.write(util.enum('1', '10', 1, RegExp(/\w\w/)).join('|'))
