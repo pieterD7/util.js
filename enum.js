@@ -1,11 +1,26 @@
 /**
  * 
  */
-util.enum = function(from, to, step, regexp, opt)
+util.enum = function(from, to, opt)
 {
-	if(typeof step === 'undefined') var step = 1
-	if(typeof opt !== 'undefined' && typeof opt.useUppercase !== 'undefined')
+	if(typeof opt === 'undefined') var opt = {}
+
+	if(typeof opt.step === 'undefined') var step = 1
+	else
+		var step = opt.step
+		
+	if(typeof opt.regexp === 'object')
+		regexp = opt.regexp
+
+	if(typeof opt.useLowercase !== 'undefined')
+		util.enum.optUseLowercase = opt.useLowercase	
+		
+	if(typeof opt.useUppercase !== 'undefined')
 		util.enum.optUseUppercase = opt.useUppercase
+
+	if(typeof opt.useSpecial !== 'undefined')
+		util.enum.optUseSpecial = opt.useSpecial
+				
 	var ret = [from]
 	var max = from.length 
 	var s = from
@@ -24,7 +39,9 @@ util.enum = function(from, to, step, regexp, opt)
 	return ret
 }
 
-util.enum.optUseUppercase = false
+util.enum.optUseLowercase = false
+util.enum.optUseUppercase = true
+util.enum.optUseSpecial = false
 
 util.enum.enumNext = function(str)
 {
@@ -34,7 +51,22 @@ util.enum.enumNext = function(str)
 	/* Count digits from the right that need to be changed */
 	for(c; c <= max; c++)
 	{
-		if(str.charCodeAt(max - c) + 1 % ('z'.charCodeAt(0)-1) > ('z'.charCodeAt(0)))
+		if(util.enum.optUseSpecial)
+		{
+			if(str.charCodeAt(max - c) + 1 % ('~'.charCodeAt(0)-1) > ('~'.charCodeAt(0)))
+				continue
+		}	
+		else if(util.enum.optUseLowercase)
+		{
+			if(str.charCodeAt(max - c) + 1 % ('z'.charCodeAt(0)-1) > ('z'.charCodeAt(0)))
+				continue
+		}
+		else if(util.enum.optUseUppercase)
+		{
+			if(str.charCodeAt(max - c) + 1 % ('Z'.charCodeAt(0)-1) > ('Z'.charCodeAt(0)))
+				continue
+		}		
+		else if(str.charCodeAt(max - c) + 1 % ('9'.charCodeAt(0)-1) > ('9'.charCodeAt(0))) 
 			continue
 		 
 		break 
@@ -62,21 +94,55 @@ util.enum._enumNext = function(str, index)
 {
 	var code = str.charCodeAt(index) + 1
 
-	if(util.enum.optUseUppercase)
+	if(util.enum.optUseSpecial)
 	{
-		if(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0))
-			code += ("A".charCodeAt(0) - "9".charCodeAt(0) -1)
-		if(code > 'Z'.charCodeAt(0) && code < 'a'.charCodeAt(0))
-			code += ("a".charCodeAt(0) - "Z".charCodeAt(0)-1)
+		if(!util.enum.optUseLowercase)
+		{
+			if(code >= "a".charCodeAt(0) && code <= 'z'.charCodeAt(0))
+				code += ('z'.charCodeAt(0) - "a".charCodeAt(0))
+		}
+		if(!util.enum.optUseUppercase)
+		{
+			if(code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0))
+				code += ("Z".charCodeAt(0) - "A".charCodeAt(0))
+		}
+		if(code > "~".charCodeAt(0))
+			code = " ".charCodeAt(0)
 	}
 	else
 	{
-		if(code > '9'.charCodeAt(0) && code < 'a'.charCodeAt(0))
-			code += ("a".charCodeAt(0) - "9".charCodeAt(0) -1)
+		if(util.enum.optUseUppercase)
+		{
+			if(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0))
+				code += ("A".charCodeAt(0) - "9".charCodeAt(0) -1)
+			if(code > 'Z'.charCodeAt(0) && code < 'a'.charCodeAt(0))
+				code += ("a".charCodeAt(0) - "Z".charCodeAt(0)-1)
+		}
+		else if(util.enum.optUseLowercase)
+		{
+			if(code > '9'.charCodeAt(0) && code < 'a'.charCodeAt(0))
+				code += ("a".charCodeAt(0) - "9".charCodeAt(0) -1)
+		}
+		else
+		{
+			if(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0))
+				code += ("A".charCodeAt(0) - "9".charCodeAt(0) -1)			
+		}
+		if(util.enum.optUseLowercase)
+		{
+			if(code > "z".charCodeAt(0))
+				code = "0".charCodeAt(0)
+		}
+		else if(util.enum.optUseUppercase)
+		{
+			if(code > "Z".charCodeAt(0))
+				code = "0".charCodeAt(0)
+		}
+		else
+			if(code > "9".charCodeAt(0))
+				code = '0'.charCodeAt(0)
 	}
-	if(code > "z".charCodeAt(0))
-		code = "0".charCodeAt(0)
 	return code
 }
-
-//alert(util.enum('1', '10', 1, void(0), {useUppercase:false}).join('|'))
+//alert(util.enum.enumNext('1000AX'))
+alert(util.enum('1000AX', '1000BA', {step:1, useUppercase:true }).join('|'))
