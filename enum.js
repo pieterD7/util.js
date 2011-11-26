@@ -127,29 +127,24 @@ util.enum.enumPrev = function(str)
 	var c = 1
 	
 	/* Count digits from the right that need to be changed */
+	if(str.charCodeAt(str.length - 1) == '0'.charCodeAt(0))
 	for(c; c <= max; c++)
 	{
 		if(util.enum.optUseSpecial)
 		{
-			if(str.charCodeAt(max - c) + 1 % ('~'.charCodeAt(0)-1) > ('~'.charCodeAt(0)))
+			if(str.charCodeAt(max - c) - 1 % ('~'.charCodeAt(0)-1) == (' '.charCodeAt(0)))
 				continue
 		}	
-		else if(util.enum.optUseLowercase)
-		{
-			if(str.charCodeAt(max - c) + 1 % ('z'.charCodeAt(0)-1) > ('z'.charCodeAt(0)))
-				continue
-		}
 		else if(util.enum.optUseUppercase)
 		{
-			if(str.charCodeAt(max - c) + 1 % ('Z'.charCodeAt(0)-1) > ('Z'.charCodeAt(0)))
+			if(str.charCodeAt(max - c) % ('Z'.charCodeAt(0)-1) == ('0'.charCodeAt(0)))
 				continue
 		}		
-		else if(str.charCodeAt(max - c) + 1 % ('9'.charCodeAt(0)-1) > ('9'.charCodeAt(0))) 
+		else if(str.charCodeAt(max - c) - 1 % ('9'.charCodeAt(0)-1) == ('0'.charCodeAt(0))) 
 			continue
 		 
 		break 
 	}
-	
 	var ret = ''
 
 	/* Build answer from the left */	
@@ -172,6 +167,30 @@ util.enum.enumPrev = function(str)
 util.enum.enumAround = function(from, opt)
 {
 	var ret = []
+	if(util.isUndef(opt))
+	{
+		var opt = {n:2}
+	}
+	if(util.isUndef(opt.regexp))
+		opt.regexp = new RegExp()
+	
+	var fromP = from
+	var fromN = from
+	for(var c = 0; c < opt.n * 2; )
+	{
+		fromP = util.enum.enumPrev(fromP)
+		fromN = util.enum.enumNext(fromN)
+		if(fromP.match(opt.regexp))
+		{
+			c++
+			ret.push(fromP)
+		}
+		if(fromN.match(opt.regexp))
+		{
+			c++
+			ret.push(fromN)
+		}
+	}
 	return ret
 }
 
@@ -329,4 +348,4 @@ util.enum('1000', '1002').forEach(function(pnumber)
 	})
 })
 */
-//alert(util.enum.enumPrev('1000'))
+//alert(util.enum.enumAround('1009AB', {n:4, regexp:RegExp(/\d{4}[A-Z]{2}/)}))
