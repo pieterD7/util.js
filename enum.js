@@ -70,9 +70,29 @@ util.enum = function(from, to, opt)
 	return ret
 }
 
+/* @return Object */
+Array.prototype.enum = function(from, to, opt)
+{
+	var ret = {}
+	var c = 0
+	var e = util.enum(from, to, opt)
+	this.forEach(
+		function(p)
+		{
+			ret[p] = e[c++]
+		})
+	return ret
+}
+
 util.enum.optUseLowercase = false
 util.enum.optUseUppercase = true
 util.enum.optUseSpecial = false
+
+var optsPreserveFormat = ['noformat', 'preserveFormat', 'preserveLanguage'].enum(0, 2)
+util.enum.optPreserveFormat = optsPreserveFormat.preserveLanguage
+
+util.enum.vowels = 'aeiou'
+util.enum.consonants = 'bcdfghjklmnpqrstvwxyz'
 
 util.enum.enumNext = function(str)
 {
@@ -308,9 +328,8 @@ util.enum.isValid = function(from, to)
 	return true	
 }
 
-
 //Little card game setup
-
+/*
 var deck = []
 var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
 
@@ -334,12 +353,11 @@ util.enum('A', 'D')
 				{
 					var c = new util.struct([card], {kind:kind, name:n, value:n})
 					deck.push(c)
-					document.getElementsByTagName('body')[0].innerHTML += set[c.data.kind] + " " + c.data.name + ' ' 
 				}
 			)		
 	}
 )
-
+*/
 
 /*
 util.enum('1000', '1002').forEach(function(pnumber)
@@ -354,9 +372,14 @@ util.enum('1000', '1002').forEach(function(pnumber)
 	})
 })
 */
+
+//var o = Array('one', 'two', 'three').enum('A', 'C')
+//alert(o.three)
+
 /*
 Array('hatsikadee').forEach(function(word)
 {
 	document.getElementsByTagName('body')[0].innerHTML += util.enum.enumAround(word, {n:word.length*13, useUppercase:false, useLowercase:true, regexp:RegExp(/^[a-z]{1,}$/)}).join(" ")	
 })
 */
+
