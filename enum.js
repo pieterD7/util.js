@@ -12,9 +12,16 @@ util.enum = function(from, to, opt)
 	if(util.isNumber(from) && util.isNumber(to))
 	{
 		var ret = []
-		for(var c = from; c <= to; c += step)
+		for(var c = from; c <= to;)
 		{
 			ret.push(c)
+			if(!util.isUndef(opt.optEnumFlags) && opt.optEnumFlags)
+				if(c <= 1)
+					c++
+				else 
+					c += c
+			else
+				c += step
 		}
 		return ret
 	}	
@@ -75,6 +82,11 @@ Array.prototype.enum = function(from, to, opt)
 {
 	var ret = {}
 	var c = 0
+	if(util.isUndef(to) && util.isUndef(from))
+	{
+		from = 0
+		to = this.length - 1
+	}
 	var e = util.enum(from, to, opt)
 	this.forEach(
 		function(p)
@@ -87,8 +99,9 @@ Array.prototype.enum = function(from, to, opt)
 util.enum.optUseLowercase = false
 util.enum.optUseUppercase = true
 util.enum.optUseSpecial = false
+util.enum.optEnumFlags = false
 
-var optsPreserveFormat = ['noformat', 'preserveFormat', 'preserveLanguage'].enum(0, 2)
+var optsPreserveFormat = ['noformat', 'preserveFormat', 'preserveLanguage'].enum()
 util.enum.optPreserveFormat = optsPreserveFormat.preserveLanguage
 
 util.enum.vowels = 'aeiou'
