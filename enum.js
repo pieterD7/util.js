@@ -20,8 +20,15 @@ util.enum = function(from, to, opt)
 
 	if(typeof opt.useSpecial !== 'undefined')
 		util.enum.optUseSpecial = opt.useSpecial
-				
-	var ret = [from]
+	
+	var cb = false
+	if(typeof opt.onEnumNext === 'function')
+	{
+		cb = opt.onEnumNext
+		cb(from)
+	}
+	else
+		var ret = [from]
 	
 	if(!util.enum.isValid(from, to))
 		return ret
@@ -36,10 +43,20 @@ util.enum = function(from, to, opt)
 			if(s == to)
 				break
 			if(++c % step == 0 && (typeof regexp == 'undefined' || s.match(regexp)))
-				ret.push(s)
+				switch(cb)
+				{
+					case false:
+						ret.push(s)
+						break
+					default:
+						cb(s)
+				}
 		}
 		while(s != to)
-	ret.push(to)
+	if(!cb)		
+		ret.push(to)
+	else
+		cb(to)
 	return ret
 }
 
@@ -93,6 +110,10 @@ util.enum.enumNext = function(str)
 	}
 
 	return ret 
+}
+util.enum._enumPrev = function()
+{
+
 }
 util.enum._enumNext = function(str, index)
 {
@@ -161,25 +182,17 @@ util.enum.isValid = function(from, to)
 }
 
 /*
-var pobjects = []
-
 util.enum('1', '2').forEach(function(pnumber)
 {
-	util.enum(pnumber + '000AZ', pnumber + '000BA', {regexp:RegExp(/\d\d\d\d[A-Z]{2}/)})
-		.forEach(function(parea)
-			{
-				var pobj = new util.struct([String], {pcode:parea})
-				pobj.print = function()
-				{
-					alert(this.data.pcode)
-				}
-				pobjects.push(pobj)
-			})
+	util.enum(pnumber + '000AZ', pnumber + '000BA', 
+		{
+		regexp:RegExp(/\d\d\d\d[A-Z]{2}/),
+		onEnumNext:function(pcode)
+		{
+			alert(pcode)
+		}
+	})
 })
 
-pobjects.forEach(function(o)
-{
-	o.print()
-})
 */
 //alert(util.enum('1000AX', '1000BA').join('|'))
