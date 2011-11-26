@@ -12,7 +12,7 @@ util.enum = function(from, to, opt)
 	if(util.isNumber(from) && util.isNumber(to))
 	{
 		var ret = []
-		for(var c = from; c < to; c += step)
+		for(var c = from; c <= to; c += step)
 		{
 			ret.push(c)
 		}
@@ -104,6 +104,7 @@ util.enum.enumNext = function(str)
 	}
 	
 	var ret = ''
+		
 
 	/* Build answer from the left */	
 	ret = str.substring(0, max - c)		
@@ -173,7 +174,11 @@ util.enum.enumAround = function(from, opt)
 	}
 	if(util.isUndef(opt.regexp))
 		opt.regexp = new RegExp()
-	
+	if(!util.isUndef(opt.useUppercase))
+		util.enum.optUseUppercase = opt.useUppercase
+	if(!util.isUndef(opt.useLowercase))
+		util.enum.optUseLowercase = opt.useLowercase
+
 	var fromP = from
 	var fromN = from
 	for(var c = 0; c < opt.n * 2; )
@@ -305,7 +310,7 @@ util.enum.isValid = function(from, to)
 
 
 //Little card game setup
-/*
+
 var deck = []
 var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
 
@@ -329,11 +334,12 @@ util.enum('A', 'D')
 				{
 					var c = new util.struct([card], {kind:kind, name:n, value:n})
 					deck.push(c)
+					document.getElementsByTagName('body')[0].innerHTML += set[c.data.kind] + " " + c.data.name + ' ' 
 				}
 			)		
 	}
 )
-*/
+
 
 /*
 util.enum('1000', '1002').forEach(function(pnumber)
@@ -348,4 +354,9 @@ util.enum('1000', '1002').forEach(function(pnumber)
 	})
 })
 */
-//alert(util.enum.enumAround('1009AB', {n:4, regexp:RegExp(/\d{4}[A-Z]{2}/)}))
+/*
+Array('hatsikadee').forEach(function(word)
+{
+	document.getElementsByTagName('body')[0].innerHTML += util.enum.enumAround(word, {n:word.length*13, useUppercase:false, useLowercase:true, regexp:RegExp(/^[a-z]{1,}$/)}).join(" ")	
+})
+*/
