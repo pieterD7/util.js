@@ -159,4 +159,27 @@ util.enum.isValid = function(from, to)
 
 	return true	
 }
+
+/*
+var pobjects = []
+
+util.enum('1', '2').forEach(function(pnumber)
+{
+	util.enum(pnumber + '000AZ', pnumber + '000BA', {regexp:RegExp(/\d\d\d\d[A-Z]{2}/)})
+		.forEach(function(parea)
+			{
+				var pobj = new util.struct([String], {pcode:parea})
+				pobj.print = function()
+				{
+					alert(this.data.pcode)
+				}
+				pobjects.push(pobj)
+			})
+})
+
+pobjects.forEach(function(o)
+{
+	o.print()
+})
+*/
 //alert(util.enum('1000AX', '1000BA').join('|'))
