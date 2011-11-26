@@ -159,4 +159,4 @@ util.enum.isValid = function(from, to)
 
 	return true	
 }
-alert(util.enum('1000AX', '1000BA').join('|'))
+//alert(util.enum('1000AX', '1000BA').join('|'))
