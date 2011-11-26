@@ -22,6 +22,10 @@ util.enum = function(from, to, opt)
 		util.enum.optUseSpecial = opt.useSpecial
 				
 	var ret = [from]
+	
+	if(!util.enum.isValid(from, to))
+		return ret
+	
 	var max = from.length 
 	var s = from
 	var c = 0
@@ -144,5 +148,15 @@ util.enum._enumNext = function(str, index)
 	}
 	return code
 }
-//alert(util.enum.enumNext('1000AX'))
-alert(util.enum('1000AX', '1000BA', {step:1, useUppercase:true }).join('|'))
+util.enum.isValid = function(from, to)
+{
+	if(!util.enum.optUseLowercase && (to.match(/[a-z]/) || from.match(/[a-z]/)))
+		return false
+	if(!util.enum.optUseUppercase && (to.match(/[A-Z]/) || from.match(/[A-Z]/)))
+		return false
+	if(!util.enum.optUseSpecial && (to.match(/[\W]/) || from.match(/[\W]/)))
+		return false
+
+	return true	
+}
+alert(util.enum('1000AX', '1000BA').join('|'))
