@@ -17,11 +17,12 @@ var util = util || {
 	        
 	        /* core modules */
 	        'validations', 'number', 
+	        'struct', 'options',
 	        
 	        /* other modules */
 	        'http', 'io', 
 	        'date', 'time', 
-	        'struct',
+	        'enum',
 	        
 	        /* util proper */
 	        'util', 
