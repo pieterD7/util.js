@@ -60,6 +60,14 @@
 			})
 		})	
 
+	// example options:
+	option = ['optionFoo', 'optionBar', 'optionBaz'].enum()
+                    
+	config = util.struct([util.options], {value:0})
+
+	config.set([option.optionFoo])
+
+	config.get() & option.optionFoo
 ==================================================================================
 Copyright (C) 2011 by pieter@nr8.nl
 
