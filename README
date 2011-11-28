@@ -6,6 +6,18 @@
 	string formatting, number & currency formatting 
 	
 	Util proper is the two files validations.js and util.js 
+	
+	eg.
+==================================================================================	
+	<script type='text/javascript' src='pathToUtil/validations.js'></script>
+	<script type='text/javascript' src='pathToUtil/util.js'></script>
+==================================================================================	
+	
+	You can also use the full version by using the loader:
+
+==================================================================================	
+	<script type='text/javascript' src='pathToUtil/loader.js'></script>
+==================================================================================		
 
 	String formatting (util proper):
 	
@@ -16,6 +28,8 @@
 	5) Truncates to number of characters and tries to round up on space
 	6) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
 
+
+Examples:
 ==================================================================================	
 
 	document.ready(function() // If using the loader
