@@ -65,9 +65,10 @@
                     
 	config = util.struct([util.options], {value:0})
 
-	config.set([option.optionFoo])
+	config.set([option.optionFoo, !option.optionBar])
 
 	config.get() & option.optionFoo
+	
 ==================================================================================
 Copyright (C) 2011 by pieter@nr8.nl
 
