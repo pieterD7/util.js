@@ -47,6 +47,19 @@
 		var m = msg.toLimitedFormattedText.apply(d, [15])
 
 
+	// example enum:
+		util.enum('1000', '1002').forEach(function(pnumber)
+		{
+			util.enum(pnumber + 'AZ', pnumber + 'BB', 
+			{
+				regexp:RegExp(/\d{4}[A-Z]{2}/),
+				onEnumNext:function(pcode)
+				{
+					alert(pcode)
+				}
+			})
+		})	
+
 ==================================================================================
 Copyright (C) 2011 by pieter@nr8.nl
 
