@@ -60,6 +60,7 @@
 			})
 		})	
 
+
 	// example options:
 	option = ['optionFoo', 'optionBar', 'optionBaz'].enum()
                     
@@ -69,6 +70,39 @@
 
 	config.get() & option.optionFoo
 	
+
+
+	// example cardgame setup
+	var deck = []
+	var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
+	
+	function card()
+	{	
+		return this
+	}
+	card.prototype.display = function()
+	{
+		alert(set[this.data.kind].toString().toFirstCharUppercase() + " " + this.data.name)
+	}
+
+	util.enum('A', 'D')
+	 .forEach(
+		function(kind)
+		{
+			util.enum('AA', 'AD')
+			 .concat(util.enum(2, 10))
+				.forEach(
+					function(n)
+					{
+						var c = new util.struct([card], {kind:kind, name:n, value:n})
+						deck.push(c)
+						c.display()
+					}
+				)		
+		}
+	)
+	
+			
 ==================================================================================
 Copyright (C) 2011 by pieter@nr8.nl
 
