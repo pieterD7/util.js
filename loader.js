@@ -25,7 +25,7 @@ var util = util || {
 	        'enum',
 	        
 	        /* util proper */
-	        'util', 
+	        'util', 'array',
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 
