@@ -22,10 +22,10 @@ var util = util || {
 	        /* other modules */
 	        'http', 'io', 
 	        'date', 'time', 
-	        'enum',
+	        'enum', 'array',
 	        
 	        /* util proper */
-	        'util', 'array',
+	        'util', 
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 
