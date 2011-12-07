@@ -111,15 +111,6 @@ Array.prototype.enum = function(from, to, opt)
 util.enum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
                     'enumFlags', 'preserveFormat', 'preserveLanguage'].enum()
                     
-util.enum.config = util.struct([util.options], {value:0})
-
-util.enum.config.set([
-                    util.enum.option.preserveLanguage,
-                    util.enum.option.useUppercase,
-                    !util.enum.option.useLowercase,
-                    !util.enum.option.useSpecial,
-                    !util.enum.option.enumFlags])
-
 util.enum.vowels = 'aeiou'
 util.enum.consonants = 'bcdfghjklmnpqrstvwxyz'
 	
@@ -203,12 +194,8 @@ util.enum.enumPrev = function(str)
 	/* Add changed digits to the right */
 	for(; c > 0; c--)
 	{
-		if(c > max) ret += '0'
-		else
-		{
 			code = util.enum._enumPrev(str, max - c)
 			ret += String.fromCharCode(code)
-		}
 	}
 
 	return ret 	
@@ -362,6 +349,15 @@ util.enum.isValid = function(from, to)
 	return true	
 }
 
+document.ready(
+	function()
+	{
+		util.enum.config = util.struct([util.options], {value:0})
+		util.enum.config.set([
+			util.enum.option.preserveLanguage,
+		    util.enum.option.useUppercase])		
+	})
+
 //Little card game setup
 /*
 var deck = []
@@ -373,7 +369,7 @@ function card()
 }
 card.prototype.display = function()
 {
-	alert(set[this.data.kind] + " " + this.data.name)
+	alert(set[this.data.kind].toString().toFirstCharUppercase() + " " + this.data.name)
 }
 
 util.enum('A', 'D')
@@ -387,6 +383,7 @@ util.enum('A', 'D')
 				{
 					var c = new util.struct([card], {kind:kind, name:n, value:n})
 					deck.push(c)
+					c.display()
 				}
 			)		
 	}
@@ -416,4 +413,4 @@ Array('hatsikadee').forEach(function(word)
 	document.getElementsByTagName('body')[0].innerHTML += util.enum.enumAround(word, {n:word.length*13, useUppercase:false, useLowercase:true, regexp:RegExp(/^[a-z]{1,}$/)}).join(" ")	
 })
 */
-
+//alert(util.enum.enumPrev('0'))
