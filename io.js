@@ -5,7 +5,7 @@
 util.toJson = function(str)
 {
 	
-	var inp = new String(str)
+	var inp = new String(str).replace(/\n|\r|\t/)
 		inp = inp
 				.replace(/{\s*'/g, '{"')
 				.replace(/:\s*'/g, ':"')
@@ -31,7 +31,9 @@ Object.prototype.val = function(value)
 {
 	this.value = value
 }
-//alert(toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
+
+// TESTS
+//alert(util.toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
 
 //alert(util.toJson("{'name':'pieter's'}").name)
-//alert(toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)
+//alert(util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)
