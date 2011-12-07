@@ -99,7 +99,7 @@ var util = util || {
 		if(this.isObject(util.lang))
 		{
 			clearInterval(util._t)
-			while(cb = util._onloads.shift())
+			while(cb = util._onloads.pop())
 				this.onLoadCompleted(cb)
 		}
 	},
