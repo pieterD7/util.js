@@ -42,8 +42,36 @@ var util = util || {
                 			utilConfig.locale : 
                 				'en')),
              
-             'lang/nl/locale_nl', 'lang/nl/def_nl', 				
-                				
+            'lang/' + 
+            (	typeof utilConfig != 'undefined' && 
+                     typeof utilConfig.defLocale != 'undefined' ? 
+                         	utilConfig.defLocale : 
+                         	(typeof utilConfig.locale != 'undefined' ? 
+                         			utilConfig.locale : 
+                         				'en')) + 
+            '/locale_' + 
+            (	typeof utilConfig != 'undefined' && 
+            		 typeof utilConfig.defLocale != 'undefined' ? 
+            				 utilConfig.defLocale : 
+            				(typeof utilConfig.locale != 'undefined' ? 
+                             utilConfig.locale : 
+                             'en')), 
+
+             'lang/' + 
+             (	typeof utilConfig != 'undefined' && 
+            		 typeof utilConfig.defLocale != 'undefined' ? 
+            				 utilConfig.defLocale : 
+                             (typeof utilConfig.locale != 'undefined' ? 
+                             utilConfig.locale : 
+                            'en')) + 
+             '/def_' + 
+             (	typeof utilConfig != 'undefined' && 
+                      typeof utilConfig.defLocale != 'undefined' ? 
+                    		  utilConfig.defLocale : 
+                    	     (typeof utilConfig.locale != 'undefined' ? 
+                             utilConfig.locale : 
+                             'en')), 
+                             
              /* init language */   			
            	'lang/initLang',
            	
