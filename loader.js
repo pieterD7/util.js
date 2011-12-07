@@ -15,11 +15,9 @@ var util = util || {
 	/* modules */
 	_mods: [
 	        
-	        /* core modules */
+	        /* modules */
 	        'validations', 'number', 
 	        'struct', 'options',
-	        
-	        /* other modules */
 	        'http', 'io', 
 	        'date', 'time', 
 	        'enum', 'array',
