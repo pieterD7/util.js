@@ -44,14 +44,14 @@ var util = util || {
             (	typeof utilConfig != 'undefined' && 
                      typeof utilConfig.defLocale != 'undefined' ? 
                          	utilConfig.defLocale : 
-                         	(typeof utilConfig.locale != 'undefined' ? 
+                         	(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
                          			utilConfig.locale : 
                          				'en')) + 
             '/locale_' + 
             (	typeof utilConfig != 'undefined' && 
             		 typeof utilConfig.defLocale != 'undefined' ? 
             				 utilConfig.defLocale : 
-            				(typeof utilConfig.locale != 'undefined' ? 
+            				(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
                              utilConfig.locale : 
                              'en')), 
 
@@ -59,14 +59,14 @@ var util = util || {
              (	typeof utilConfig != 'undefined' && 
             		 typeof utilConfig.defLocale != 'undefined' ? 
             				 utilConfig.defLocale : 
-                             (typeof utilConfig.locale != 'undefined' ? 
+                             (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
                              utilConfig.locale : 
                             'en')) + 
              '/def_' + 
              (	typeof utilConfig != 'undefined' && 
                       typeof utilConfig.defLocale != 'undefined' ? 
                     		  utilConfig.defLocale : 
-                    	     (typeof utilConfig.locale != 'undefined' ? 
+                    	     (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
                              utilConfig.locale : 
                              'en')), 
                              
