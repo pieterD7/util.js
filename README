@@ -24,11 +24,13 @@
 	Introduction:
 
 	Because app interfaces are written for specific HTML5 browsers  
-	I felt the need to write a lightweight js lib (yes, another one, getting 
-	rid of all the HTML4 code lines and more for applications and certainly not
-	for the old way of doing pages in html).
-	I did this so far for the Android platform, but it shouldn't be hard
-	to extend to Safari or IE9 :)
+	I felt the need to write a lightweight js lib with page elements
+	rather than pages. The names have been taken from JQuery for desktops
+	and if you dive into the structure you can think of util.js in a Dojo-like
+	manner. It's a bit of modular and is made primarily for abstracting app 
+	natural language specific data structures, in short: for displaying text.
+	I've developed this so far for the Android platform, but it shouldn't be hard
+	to extend to other browsers.
 
 
 	Goals of util.js:
