@@ -1,6 +1,7 @@
 /**
  *  Written for the V8 engine
  */
+var util = util || {}
 String.prototype.isEmpty = function()
 {
 	return this.toString() == '' 

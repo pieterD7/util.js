@@ -219,11 +219,10 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 		for(var c = 0; c < l.length && limited.length + l[c].length < limit; c++)
 		{
 			if(c > 0) limited += ' '
-			{
+			
 				// replace dotspace with dot		
-				var ll = String(l[c]).replace(/\s\\./g, '.')	
-				limited += ll
-			}
+			var ll = String(l[c]).replace(/\s\\./g, '.')	
+			limited += ll
 		}
 	}
 	else
@@ -242,7 +241,7 @@ Object.prototype.addListener = function(event, cb)
 }
 
 //alert(util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
-//	.toLimitedFormattedText(230))
+//	.toLimitedFormattedText(23))
 
 //alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
 //	.toLimitedFormattedHTML(120))
