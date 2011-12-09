@@ -5,7 +5,7 @@
 util.toJson = function(str)
 {
 	
-	var inp = new String(str).replace(/\n|\r|\t/)
+	var inp = new String(str).replace(/\n|\r|\t/g, '')
 		inp = inp
 				.replace(/{\s*'/g, '{"')
 				.replace(/:\s*'/g, ':"')

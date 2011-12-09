@@ -49,9 +49,9 @@ util.ajax = function(obj)
 				if(util.isUndef(obj.dataType) || obj.dataType.match(/text/i))
 					obj.onSuccess(http.responseText)
 				else if(obj.dataType.match(/json/i))
-					obj.onSuccess(toJson(http.responseText))
+					obj.onSuccess(util.toJson(http.responseText))
 				else if(obj.dataType.match(/xml/i))
-					obj.onSuccess(toXml(http.responseText))
+					obj.onSuccess(util.toXml(http.responseText))
 		}
 		else if(http.readyState == 4)
 		{
