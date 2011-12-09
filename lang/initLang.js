@@ -44,7 +44,28 @@ util.getBestUserLang = function()
 util.initLang = function()
 {
 	var ulang = this.getBestUserLang()
-
+	ulang = utilConfig.defLocale
+	
+	if(util.isObject(util._lang[ulang]))
+	{	
+		/* this is only true if ulang eq utilConfig.defLocale 
+		 * because others need to be loaded yet */
+		strings =  _initLang(util._lang[ulang])
+		util.locale = util._locale[ulang]
+		util.defaultStrings = util._defaultStrings[ulang]
+		for(var i in strings)
+		{					
+			var o = _s(strings[i].sel) || 'store'
+			if(util.isUndef(strings[i].value) && o != 'store')
+				o.html(strings[i].html)
+				else if(o != 'store')
+					o.val(strings[i].value)
+				else if(o == 'store')
+				util.storeString(strings[i], ulang)
+		}	
+		util.lang = util._lang[ulang]
+	}	
+	
 	this.HttpStatus('lang/' + ulang + '/lang_' + ulang + '.js', 
 		function(stat)
 		{
@@ -52,36 +73,12 @@ util.initLang = function()
 			if(stat == 200)
 			{
 				
-				if(util.isObject(util._lang[ulang]))
-				{	
-					/* this is only true if ulang eq utilConfig.defLocale 
-					 * because others need to be loaded yet */
-					strings =  _initLang(util._lang[ulang])
-					util.locale = util._locale[ulang]
-					util.defaultStrings = util._defaultStrings[ulang]
-				}
-				else
 				{
 					ulang = 'en'
 					strings =  _initLang(util._lang['en'])
 					util.locale = util._locale['en']
 					util.defaultStrings = util._defaultStrings['en']					
 				}
-			}
-
-			if(stat != 0)
-			{
-				for(var i in strings)
-				{					
-					var o = _s(strings[i].sel) || 'store'
-					if(util.isUndef(strings[i].value) && o != 'store')
-						o.html(strings[i].html)
-						else if(o != 'store')
-							o.val(strings[i].value)
-						else if(o == 'store')
-						util.storeString(strings[i], ulang)
-				}	
-				util.lang = util._lang[ulang]
 			}
 		})
 }

@@ -103,9 +103,23 @@ var util = util || {
 	
 	initUtil: function()
 	{	
+		var base = ''
+		var url = ''
+		
+		var scripts = document.getElementsByTagName('script')
+		for(var c = 0; c < scripts.length; c++)
+		{
+			if(scripts[c].src.match(/loader/))
+				base = scripts[c].src
+		}
+		var bs = base.split('/')
+		for(var c = 0; c < bs.length - 1; c++)
+		{
+			url += bs[c] + '/'
+		}
 		for(var c = 0; c < util._mods.length; c++)
 		{
-			this.loadScript(util._mods[c])
+			this.loadScript(url + util._mods[c])
 		}
 		util._t = setInterval("util.waitForLoadCompleted();", 50)
 	},

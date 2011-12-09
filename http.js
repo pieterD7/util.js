@@ -55,7 +55,7 @@ util.ajax = function(obj)
 		}
 		else if(http.readyState == 4)
 		{
-			if(isFunction(obj.onError))
+			if(util.isFunction(obj.onError))
 				obj.onError({status:http.status})
 		}
 	}

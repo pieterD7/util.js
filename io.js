@@ -24,7 +24,10 @@ util.toXml = function(str)
 
 Object.prototype.html = function(html)
 {
-	this.innerHTML = html
+	if(!util.isUndef(this.innerHTML))
+		this.innerHTML = html
+	else
+		this.text = html
 }
 
 Object.prototype.val = function(value)
