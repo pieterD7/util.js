@@ -349,15 +349,24 @@ util.enum.isValid = function(from, to)
 	return true	
 }
 
-document.ready(
-	function()
-	{
-		util.enum.config = util.struct([util.options], {value:0})
-		util.enum.config.set([
-			util.enum.option.preserveLanguage,
-		    util.enum.option.useUppercase])		
-	})
-
+if(! navigator.userAgent.match(/Firefox/))
+{
+	util.enum.config = util.struct([util.options], {value:0})
+	util.enum.config.set([
+	     util.enum.option.preserveLanguage,
+	     util.enum.option.useUppercase])		
+}
+else{
+	document.ready(
+			function()
+			{
+				// FF needs this
+				util.enum.config = util.struct([util.options], {value:0})
+				util.enum.config.set([
+				     util.enum.option.preserveLanguage,
+				     util.enum.option.useUppercase])		
+			})
+}
 //Little card game setup
 /*
 var deck = []
