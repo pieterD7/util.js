@@ -84,45 +84,6 @@ util.unum = function(from, to, opt)
 	return ret
 }
 
-if(! ('forEach' in Array.prototype))
-{
-	Array.prototype.forEach = function(action)
-	{
-		for(var c = 0; c < this.length; c++)
-		{
-			if(c in this)
-			{
-				action(this[c])
-			}
-		}
-	}
-}
-
-/* @return Object */
-Array.prototype.unum = function(from, to, opt)
-{
-	var ret = {}
-	var c = 0
-	if(util.isUndef(to) && util.isUndef(from) || ( util.isUndef(to) && from == 1))
-	{
-		var opt = opt || {}
-		opt.optunumFlags = true
-		from = 1
-		to = Math.pow(this.length, 2)
-	}
-	else if(!util.isUndef(from) && util.isUndef(to) && from == 0)
-	{
-		to = this.length
-	}
-	var e = util.unum(from, to, opt)
-	this.forEach(
-		function(p)
-		{
-			ret[p] = e[c++]
-		})
-	return ret
-}
-
 util.unum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
                     'unumFlags', 'preserveFormat', 'preserveLanguage'].unum()
                     
@@ -386,7 +347,7 @@ else{
 }
 
 //Little card game setup
-
+/*
 function _init(){
 	var deck = []
 	var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
@@ -418,6 +379,8 @@ function _init(){
 	alert(deck[0] instanceof card)	
 }
 
+util.ready(function(){_init()})
+*/
 /*
 util.unum('1000', '1002').forEach(function(pnumber)
 {

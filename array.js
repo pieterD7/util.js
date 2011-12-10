@@ -40,5 +40,44 @@ Array.prototype.joinEach = function(id, sep)
 	})
 	return ret
 }
+if(! ('forEach' in Array.prototype))
+{
+	Array.prototype.forEach = function(action)
+	{
+		for(var c = 0; c < this.length; c++)
+		{
+			if(c in this)
+			{
+				action(this[c])
+			}
+		}
+	}
+}
+
+/* @return Object */
+Array.prototype.unum = function(from, to, opt)
+{
+	var ret = {}
+	var c = 0
+	if(util.isUndef(to) && util.isUndef(from) || ( util.isUndef(to) && from == 1))
+	{
+		var opt = opt || {}
+		opt.optunumFlags = true
+		from = 1
+		to = Math.pow(this.length, 2)
+	}
+	else if(!util.isUndef(from) && util.isUndef(to) && from == 0)
+	{
+		to = this.length
+	}
+	var e = util.unum(from, to, opt)
+	this.forEach(
+		function(p)
+		{
+			ret[p] = e[c++]
+		})
+	return ret
+}
+
 //alert([1, 2, 3, 3].unique().join())
 //alert([{name:'ik'},{name:'ik'}, {name:'pieter'}].unique('name').joinEach('name', '|'))
