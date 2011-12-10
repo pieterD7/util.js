@@ -152,3 +152,14 @@ Examples:
 	
 			
 ==END=============================================================================
+
+
+Util.js was tested on :
+
+- Android native browser
+- Chrome 15
+- Opera
+- Opera Mini
+- Firefox 8 
+- Safari 5
+- IE9
