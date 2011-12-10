@@ -95,13 +95,13 @@ Examples:
 		var m = msg.toLimitedFormattedText.apply(d, [15])
 
 
-	// example enum:
-		util.enum('1000', '1002').forEach(function(pnumber)
+	// example unum:
+		util.unum('1000', '1002').forEach(function(pnumber)
 		{
-			util.enum(pnumber + 'AZ', pnumber + 'BB', 
+			util.unum(pnumber + 'AZ', pnumber + 'BB', 
 			{
 				regexp:RegExp(/\d{4}[A-Z]{2}/),
-				onEnumNext:function(pcode)
+				onunumNext:function(pcode)
 				{
 					alert(pcode)
 				}
@@ -110,7 +110,7 @@ Examples:
 
 
 	// example options:
-	option = ['optionFoo', 'optionBar', 'optionBaz'].enum()
+	option = ['optionFoo', 'optionBar', 'optionBaz'].unum()
                     
 	config = util.struct([util.options], {value:0})
 
@@ -133,12 +133,12 @@ Examples:
 		alert(set[this.data.kind].toString().toFirstCharUppercase() + " " + this.data.name)
 	}
 
-	util.enum('A', 'D')
+	util.unum('A', 'D')
 	 .forEach(
 		function(kind)
 		{
-			util.enum('AA', 'AD')
-			 .concat(util.enum(2, 10))
+			util.unum('AA', 'AD')
+			 .concat(util.unum(2, 10))
 				.forEach(
 					function(n)
 					{
