@@ -129,14 +129,14 @@ var util = util || {
 		if(document.readyState == 'complete')
 		{
 			clearInterval(util._t)
-			this.initLang()
-			_t = setInterval("util.waitForLanguageLoaded();", 50)	
+			util.initLang()
+			util._t = setInterval("util.waitForLanguageLoaded();", 50)	
 		}		
 	},
 	
 	waitForLanguageLoaded: function()
 	{
-		if(this.isObject(util.lang))
+		if(util.isObject(util.lang))
 		{
 			clearInterval(util._t)
 			while(cb = util._onloads.pop())
