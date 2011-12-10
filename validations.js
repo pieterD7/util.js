@@ -14,7 +14,7 @@ util.isUndef = function(a)
 
 util.isObject = function(a)
 {
-	return typeof a === 'object'
+	return a instanceof Object
 }
 
 util.isString = function(a)
