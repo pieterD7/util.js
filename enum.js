@@ -378,7 +378,7 @@ function card()
 }
 card.prototype.display = function()
 {
-	alert(set[this.data.kind].toString().toFirstCharUppercase() + " " + this.data.name)
+	alert(String(set[this.kind]).toFirstCharUppercase() + " " + this.name)
 }
 
 util.enum('A', 'D')
@@ -390,15 +390,15 @@ util.enum('A', 'D')
 			.forEach(
 				function(n)
 				{
-					var c = new util.struct([card], {kind:kind, name:n, value:n})
+					var c = util.mixin(card, {kind:kind, name:n, value:n})
 					deck.push(c)
 					c.display()
 				}
 			)		
 	}
 )
+alert(deck[0] instanceof card)
 */
-
 /*
 util.enum('1000', '1002').forEach(function(pnumber)
 {
