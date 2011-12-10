@@ -142,7 +142,7 @@ Examples:
 				.forEach(
 					function(n)
 					{
-						var c = new util.struct([card], {kind:kind, name:n, value:n})
+						var c = util.mixin(card, {kind:kind, name:n, value:n})
 						deck.push(c)
 						c.display()
 					}
