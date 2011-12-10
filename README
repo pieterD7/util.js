@@ -66,7 +66,7 @@
 Examples:
 ==CODE============================================================================	
 
-	document.ready(function() // If using the loader
+	util.ready(function() // If using the loader
 	{
 		var msg = 'fits in as many words as possible when first word in string is shorter then limit'
 			.toLimitedFormattedHTML(23)
@@ -95,7 +95,7 @@ Examples:
 		var m = msg.toLimitedFormattedText.apply(d, [15])
 
 
-	// example unum:
+	// example enum:
 		util.unum('1000', '1002').forEach(function(pnumber)
 		{
 			util.unum(pnumber + 'AZ', pnumber + 'BB', 
