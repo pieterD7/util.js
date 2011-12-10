@@ -4,6 +4,7 @@
  */
 util.unum = function(from, to, opt)
 {
+	var ret = []	
 	if(util.isUndef(opt)) var opt = {}
 
 	if(isNaN(opt.step)) var step = 1
@@ -12,7 +13,6 @@ util.unum = function(from, to, opt)
 	
 	if(util.isNumber(from) && util.isNumber(to))
 	{
-		var ret = []
 		for(var c = from; c <= to;)
 		{
 			ret.push(c)
@@ -84,6 +84,20 @@ util.unum = function(from, to, opt)
 	return ret
 }
 
+if(! ('forEach' in Array.prototype))
+{
+	Array.prototype.forEach = function(action)
+	{
+		for(var c = 0; c < this.length; c++)
+		{
+			if(c in this)
+			{
+				action(this[c])
+			}
+		}
+	}
+}
+
 /* @return Object */
 Array.prototype.unum = function(from, to, opt)
 {
@@ -101,12 +115,12 @@ Array.prototype.unum = function(from, to, opt)
 		to = this.length
 	}
 	var e = util.unum(from, to, opt)
-	/*this.forEach(
+	this.forEach(
 		function(p)
 		{
 			ret[p] = e[c++]
 		})
-	*/return ret
+	return ret
 }
 
 util.unum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
@@ -368,37 +382,39 @@ else{
 				     util.unum.option.useUppercase])		
 			})
 }
+
 //Little card game setup
 /*
-var deck = []
-var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
+function _init(){
+	var deck = []
+	var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
 
-function card()
-{
-	return this
-}
-card.prototype.display = function()
-{
-	alert(String(set[this.kind]).toFirstCharUppercase() + " " + this.name)
-}
-
-util.unum('A', 'D')
- .forEach(
-	function(kind)
+	function card()
 	{
-		util.unum('AA', 'AD')
-		 .concat(util.unum(2, 10))
-			.forEach(
-				function(n)
-				{
-					var c = util.mixin(card, {kind:kind, name:n, value:n})
-					deck.push(c)
-					c.display()
-				}
-			)		
+		return this
 	}
-)
-alert(deck[0] instanceof card)
+	card.prototype.display = function()
+	{
+		alert(String(set[this.kind]).toFirstCharUppercase() + " " + this.name)
+	}
+	
+	util.unum('A', 'D').forEach(
+		function(kind)
+		{
+			util.unum('AA', 'AD')
+			 .concat(util.unum(2, 10))
+				.forEach(
+					function(n)
+					{
+						var c = util.mixin(card, {kind:kind, name:n, value:n})
+						deck.push(c)
+						c.display()
+					}
+				)		
+		}
+	)
+	alert(deck[0] instanceof card)	
+}
 */
 /*
 util.unum('1000', '1002').forEach(function(pnumber)
