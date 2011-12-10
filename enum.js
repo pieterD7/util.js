@@ -83,12 +83,6 @@ util.unum = function(from, to, opt)
 		ret.push(to)
 	return ret
 }
-
-util.unum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
-                    'unumFlags', 'preserveFormat', 'preserveLanguage'].unum()
-                    
-util.unum.vowels = 'aeiou'
-util.unum.consonants = 'bcdfghjklmnpqrstvwxyz'
 	
 util.unum.unumNext = function(str)
 {
@@ -325,26 +319,18 @@ util.unum.isValid = function(from, to)
 	return true	
 }
 
-if(! navigator.userAgent.match(/Firefox/))
-{
-	util.prepare(function(){
-		util.unum.config = util.struct([util.options], {value:0})
-		util.unum.config.set([
-		     util.unum.option.preserveLanguage,
-		     util.unum.option.useUppercase])
-	})
-}
-else{
-	document.ready(
-			function()
-			{
-				// FF needs this
-				util.unum.config = util.struct([util.options], {value:0})
-				util.unum.config.set([
-				     util.unum.option.preserveLanguage,
-				     util.unum.option.useUppercase])		
-			})
-}
+util.prepare(function(){
+	util.unum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
+	                   'unumFlags', 'preserveFormat', 'preserveLanguage'].unum()
+		                    
+	util.unum.vowels = 'aeiou'
+	util.unum.consonants = 'bcdfghjklmnpqrstvwxyz'
+
+	util.unum.config = util.struct([util.options], {value:0})
+	util.unum.config.set([
+	     util.unum.option.preserveLanguage,
+	     util.unum.option.useUppercase])
+})
 
 //Little card game setup
 /*
@@ -371,7 +357,7 @@ function _init(){
 					{
 						var c = util.mixin(card, {kind:kind, name:n, value:n})
 						deck.push(c)
-					//	c.display()
+						c.display()
 					}
 				)		
 		}
