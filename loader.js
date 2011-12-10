@@ -84,6 +84,8 @@ var util = util || {
 	/* pointer to timer */
 	_t:null,
 
+	_onprepare:[],
+	
 	/* array with functions to be called after load */
 	_onloads:[],
 	
@@ -139,6 +141,8 @@ var util = util || {
 		if(util.isObject(util.lang))
 		{
 			clearInterval(util._t)
+			while(cb = util._onprepare.pop())
+				this.onLoadCompleted(cb)
 			while(cb = util._onloads.pop())
 				this.onLoadCompleted(cb)
 		}
@@ -154,8 +158,12 @@ var util = util || {
 Object.prototype.ready = function(cb)
 {
 	if(document.readyState == 'complete')
-		onLoadCompleted(cb)
+		util.onLoadCompleted(cb)
 	else
 		util._onloads.push(cb)
+}
+Object.prototype.prepare = function(cb)
+{
+		util._onprepare.push(cb)
 }
 util.initUtil()

@@ -366,10 +366,12 @@ util.unum.isValid = function(from, to)
 
 if(! navigator.userAgent.match(/Firefox/))
 {
-	util.unum.config = util.struct([util.options], {value:0})
-	util.unum.config.set([
-	     util.unum.option.preserveLanguage,
-	     util.unum.option.useUppercase])		
+	util.prepare(function(){
+		util.unum.config = util.struct([util.options], {value:0})
+		util.unum.config.set([
+		     util.unum.option.preserveLanguage,
+		     util.unum.option.useUppercase])
+	})
 }
 else{
 	document.ready(
@@ -384,7 +386,7 @@ else{
 }
 
 //Little card game setup
-/*
+
 function _init(){
 	var deck = []
 	var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
@@ -408,14 +410,14 @@ function _init(){
 					{
 						var c = util.mixin(card, {kind:kind, name:n, value:n})
 						deck.push(c)
-						c.display()
+					//	c.display()
 					}
 				)		
 		}
 	)
 	alert(deck[0] instanceof card)	
 }
-*/
+
 /*
 util.unum('1000', '1002').forEach(function(pnumber)
 {
