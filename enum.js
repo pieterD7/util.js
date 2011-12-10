@@ -1,12 +1,13 @@
 /**
- * 
+ * For some weird and uncomprehendble reason IE9 stalls on 
+ * calling an enum an enum. So a unum was envisaged..
  */
-util.enum = function(from, to, opt)
+util.unum = function(from, to, opt)
 {
 	if(util.isUndef(opt)) var opt = {}
 
-	if(util.isUndef(opt.step)) var step = 1
-	else
+	if(isNaN(opt.step)) var step = 1
+	else 
 		var step = opt.step	
 	
 	if(util.isNumber(from) && util.isNumber(to))
@@ -15,7 +16,7 @@ util.enum = function(from, to, opt)
 		for(var c = from; c <= to;)
 		{
 			ret.push(c)
-			if(!util.isUndef(opt.optEnumFlags) && opt.optEnumFlags)
+			if(!util.isUndef(opt.optunumFlags) && opt.optunumFlags)
 				if(c <= 1)
 					c++
 				else 
@@ -33,23 +34,23 @@ util.enum = function(from, to, opt)
 
 	if(!util.isUndef(opt.useLowercase))
 		if(opt.useLowercase)
-			util.enum.config.set([util.enum.option.useLowercase])
+			util.unum.config.set([util.unum.option.useLowercase])
 		else
-			util.enum.config.set([!util.enum.option.useLowercase])
+			util.unum.config.set([!util.unum.option.useLowercase])
 		
 	if(!util.isUndef(opt.useUppercase))
 		if(opt.useUppercase)
-			util.enum.config.set([util.enum.option.useUppercase])
+			util.unum.config.set([util.unum.option.useUppercase])
 		else
-			util.enum.config.set([!util.enum.option.useUppercase])
+			util.unum.config.set([!util.unum.option.useUppercase])
 			
 	if(!util.isUndef(opt.useSpecial))
-		util.enum.optUseSpecial = opt.useSpecial
+		util.unum.optUseSpecial = opt.useSpecial
 	
 	var cb = false
-	if(util.isFunction(opt.onEnumNext))
+	if(util.isFunction(opt.onunumNext))
 	{
-		cb = opt.onEnumNext
+		cb = opt.onunumNext
 		cb(from)
 	}
 	else
@@ -57,7 +58,7 @@ util.enum = function(from, to, opt)
 		cb = null
 		var ret = [from]
 	}
-	if(!util.enum.isValid(from, to))
+	if(!util.unum.isValid(from, to))
 		return ret
 	
 	var max = from.length 
@@ -66,7 +67,7 @@ util.enum = function(from, to, opt)
 		do
 		{	
 			/* Take step times */
-			s = util.enum.enumNext(s)
+			s = util.unum.unumNext(s)
 			if(s == to)
 				break
 			if(++c % step == 0 && (typeof regexp == 'undefined' || s.match(regexp)))
@@ -84,14 +85,14 @@ util.enum = function(from, to, opt)
 }
 
 /* @return Object */
-Array.prototype.enum = function(from, to, opt)
+Array.prototype.unum = function(from, to, opt)
 {
 	var ret = {}
 	var c = 0
 	if(util.isUndef(to) && util.isUndef(from) || ( util.isUndef(to) && from == 1))
 	{
 		var opt = opt || {}
-		opt.optEnumFlags = true
+		opt.optunumFlags = true
 		from = 1
 		to = Math.pow(this.length, 2)
 	}
@@ -99,22 +100,22 @@ Array.prototype.enum = function(from, to, opt)
 	{
 		to = this.length
 	}
-	var e = util.enum(from, to, opt)
-	this.forEach(
+	var e = util.unum(from, to, opt)
+	/*this.forEach(
 		function(p)
 		{
 			ret[p] = e[c++]
 		})
-	return ret
+	*/return ret
 }
 
-util.enum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
-                    'enumFlags', 'preserveFormat', 'preserveLanguage'].enum()
+util.unum.option = ['useUppercase', 'useLowercase', 'useSpecial', 
+                    'unumFlags', 'preserveFormat', 'preserveLanguage'].unum()
                     
-util.enum.vowels = 'aeiou'
-util.enum.consonants = 'bcdfghjklmnpqrstvwxyz'
+util.unum.vowels = 'aeiou'
+util.unum.consonants = 'bcdfghjklmnpqrstvwxyz'
 	
-util.enum.enumNext = function(str)
+util.unum.unumNext = function(str)
 {
 	var max = str.length 
 	var c = 1
@@ -122,17 +123,17 @@ util.enum.enumNext = function(str)
 	/* Count digits from the right that need to be changed */
 	for(c; c <= max; c++)
 	{
-		if(util.enum.config.get() & util.enum.option.useSpecial)
+		if(util.unum.config.get() & util.unum.option.useSpecial)
 		{
 			if(str.charCodeAt(max - c) + 1 % ('~'.charCodeAt(0)-1) > ('~'.charCodeAt(0)))
 				continue
 		}	
-		else if(util.enum.config.get() & util.enum.option.useLowercase)
+		else if(util.unum.config.get() & util.unum.option.useLowercase)
 		{
 			if(str.charCodeAt(max - c) + 1 % ('z'.charCodeAt(0)-1) > ('z'.charCodeAt(0)))
 				continue
 		}
-		else if(util.enum.config.get() & util.enum.option.useUppercase)
+		else if(util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(str.charCodeAt(max - c) + 1 % ('Z'.charCodeAt(0)-1) > ('Z'.charCodeAt(0)))
 				continue
@@ -155,14 +156,14 @@ util.enum.enumNext = function(str)
 		if(c > max) ret += '0'
 		else
 		{
-			code = util.enum._enumNext(str, max - c)
+			code = util.unum._unumNext(str, max - c)
 			ret += String.fromCharCode(code)
 		}
 	}
 
 	return ret 
 }
-util.enum.enumPrev = function(str)
+util.unum.unumPrev = function(str)
 {
 	var max = str.length 
 	var c = 1
@@ -171,12 +172,12 @@ util.enum.enumPrev = function(str)
 	if(str.charCodeAt(str.length - 1) == '0'.charCodeAt(0))
 	for(c; c <= max; c++)
 	{
-		if(util.enum.config.get() & util.enum.option.useSpecial)
+		if(util.unum.config.get() & util.unum.option.useSpecial)
 		{
 			if(str.charCodeAt(max - c) - 1 % ('~'.charCodeAt(0)-1) == (' '.charCodeAt(0)))
 				continue
 		}	
-		else if(util.enum.config.get() & util.enum.option.useUppercase)
+		else if(util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(str.charCodeAt(max - c) % ('Z'.charCodeAt(0)-1) == ('0'.charCodeAt(0)))
 				continue
@@ -194,14 +195,14 @@ util.enum.enumPrev = function(str)
 	/* Add changed digits to the right */
 	for(; c > 0; c--)
 	{
-			code = util.enum._enumPrev(str, max - c)
+			code = util.unum._unumPrev(str, max - c)
 			ret += String.fromCharCode(code)
 	}
 
 	return ret 	
 }
 
-util.enum.enumAround = function(from, opt)
+util.unum.unumAround = function(from, opt)
 {
 	var ret = []
 	if(util.isUndef(opt))
@@ -212,20 +213,20 @@ util.enum.enumAround = function(from, opt)
 		opt.regexp = new RegExp()
 	if(!util.isUndef(opt.useUppercase))
 		if(opt.useUppercase)
-			util.enum.config.set([util.enum.option.useUppercase])
+			util.unum.config.set([util.unum.option.useUppercase])
 		else
-			util.enum.config.set([! util.enum.option.useUppercase])	
+			util.unum.config.set([! util.unum.option.useUppercase])	
 	if(!util.isUndef(opt.useLowercase))
 		if(opt.useLowercase)
-			util.enum.config.set([ util.enum.option.useLowercase])
+			util.unum.config.set([ util.unum.option.useLowercase])
 		else
-			util.enum.config.set([! util.enum.option.useLowercase])
+			util.unum.config.set([! util.unum.option.useLowercase])
 	var fromP = from
 	var fromN = from
 	for(var c = 0; c < opt.n * 2; )
 	{
-		fromP = util.enum.enumPrev(fromP)
-		fromN = util.enum.enumNext(fromN)
+		fromP = util.unum.unumPrev(fromP)
+		fromN = util.unum.unumNext(fromN)
 		if(fromP.match(opt.regexp))
 		{
 			c++
@@ -240,18 +241,18 @@ util.enum.enumAround = function(from, opt)
 	return ret
 }
 
-util.enum._enumPrev = function(str, index)
+util.unum._unumPrev = function(str, index)
 {
 	var code = str.charCodeAt(index) - 1
 
-	if(util.enum.config.get() & util.enum.option.useSpecial)
+	if(util.unum.config.get() & util.unum.option.useSpecial)
 	{
-		if(!util.enum.config.get() & util.enum.option.useLowercase)
+		if(!util.unum.config.get() & util.unum.option.useLowercase)
 		{
 			if(code >= "a".charCodeAt(0) && code <= 'z'.charCodeAt(0))
 				code -= ('z'.charCodeAt(0) - "a".charCodeAt(0))
 		}
-		if(!util.enum.config.get() & util.enum.option.useUppercase)
+		if(!util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0))
 				code -= ("Z".charCodeAt(0) - "A".charCodeAt(0))
@@ -261,14 +262,14 @@ util.enum._enumPrev = function(str, index)
 	}
 	else
 	{
-		if(util.enum.config.get() & util.enum.option.useUppercase)
+		if(util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0))
 				code -= ("A".charCodeAt(0) - "9".charCodeAt(0) -1)
 			if(code > 'Z'.charCodeAt(0) && code < 'a'.charCodeAt(0))
 				code -= ("a".charCodeAt(0) - "Z".charCodeAt(0)-1)
 		}
-		else if(util.enum.config.get() & util.enum.option.useLowercase)
+		else if(util.unum.config.get() & util.unum.option.useLowercase)
 		{
 			if(code > '9'.charCodeAt(0) && code < 'a'.charCodeAt(0))
 				code -= ("a".charCodeAt(0) - "9".charCodeAt(0) -1)
@@ -283,18 +284,18 @@ util.enum._enumPrev = function(str, index)
 	}
 	return code
 }
-util.enum._enumNext = function(str, index)
+util.unum._unumNext = function(str, index)
 {
 	var code = str.charCodeAt(index) + 1
 
-	if(util.enum.config.get() & util.enum.option.useSpecial)
+	if(util.unum.config.get() & util.unum.option.useSpecial)
 	{
-		if(!util.enum.config.get() & util.enum.option.useLowercase)
+		if(!util.unum.config.get() & util.unum.option.useLowercase)
 		{
 			if(code >= "a".charCodeAt(0) && code <= 'z'.charCodeAt(0))
 				code += ('z'.charCodeAt(0) - "a".charCodeAt(0))
 		}
-		if(!util.enum.config.get() & util.enum.option.useUppercase)
+		if(!util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0))
 				code += ("Z".charCodeAt(0) - "A".charCodeAt(0))
@@ -304,14 +305,14 @@ util.enum._enumNext = function(str, index)
 	}
 	else
 	{
-		if(util.enum.config.get() & util.enum.option.useUppercase)
+		if(util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0))
 				code += ("A".charCodeAt(0) - "9".charCodeAt(0) -1)
 			if(code > 'Z'.charCodeAt(0) && code < 'a'.charCodeAt(0))
 				code += ("a".charCodeAt(0) - "Z".charCodeAt(0)-1)
 		}
-		else if(util.enum.config.get() & util.enum.option.optUseLowercase)
+		else if(util.unum.config.get() & util.unum.option.optUseLowercase)
 		{
 			if(code > '9'.charCodeAt(0) && code < 'a'.charCodeAt(0))
 				code += ("a".charCodeAt(0) - "9".charCodeAt(0) -1)
@@ -321,12 +322,12 @@ util.enum._enumNext = function(str, index)
 			if(code > '9'.charCodeAt(0) && code < 'A'.charCodeAt(0))
 				code += ("A".charCodeAt(0) - "9".charCodeAt(0) -1)			
 		}
-		if(util.enum.config.get() & util.enum.option.useLowercase)
+		if(util.unum.config.get() & util.unum.option.useLowercase)
 		{
 			if(code > "z".charCodeAt(0))
 				code = "0".charCodeAt(0)
 		}
-		else if(util.enum.config.get() & util.enum.option.useUppercase)
+		else if(util.unum.config.get() & util.unum.option.useUppercase)
 		{
 			if(code > "Z".charCodeAt(0))
 				code = "0".charCodeAt(0)
@@ -337,13 +338,13 @@ util.enum._enumNext = function(str, index)
 	}
 	return code
 }
-util.enum.isValid = function(from, to)
+util.unum.isValid = function(from, to)
 {
-	if(!(util.enum.config.get() & util.enum.option.useLowercase) && (to.match(/[a-z]/) || from.match(/[a-z]/)))
+	if(!(util.unum.config.get() & util.unum.option.useLowercase) && (to.match(/[a-z]/) || from.match(/[a-z]/)))
 		return false
-	if(!(util.enum.config.get() & util.enum.option.useUppercase) && (to.match(/[A-Z]/) || from.match(/[A-Z]/)))
+	if(!(util.unum.config.get() & util.unum.option.useUppercase) && (to.match(/[A-Z]/) || from.match(/[A-Z]/)))
 		return false
-	if(!(util.enum.config.get() & util.enum.option.useSpecial) && (to.match(/[\W]/) || from.match(/[\W]/)))
+	if(!(util.unum.config.get() & util.unum.option.useSpecial) && (to.match(/[\W]/) || from.match(/[\W]/)))
 		return false
 
 	return true	
@@ -351,20 +352,20 @@ util.enum.isValid = function(from, to)
 
 if(! navigator.userAgent.match(/Firefox/))
 {
-	util.enum.config = util.struct([util.options], {value:0})
-	util.enum.config.set([
-	     util.enum.option.preserveLanguage,
-	     util.enum.option.useUppercase])		
+	util.unum.config = util.struct([util.options], {value:0})
+	util.unum.config.set([
+	     util.unum.option.preserveLanguage,
+	     util.unum.option.useUppercase])		
 }
 else{
 	document.ready(
 			function()
 			{
 				// FF needs this
-				util.enum.config = util.struct([util.options], {value:0})
-				util.enum.config.set([
-				     util.enum.option.preserveLanguage,
-				     util.enum.option.useUppercase])		
+				util.unum.config = util.struct([util.options], {value:0})
+				util.unum.config.set([
+				     util.unum.option.preserveLanguage,
+				     util.unum.option.useUppercase])		
 			})
 }
 //Little card game setup
@@ -381,12 +382,12 @@ card.prototype.display = function()
 	alert(String(set[this.kind]).toFirstCharUppercase() + " " + this.name)
 }
 
-util.enum('A', 'D')
+util.unum('A', 'D')
  .forEach(
 	function(kind)
 	{
-		util.enum('AA', 'AD')
-		 .concat(util.enum(2, 10))
+		util.unum('AA', 'AD')
+		 .concat(util.unum(2, 10))
 			.forEach(
 				function(n)
 				{
@@ -400,12 +401,12 @@ util.enum('A', 'D')
 alert(deck[0] instanceof card)
 */
 /*
-util.enum('1000', '1002').forEach(function(pnumber)
+util.unum('1000', '1002').forEach(function(pnumber)
 {
-	util.enum(pnumber + 'AZ', pnumber + 'BB', 
+	util.unum(pnumber + 'AZ', pnumber + 'BB', 
 		{
 		regexp:RegExp(/\d{4}[A-Z]{2}/),
-		onEnumNext:function(pcode)
+		onunumNext:function(pcode)
 		{
 			alert(pcode)
 		}
@@ -413,13 +414,13 @@ util.enum('1000', '1002').forEach(function(pnumber)
 })
 */
 
-//var o = Array('one', 'two', 'three').enum('A', 'C')
+//var o = Array('one', 'two', 'three').unum('A', 'C')
 //alert(o.three)
 
 /*
 Array('hatsikadee').forEach(function(word)
 {
-	document.getElementsByTagName('body')[0].innerHTML += util.enum.enumAround(word, {n:word.length*13, useUppercase:false, useLowercase:true, regexp:RegExp(/^[a-z]{1,}$/)}).join(" ")	
+	document.getElementsByTagName('body')[0].innerHTML += util.unum.unumAround(word, {n:word.length*13, useUppercase:false, useLowercase:true, regexp:RegExp(/^[a-z]{1,}$/)}).join(" ")	
 })
 */
-//alert(util.enum.enumPrev('0'))
+//alert(util.unum.unumPrev('0'))
