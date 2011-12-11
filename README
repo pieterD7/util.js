@@ -23,14 +23,12 @@
 	
 	Introduction:
 
-	Because app interfaces are written for specific HTML5 browsers  
-	I felt the need to write a lightweight js lib with page elements
-	rather than pages. The names have been taken from JQuery for desktops
-	and if you dive into the structure you can think of util.js in a Dojo-like
-	manner. It's a bit of modular and is made primarily for abstracting app 
-	natural language specific data structures, in short: for displaying text.
-	I've developed this so far for the Android platform, but it shouldn't be hard
-	to extend to other browsers.
+	Because app interfaces are written for specific HTML5 browsers  I felt the 
+	need to write a lightweight js lib with page elements rather than pages. The 
+	names have been taken from JQuery for desktops and if you dive into the 
+	structure you can think of util.js in a Dojo-like manner. It's a bit of 
+	modular and is made primarily for abstracting app natural language specific 
+	data structures, in short: for displaying text. 
 
 
 	Util.js was tested on :
@@ -38,7 +36,7 @@
 	- Android 2.2, 2.3.4 native browser
 	- Chrome 15
 	- Opera 11.60
-	- Opera Mini Simulator
+	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
 	- Firefox 8 
 	- Safari 5
@@ -70,7 +68,8 @@
 	4) Removes space before dot
 	5) Leaves abbreviations as they are
 	6) Truncates to number of characters and tries to round up on space
-	7) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
+	7) Adds an optional string or ' ...' (to the last open fitting tag) when the string 
+	   has been truncated
 
 
 	A note on IE9 compatible CSS selectors
