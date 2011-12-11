@@ -3,24 +3,6 @@
  *  written for the V8 engine
  */
 
-if(typeof sizzle === 'undefined')
-{
-	//@return Object
-	function _s(sel)
-	{
-		if(typeof sel === 'object')
-			return sel
-		return document.querySelector(sel)
-	}
-
-	//@return Array
-	function _sa(sel)
-	{
-		if(typeof sel === 'object')
-			return [].push(sel)
-		return document.querySelectorAll(sel)
-	}
-}
 
 //@return String
 util.trim = function(str, eraseAllSpace)

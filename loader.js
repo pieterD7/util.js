@@ -16,11 +16,12 @@ var util = util || {
 	_mods: [
 	        
 	        /* modules */
-	        'validations', 'number', 
+	        'array', 'validations', 
+	        'selector', 'number', 
 	        'struct', 'options',
 	        'http', 'io', 
 	        'date', 'time', 
-	        'enum', 'array',
+	        'enum',
 	        
 	        /* util proper */
 	        'util', 
