@@ -33,15 +33,25 @@
 	to extend to other browsers.
 
 
+	Util.js was tested on :
+
+	- Android 2.2, 2.3.4 native browser
+	- Chrome 15
+	- Opera 11.60
+	- Opera Mini Simulator
+	- Opera Mobile Emulator 11.5
+	- Firefox 8 
+	- Safari 5
+	- IE9
+
+
 	Goals of util.js:
 	
 	simple, easy to learn, lightweight, powerfull in an object oriented way,
 	specially made for apps, multiple languages & formats,
 	string formatting, number & currency formatting 
 	
-	Util proper is the two files validations.js and util.js 
-	
-	eg.
+	Util proper is the two files validations.js and util.js :
 ==CODE============================================================================	
 	<script type='text/javascript' src='pathToUtil/validations.js'></script>
 	<script type='text/javascript' src='pathToUtil/util.js'></script>
@@ -152,14 +162,3 @@ Examples:
 	
 			
 ==END=============================================================================
-
-
-Util.js was tested on :
-
-- Android native browser
-- Chrome 15
-- Opera
-- Opera Mini
-- Firefox 8 
-- Safari 5
-- IE9
