@@ -73,6 +73,16 @@
 	7) Adds an optional string or ' ...' (to the last open fitting tag) when the string has been truncated
 
 
+	A note on IE9 compatible CSS selectors
+	
+	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
+	write compatible selectors like:
+	
+	ul > li:nth-child(2)  (IE will fail)
+	ul > li:first-child + li (the same intention, but success with IE)
+
+	
+
 Examples:
 ==CODE============================================================================	
 
