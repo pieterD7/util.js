@@ -48,7 +48,7 @@ if(! ('forEach' in Array.prototype))
 		{
 			if(c in this)
 			{
-				action(this[c])
+				action(this[c], c)
 			}
 		}
 	}

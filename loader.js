@@ -78,7 +78,10 @@ var util = util || {
            	'lang/com_lang', 
            	
            	/* module for browsers */
-           	'display'
+           	'display',
+           	
+           	/* map functions */
+           	'map'
            ]
 	,
 

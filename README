@@ -101,7 +101,9 @@ Examples:
 		var res = 'average of &%'.format([1.5], 'precision:1', '&')
 
 	// handle input			
-		util.trim(null).isEmpty()
+		util.trim(null).isEmpty() // false
+		
+		util.isObject(null) // false
 
 	// no parser, just the ones builtin (json and xml)
 		util.toJson("[
