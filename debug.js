@@ -50,7 +50,8 @@ util.debug.log = function(err)
 	this.onError.forEach(
 		function(onErr)
 		{
-			onErr(
+			if(util.isFunction(onErr))
+				onErr(
 					document.location.pathname.split('/').slice(2).join('/'),
 					state, 
 					err)
