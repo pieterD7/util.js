@@ -5,7 +5,8 @@
 util.debug = {
 		
 	getAppState: function(){return 0},
-	msgContainerSel: null
+	msgContainerSel: null,
+	onError:[]
 }
 
 util.debug.setGetAppState = function(cb)
@@ -19,6 +20,13 @@ util.debug.setMsgContainerSel = function(str)
 	if(util.isString(str))
 		this.msgContainerSel = str
 }
+
+util.debug.setOnError = function(cb)
+{
+	if(util.isFunction(cb))
+		this.onError.push(cb)
+}
+
 
 util.debug.log = function(err)
 {
@@ -35,5 +43,11 @@ util.debug.log = function(err)
 				document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
 				state + '<br/>' + 
 				'<i>' + err + '</i></div>'
-			)	
+			)
+			
+	this.onError.forEach(
+		function(onErr)
+		{
+			onErr()
+		})
 }
