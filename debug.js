@@ -33,21 +33,26 @@ util.debug.log = function(err)
 	var state = 0
 	if(util.isFunction(util.debug.getAppState))
 		state = util.debug.getAppState()
+	
+	var htmlstr = '<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
+	'<div class="debugMsgText">' + util.defaultStrings.debugMsg + '<br/>' + 
+	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
+	state + '<br/>' + 
+	'<i>' + err + '</i></div>'	
 		
 	if(! util.isUndef(util.debug.msgContainerSel) &&
 		_s(util.debug.msgContainerSel))
 		_s(util.debug.msgContainerSel)
 			.html(
-				'<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
-				'<div class="debugMsgText">' + util.defaultStrings.debugMsg + '<br/>' + 
-				document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
-				state + '<br/>' + 
-				'<i>' + err + '</i></div>'
+				htmlstr
 			)
 			
 	this.onError.forEach(
 		function(onErr)
 		{
-			onErr()
+			onErr(
+					document.location.pathname.split('/').slice(2).join('/'),
+					state, 
+					err)
 		})
 }
