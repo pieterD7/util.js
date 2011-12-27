@@ -16,15 +16,16 @@ var util = util || {
 	_mods: [
 	        
 	        /* modules */
+	        'debug',
 	        'array', 'validations', 
 	        'selector', 'number', 
 	        'struct', 'options',
 	        'http', 'io', 
 	        'date', 'time', 
-	        'enum',
+	        'enum', 'combobox',
 	        
 	        /* util proper */
-	        'util', 
+	        'util', 'jsjbridge',
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 
@@ -110,12 +111,11 @@ var util = util || {
 	initUtil: function()
 	{	
 		var base = ''
-		var url = ''
-		
+		url = ''
 		var scripts = document.getElementsByTagName('script')
 		for(var c = 0; c < scripts.length; c++)
 		{
-			if(scripts[c].src.match(/loader/))
+			if(String(scripts[c].src).match(/loader/))
 				base = scripts[c].src
 		}
 		var bs = base.split('/')
@@ -126,7 +126,7 @@ var util = util || {
 		for(var c = 0; c < util._mods.length; c++)
 		{
 			this.loadScript(url + util._mods[c])
-		}
+		}		
 		util._t = setInterval("util.waitForLoadCompleted();", 50)
 	},
 	
@@ -135,6 +135,7 @@ var util = util || {
 		if(document.readyState == 'complete')
 		{
 			clearInterval(util._t)
+
 			util.initLang()
 			util._t = setInterval("util.waitForLanguageLoaded();", 50)	
 		}		
@@ -143,7 +144,7 @@ var util = util || {
 	waitForLanguageLoaded: function()
 	{
 		if(util.isObject(util.lang))
-		{
+		{	
 			clearInterval(util._t)
 			while(cb = util._onprepare.pop())
 				this.onLoadCompleted(cb)
@@ -155,7 +156,15 @@ var util = util || {
 	onLoadCompleted: function(cb)
 	{
 		if(typeof cb === 'function')
-			cb()
+		{
+			try{
+				cb()				
+			}
+			catch(err)
+			{
+				
+			}
+		}
 	}
 }
 
@@ -171,3 +180,4 @@ Object.prototype.prepare = function(cb)
 		util._onprepare.push(cb)
 }
 util.initUtil()
+
