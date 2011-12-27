@@ -87,6 +87,12 @@ Examples:
 
 	util.ready(function() // If using the loader
 	{
+		util.debug.setGetAppState(function()
+		{
+			return 'state=' + state + ', abo=' + abo;
+		})
+		util.debug.setMsgContainerSel('.info')
+	
 		var msg = 'fits in as many words as possible when first word in string is shorter then limit'
 			.toLimitedFormattedHTML(23)
 			
