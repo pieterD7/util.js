@@ -16,7 +16,7 @@ var util = util || {
 	_mods: [
 	        
 	        /* modules */
-	        'debug',
+	        'debug', 'langbar', 
 	        'array', 'validations', 
 	        'selector', 'number', 
 	        'struct', 'options',
@@ -108,6 +108,24 @@ var util = util || {
 		document.getElementsByTagName('head')[0].appendChild(s)
 	},
 	
+	getBaseUrl : function()
+	{
+		var base = ''
+			url = ''
+			var scripts = document.getElementsByTagName('script')
+			for(var c = 0; c < scripts.length; c++)
+			{
+				if(String(scripts[c].src).match(/loader/))
+					base = scripts[c].src
+			}
+			var bs = base.split('/')
+			for(var c = 0; c < bs.length - 1; c++)
+			{
+				url += bs[c] + '/'
+			}
+		return url
+	},
+	
 	initUtil: function()
 	{	
 		var base = ''
@@ -162,7 +180,7 @@ var util = util || {
 			}
 			catch(err)
 			{
-				
+				util.debug.log(err)
 			}
 		}
 	}

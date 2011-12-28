@@ -1,7 +1,7 @@
 
 	Obtain a copy of the source at http://github.com/pieterhoekstra/util.js/
 
-	Copyright (C) 2011 by pieter@nr8.nl
+	Copyright (C) 2011 by pieter@nr8.nl and Loginet B.V. The Netherlands
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 	
 	Introduction:
 
-	Because app interfaces are written for specific HTML5 browsers  I felt the 
+	Because app interfaces are written for specific HTML5 browsers I felt the 
 	need to write a lightweight js lib with page elements rather than pages. The 
 	names have been taken from JQuery for desktops and if you dive into the 
 	structure you can think of util.js in a Dojo-like manner. It's a bit of 
@@ -59,6 +59,12 @@
 	
 	You can also use the full version by using the loader:
 ==CODE============================================================================	
+	<script type="text/javascript">
+	var utilConfig = {
+		defLocale: 'en',
+		locales: ['it', 'nl']
+	}
+	</script>
 	<script type='text/javascript' src='pathToUtil/loader.js'></script>
 ==END=============================================================================		
 
