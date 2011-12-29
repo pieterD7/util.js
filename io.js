@@ -44,9 +44,9 @@ HTMLElement.prototype.appendChild = function(o)
 	this.node.appendChild(o)
 }
 
-HTMLElement.prototype.setAttribute = function(str)
+HTMLElement.prototype.setAttribute = function(attr, str)
 {
-	this.node.setAttribute(str)
+	this.node.setAttribute(attr, str)
 }
 
 util.createElement = function(type)
