@@ -104,6 +104,7 @@ var util = util || {
 	{
 		var s = document.createElement('script')
 		s.setAttribute('src', fileName + '.js')
+		s.setAttribute('charset', 'UTF-8');
 		s.setAttribute('type', 'text/javascript')
 		document.getElementsByTagName('head')[0].appendChild(s)
 	},
