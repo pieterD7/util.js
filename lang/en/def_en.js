@@ -4,6 +4,10 @@
 
 util._defaultStrings.en = 
 {
+	debugHeader : "An error occurred :",
+	debugMsg : "Something didn't work out as we expected." +
+			"You can <a href='javascript:void(0)'>send</a> this error message: ",		
+
 	year: 		{s:'year',p:'+s'},
 	month:		{s:'month',p:'+s'},
 	week: 		{s:'week',p:'+s'},
