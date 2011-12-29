@@ -40,8 +40,8 @@ util.langbar.selectLang = function(iso_code)
 			{					
 				var o = _s(strings[i].sel) || 'store'
 				if(util.isUndef(strings[i].value) && o != 'store')
-					if(typeof o.html === 'function')
-						o.html(strings[i].html)
+					if(typeof o.setHtml === 'function')
+						o.setHtml(strings[i].html)
 					else if(o != 'store')
 						if(typeof o.val === 'function')
 							o.val(strings[i].value)
@@ -65,7 +65,7 @@ util.langbar.selectLang = function(iso_code)
 
 util.langbar.update = function()
 {
-	_s(this.sel).html('')
+	_s(this.sel).setHtml('')
 	util.langbar.display(this.sel)
 }
 
@@ -81,11 +81,11 @@ util.langbar.display = function(sel)
 			{
 				var sep = document.createElement('span')
 				sep.setAttribute('class', 'space')
-				var item = document.createElement('a')
+				var item = util.createElement('a')
 				item.setAttribute('class', 'langLink')
 				item.setAttribute('href', "javascript:util.langbar.selectLang('" + lang.iso_code + "')")
-				item.html(String(lang.label).toFirstCharUppercase())
-				sep.appendChild(item)
+				item.setHtml(String(lang.label).toFirstCharUppercase())
+				sep.appendChild(item.node)
 				_s(sel).appendChild(sep)
 			}
 		})

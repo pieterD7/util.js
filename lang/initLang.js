@@ -2,6 +2,7 @@
  * 
  */
 util.lang = ''
+util.curLang = ''
 
 String.prototype.format = function(ar, as, char)
 {
@@ -38,18 +39,32 @@ util.getBestUserLang = function()
 	    else if ( navigator.systemLanguage ) {
 	        return navigator.systemLanguage;
 	    }
-	    return ''
+	    return 'en'
 }
 
 util.initLang = function()
 {
-	var ulang = this.getBestUserLang()
+	var ulang = this.getBestUserLang()	
 	ulang = utilConfig.defLocale
+	var url = util.getBaseUrl()
+	
+	var locales = utilConfig.locales ? utilConfig.locales : []
+	locales.forEach(function(iso_code)
+	{
+		var s = url + 'lang/' + iso_code + '/' + 'lang_' + iso_code 
+		util.loadScript(s)
+		s = url + 'lang/' + iso_code + '/' + 'def_' + iso_code
+		util.loadScript(s)
+		s = url + 'lang/' + iso_code + '/' + 'locale_' + iso_code
+		util.loadScript(s)		
+		
+	})
 	
 	if(util.isObject(util._lang[ulang]))
 	{	
 		/* this is only true if ulang eq utilConfig.defLocale 
 		 * because others need to be loaded yet */
+		util.curLang = ulang
 		strings =  _initLang(util._lang[ulang])
 		util.locale = util._locale[ulang]
 		util.defaultStrings = util._defaultStrings[ulang]
@@ -57,9 +72,11 @@ util.initLang = function()
 		{					
 			var o = _s(strings[i].sel) || 'store'
 			if(util.isUndef(strings[i].value) && o != 'store')
-				o.html(strings[i].html)
+					if(typeof o.setHtml === 'function')
+						o.setHtml(strings[i].html)
 				else if(o != 'store')
-					o.val(strings[i].value)
+					if(typeof o.val === 'function')
+						o.val(strings[i].value)
 				else if(o == 'store')
 				util.storeString(strings[i], ulang)
 		}	

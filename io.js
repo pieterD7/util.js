@@ -21,20 +21,52 @@ util.toXml = function(str)
    var xml = p.parseFromString(str, "text/xml");
    return xml;
 }
-
-Object.prototype.html = function(html)
+/* IE doesn't allow prototype extensions for the 
+ * built in Object so we need a crossbrowser workaround.
+ * */
+function HTMLElement(o)
 {
-	if(!util.isUndef(this.innerHTML))
+	this.node = o
+	return this
+}
+/*
+ * Could not use JQuery name (html) because 
+ * of conflicts with IE
+ * */
+HTMLElement.prototype.setHtml = function(html)
+{
+	if(this.node && !String(this.node.tagName).match(/TITLE/i))
+		this.node.innerHTML = html
+}
+
+HTMLElement.prototype.appendChild = function(o)
+{
+	this.node.appendChild(o)
+}
+
+HTMLElement.prototype.setAttribute = function(str)
+{
+	this.node.setAttribute(str)
+}
+
+util.createElement = function(type)
+{
+	return new HTMLElement(document.createElement(type))
+}
+/* 
+Object.prototype.setHtml = function(html)
+{
+	if(!String(this.tagName).match(/TITLE/i))
 		this.innerHTML = html
 	else
-		this.text = html
+		this.nodeValue = html
 }
 
 Object.prototype.val = function(value)
 {
 	this.value = value
 }
-
+*/
 // TESTS
 //alert(util.toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
 

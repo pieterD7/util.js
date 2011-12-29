@@ -2,13 +2,13 @@
  * 
  */
 
-//@return Object
+//@return Object or HTMLElement
 function _s(sel)
 {
 	if(typeof sel === 'object')
 		return sel
 	else if(typeof sel === 'string')
-		return document.querySelector(sel)
+		return new HTMLElement(document.querySelector(sel))
 }
 	
 //@return Array

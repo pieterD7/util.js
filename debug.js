@@ -35,15 +35,15 @@ util.debug.log = function(err)
 		state = util.debug.getAppState()
 	
 	var htmlstr = '<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
-	'<div class="debugMsgText">' + util.defaultStrings.debugMsg + '<br/>' + 
+	'<div class="debugMsgText">' + util.defaultStrings.debugMsg.toFormattedText() + '<br/>' + 
 	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
 	state + '<br/>' + 
 	'<i>' + err + '</i></div>'	
-		
-	if(! util.isUndef(util.debug.msgContainerSel) &&
+
+	if(util.isString(util.debug.msgContainerSel) &&
 		_s(util.debug.msgContainerSel))
 		_s(util.debug.msgContainerSel)
-			.html(
+			.setHtml(
 				htmlstr
 			)
 			
