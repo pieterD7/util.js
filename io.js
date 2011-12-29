@@ -44,9 +44,36 @@ HTMLElement.prototype.appendChild = function(o)
 	this.node.appendChild(o)
 }
 
+HTMLElement.prototype.removeChild = function(o)
+{
+	this.node.removeChild(o)
+}
+
+HTMLElement.prototype.addListener = function(evnt, l)
+{
+	this.node.addListener(evnt, l)
+}
+
+HTMLElement.prototype.val = function(v)
+{
+	if(!util.isUndef(v))	
+		this.node.value = v
+	return this.node.value
+}
+
 HTMLElement.prototype.setAttribute = function(attr, str)
 {
 	this.node.setAttribute(attr, str)
+}
+
+HTMLElement.prototype.focus = function()
+{
+	this.node.focus()
+}
+
+HTMLElement.prototype.reset = function()
+{
+	this.node.reset()
 }
 
 util.createElement = function(type)
