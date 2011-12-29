@@ -8,7 +8,14 @@ function _s(sel)
 	if(typeof sel === 'object')
 		return sel
 	else if(typeof sel === 'string')
-		return new HTMLElement(document.querySelector(sel))
+	{
+		var e = document.querySelector(sel)
+		if(e)
+		{
+			return new HTMLElement(e)	
+		}
+	}
+	return 
 }
 	
 //@return Array
