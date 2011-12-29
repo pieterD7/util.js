@@ -9,6 +9,16 @@ util.langbar =
 	onUpdate:[]
 }
 
+util.langbar.hasLanguage = function(iso_code)
+{
+	this.langs.forEach(function(lang)
+	{
+		if(lang.iso_code == iso_code)
+			return true;
+	})
+	return false
+}
+
 util.langbar.setOnUpdate = function(cb)
 {
 	if(util.isFunction(cb))
@@ -31,7 +41,8 @@ util.langbar.setLanguages = function(ar)
 util.langbar.selectLang = function(iso_code)
 {
 	try{
-		if(util.isString(iso_code))
+		if( util.isString(iso_code) && 
+			util.langbar.hasLanguage(iso_code))
 		{
 			strings =  _initLang(util._lang[iso_code])
 			util.locale = util._locale[iso_code]
