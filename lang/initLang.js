@@ -69,16 +69,14 @@ util.initLang = function()
 		util.locale = util._locale[ulang]
 		util.defaultStrings = util._defaultStrings[ulang]
 		for(var i in strings)
-		{					
+		{			
 			var o = _s(strings[i].sel) || 'store'
-			if(util.isUndef(strings[i].value) && o != 'store')
-					if(typeof o.setHtml === 'function')
-						o.setHtml(strings[i].html)
-				else if(o != 'store')
-					if(typeof o.val === 'function')
-						o.val(strings[i].value)
+				if(strings[i].html && o != 'store')
+					o.setHtml(strings[i].html)
+				else if(strings[i].value)
+					o.val(strings[i].value)
 				else if(o == 'store')
-				util.storeString(strings[i], ulang)
+					util.storeString(strings[i], ulang)
 		}	
 		util.lang = util._lang[ulang]
 	}	
