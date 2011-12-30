@@ -11,12 +11,13 @@ util.langbar =
 
 util.langbar.hasLanguage = function(iso_code)
 {
+	var ret = false
 	this.langs.forEach(function(lang)
 	{
 		if(lang.iso_code == iso_code)
-			return true;
+			ret = true;
 	})
-	return false
+	return ret
 }
 
 util.langbar.setOnUpdate = function(cb)
