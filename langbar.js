@@ -49,14 +49,12 @@ util.langbar.selectLang = function(iso_code)
 			util.locale = util._locale[iso_code]
 			util.defaultStrings = util._defaultStrings[iso_code]
 			for(var i in strings)
-			{					
+			{			
 				var o = _s(strings[i].sel) || 'store'
-				if(util.isUndef(strings[i].value) && o != 'store')
-					if(typeof o.setHtml === 'function')
+					if(strings[i].html && o != 'store')
 						o.setHtml(strings[i].html)
-					else if(o != 'store')
-						if(typeof o.val === 'function')
-							o.val(strings[i].value)
+					else if(strings[i].value)
+						o.val(strings[i].value)
 					else if(o == 'store')
 						util.storeString(strings[i], iso_code)
 			}	
