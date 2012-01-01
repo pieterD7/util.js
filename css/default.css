@@ -1,0 +1,57 @@
+.debugMsgHeader			{
+						margin-top:20px;
+						background:#ff8800;
+						color:white;
+						font-weight:bold;
+						padding:4px;
+						}	
+.debugMsgText
+						{
+						padding:4px;
+						}
+.datePickerContainer	{
+						padding-right:4px;
+						}						
+.datePickerBackground	{
+						background:white;
+						border:1px solid #808080;
+						padding:4px;
+						min-width:17.5em;
+						}
+.datePickerHeaderDay
+						{
+						float:left;
+						background:#f7f7f7;
+						font-weight:bold;
+						}						
+.datePickerSelector		{
+						float:left;
+						width:100%;
+						padding-top:4px;
+						padding-bottom:4px;
+						text-align:center;
+						border: 2px solid #ff8800;
+						}												
+div.datePickerSelector:nth-child(7)
+						{
+						text-align:right;
+						}	
+.datePickerDay			{
+						width: 2em;
+						float:left;
+						text-align:center;
+						border: 1px solid white;
+						}
+.datePickerDay:hover:not(.datePickerHeaderDay)
+						{
+						border: 1px solid #ff8800;
+						cursor:pointer;
+						}							
+.datePickerDayBreak		{
+						clear:left;
+						float:left;
+						border-right: 1px solid #808080;
+						}
+.datePickerSelectedDay	{
+						border: 1px solid red;
+						}	
