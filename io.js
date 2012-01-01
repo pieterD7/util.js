@@ -61,6 +61,13 @@ HTMLElement.prototype.val = function(v)
 	return this.node.value
 }
 
+HTMLElement.prototype.style = function(style)
+{
+	if(util.isString(style))
+		this.node.setAttribute('style', style)
+	return this.node.style
+}
+
 HTMLElement.prototype.setAttribute = function(attr, str)
 {
 	this.node.setAttribute(attr, str)
@@ -74,6 +81,26 @@ HTMLElement.prototype.focus = function()
 HTMLElement.prototype.reset = function()
 {
 	this.node.reset()
+}
+
+HTMLElement.prototype.addClassName = function(className)
+{
+	var na = []
+	var str = ''
+	var _names = this.node.getAttribute('class')
+	if(_names)
+	{
+		na = _names.split(' ')
+	}
+	na.forEach(function(name)
+	{
+		str += '.' + name 
+	})
+	if(!String(str).match(RegExp('.' + className)))
+	{
+		var class_ = na.join(' ') + ' ' + className
+		this.node.setAttribute('class', class_)
+	}
 }
 
 util.createElement = function(type)

@@ -80,6 +80,13 @@
 	   has been truncated
 
 
+	HTML5 datePicker:
+	
+	If you add the datepicker module to the loader, it will add datePicker behaviour
+	to any html input tag with the attribute 'type' set to 'date'. The module is dependant
+	on the date module and, to a lesser extend, on the current util.locale.
+	
+
 	A note on IE9 compatible CSS selectors
 	
 	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
@@ -147,7 +154,7 @@ Examples:
 	// example options:
 	option = ['optionFoo', 'optionBar', 'optionBaz'].unum()
                     
-	config = util.struct([util.options], {value:0})
+	config = new util.struct([util.options], {value:0})
 
 	config.set([option.optionFoo, !option.optionBar])
 

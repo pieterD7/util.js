@@ -44,7 +44,7 @@ util.debug.log = function(err)
 		_s(util.debug.msgContainerSel))
 		_s(util.debug.msgContainerSel)
 			.setHtml(
-				htmlstr
+					htmlstr
 			)
 			
 	this.onError.forEach(
@@ -57,3 +57,10 @@ util.debug.log = function(err)
 					err)
 		})
 }
+util.prepare(function()
+{
+	if(utilConfig.debug)
+	{
+		util.debug.setMsgContainerSel('div')
+	}	
+})

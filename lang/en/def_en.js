@@ -8,6 +8,9 @@ util._defaultStrings.en =
 	debugMsg : "Something didn't work out as we expected." +
 			"You can <a href='javascript:void(0)'>send</a> this error message: ",		
 
+	error:{
+		error_create_database_instance: "Error opening database"},	
+
 	year: 		{s:'year',p:'+s'},
 	month:		{s:'month',p:'+s'},
 	week: 		{s:'week',p:'+s'},
@@ -32,26 +35,22 @@ util._defaultStrings.en =
 	month11: 'november',
 	month12: 'december',
 
-	month1short: 'jan',
-	month2short: 'feb',
-	month3short: 'mrt',
-	month4short: 'april',
-	month5short: 'may',
-	month6short: 'jun',
-	month7short: 'jul',
-	month8short: 'aug',
-	month9short: 'sept',
-	month10short: 'oct',
-	month11short: 'nov',
-	month12short: 'dec',	
-	
-	day1short: 'su',
-	day2short: 'mo',
-	day3short: 'tu',
-	day4short: 'we',
-	day5short: 'th',
-	day6short: 'fr',
-	day7short: 'sa',
+	monthsshort: ['jan','feb','mrt',
+	              'april','mei','jun',
+	              'jul','aug','sept',
+	              'okt','nov','dec'],
+
+  	holidays:{
+		cities:{leiden:{_3oct:"leiden's ontzet"}},
+		easter:'pasen',
+		christmas: 'kerst',
+		ascension: 'hemelvaart',
+		pentecost: 'pinksteren',
+		liberationday:'bevrijdingsdag',
+		queensday:'koninginnedag',
+		jan1:'nieuwjaarsdag'},	              
+	              
+	daysshort:['mo','tu','we','th','fr','sa', 'su'],
 	
 	day1: 'sunday',
 	day2: 'monday',

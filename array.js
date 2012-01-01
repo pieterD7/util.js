@@ -79,5 +79,16 @@ Array.prototype.unum = function(from, to, opt)
 	return ret
 }
 
+Object.prototype.forEach = function(cb)
+{
+	if(util.isFunction(cb))
+	{
+		for(var c = 0; c < this.length; c++)
+		{
+			cb(this[c])
+		}
+	}
+}
+
 //alert([1, 2, 3, 3].unique().join())
 //alert([{name:'ik'},{name:'ik'}, {name:'pieter'}].unique('name').joinEach('name', '|'))

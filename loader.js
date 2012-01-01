@@ -9,6 +9,8 @@ var util = util || {
 	
 	_defaultStrings: [],
 	
+	_bankholidays: [],
+	
 	/* regional formats */
 	_locale: [],
 	
@@ -71,15 +73,32 @@ var util = util || {
                     	     (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
                              utilConfig.locale : 
                              'en')), 
+
+                             
+              'lang/' + (	typeof utilConfig != 'undefined' && 
+            		 typeof utilConfig.defLocale != 'undefined' ? 
+            				 utilConfig.defLocale : 
+                             (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
+                             utilConfig.locale : 
+                            'en')) + 
+              
+              
+              '/bank_holidays_' +                               
+              	(	typeof utilConfig != 'undefined' && 
+                        typeof utilConfig.defLocale != 'undefined' ? 
+                               utilConfig.defLocale : 
+                               (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
+                                utilConfig.locale : 
+                                'en')),                             
                              
              /* init language */   			
-           	'lang/initLang',
+           	'lang/initLang', 'lang/bank_holidays',
            	
            	/* App language blueprint*/
            	'lang/com_lang', 
            	
            	/* module for browsers */
-           	'display',
+           	'display', 'datepicker',
            	
            	/* map functions */
            	'map'

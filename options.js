@@ -13,7 +13,7 @@ util.options.prototype.set = function(ops)
 		this.data.value |= ops[c]
 	}
 }
-util.options.prototype.get = function()
+util.options.prototype.get = function(flag)
 {
-	return this.data.value
+	return this.data.value & flag
 }

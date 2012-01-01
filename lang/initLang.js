@@ -1,7 +1,7 @@
 /**
  * 
  */
-util.lang = ''
+util.lang = null
 util.curLang = ''
 
 String.prototype.format = function(ar, as, char)
@@ -57,7 +57,8 @@ util.initLang = function()
 		util.loadScript(s)
 		s = url + 'lang/' + iso_code + '/' + 'locale_' + iso_code
 		util.loadScript(s)		
-		
+		s = url + 'lang/' + iso_code + '/bank_holidays_' + iso_code
+		util.loadScript(s)
 	})
 	
 	if(util.isObject(util._lang[ulang]))
@@ -79,6 +80,7 @@ util.initLang = function()
 					util.storeString(strings[i], ulang)
 		}	
 		util.lang = util._lang[ulang]
+		util.bankholidays = util._bankholidays[ulang]
 	}	
 	
 	this.HttpStatus('lang/' + ulang + '/lang_' + ulang + '.js', 
