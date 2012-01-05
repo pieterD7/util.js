@@ -4,6 +4,14 @@
 
 var util = util || {
 
+	error: function(err)
+	{
+		var e = Error(err)
+		this.message = err
+		this.stack = (e.stack && !e.stacktrace?e.stack:(e.stacktrace?e.stacktrace:''))
+		return this
+	},
+	
 	/* translations */
 	_lang: [],
 	
@@ -25,6 +33,7 @@ var util = util || {
 	        'http', 'io', 
 	        'date', 'time', 
 	        'enum', 'combobox',
+	        'event', 
 	        
 	        /* util proper */
 	        'util', 'jsjbridge',
@@ -101,7 +110,7 @@ var util = util || {
            	'display', 'datepicker',
            	
            	/* map functions */
-           	'map'
+           	'map', 'geohash',
            ]
 	,
 
