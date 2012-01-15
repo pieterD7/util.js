@@ -3,10 +3,10 @@
  * 
  */
 
-util.crumb = function(langId, cb, n){
+util.crumb = function(langId, cb){
 	this.langId = langId
 	this.call = cb
-	this.n = n
+	this.n = null
 	this.display = function()
 	{
 		return "<a 	class='crumb' " +
@@ -28,7 +28,10 @@ util.crumbs.setSel = function(sel)
 util.crumbs.push = function(crumb)
 {
 	if(crumb instanceof util.crumb)
+	{
+		crumb.n = this._crumbs.length
 		this._crumbs.push(crumb)
+	}
 }
 
 util.crumbs.pop = function(crumb)
