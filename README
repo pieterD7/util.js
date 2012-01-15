@@ -105,7 +105,7 @@
 ==CODE===========================================================================
 	// Push 'home' breadcrumb
 	// 'home' is a langId, eg. util.lang.home and util._lang['en'].home
-	util.crumbs.push(new util.crumb('home', clientResume, util.crumbs._crumbs.length))
+	util.crumbs.push(new util.crumb('home', clientResume))
 	// Assign selector
 	util.crumbs.setSel('#crumbs')
 
