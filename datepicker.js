@@ -3,26 +3,54 @@
  */
 
 util.datePicker = {
-		dPickers:[]
+	dPickers:[],
+	dataFormat:'YYYY-MM-DD',
+	flags:[],
+	options:null
 }
 
-function _datePicker(inp)
+util.prepare(function()
 {
-	this.node = inp
-	this.value = null
-	this.date = null
-	this.format = null
-	this.state = 'closed'
-}
+	util.datePicker.init()
+})
 
-_datePicker.prototype.valueToDate = function()
+util.ready(function()
 {
-	this.date = new Date(this.node.value)
-	this.value = 0
-	this.format = util.locale.datePickerDateFormat
+	util.datePicker.options.set(
+		[util.datePicker.flags.expand]
+	)
+	util.datePicker.initInputTypeDate()
+})
+
+util.datePicker.init = function()
+{
+	this.flags = 
+	['expand',	// Drop down list or click to increment/decrement
+	 'incrementworkday', // Only valid without expand, skips holidays on increment with showholidays
+	 'showholidays', // Show holidays in dropdown, eg of util.holidays.list 
+     'expandvalueonfocus', // Expand node values to format on focus eg not on load
+     'expandtoholidayformat',	// Expand to util.locale.datePickerHolidayFormat
+	 'expandenabledrag'	// Enables dropdown list to be scrolled by dragging on mobile devices
+	  ].unum()
+	this.options = new util.struct([util.options], {value:0})
 }
 
-_datePicker.prototype.displayWeeks = function()
+util._datePicker = function()
+{
+	return this
+}
+
+util._datePicker.prototype.valueToDate = function()
+{
+	var val = String(this.data.node.value)
+	this.data.date = new Date(val)
+	if( isNaN(this.data.date.getMonth()))
+		throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
+	this.data.value = 0
+	this.data.format = util.locale.datePickerDateFormat
+}
+
+util._datePicker.prototype.displayWeeks = function()
 {
 	var ret = util.createElement('div')
 	ret.addClassName('datePickerContainer')
@@ -34,7 +62,7 @@ _datePicker.prototype.displayWeeks = function()
 	{
 		selectVal.hide()
 	})	
-	div.setHtml(this.date.format(util.locale.datePickerDateFormat).toUpperCase())
+	div.setHtml(this.data.date.format(util.locale.datePickerDateFormat).toUpperCase())
 	ret.appendChild(div.node)
 	
 	ret.appendChild(div.node)
@@ -64,9 +92,9 @@ _datePicker.prototype.displayWeeks = function()
 			else if(cc > 0)
 			{
 				dd.addClassName('datePickerDaySelect')
-				var offset =(c-1)*7+cc-this.date.getDay()-7
+				var offset =(c-1)*7+cc-this.data.date.getDay()-7
 				dd.setHtml(
-						new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()+offset)
+						new Date(this.data.date.getFullYear(), this.data.date.getMonth(), this.data.date.getDate()+offset)
 					.getDate())
 				if(offset == 0)
 				{
@@ -77,7 +105,7 @@ _datePicker.prototype.displayWeeks = function()
 			else 
 			{
 				dd.addClassName('datePickerDaySelect datePickerDayBreak')
-				dd.setHtml(new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()+(c-1)*7).getWeek(1))
+				dd.setHtml(new Date(this.data.date.getFullYear(), this.data.date.getMonth(), this.data.date.getDate()+(c-1)*7).getWeek(1))
 				d.appendChild(dd.node)
 			}
 		}
@@ -86,27 +114,27 @@ _datePicker.prototype.displayWeeks = function()
 	return ret.node
 }
 
-_datePicker.prototype.display = function()
+util._datePicker.prototype.display = function()
 {
-	this.state = 'open'
-	var pos = util.getCumulativeOffset(this.node)
+	this.data.state = 'open'
+	var pos = util.getCumulativeOffset(this.data.node)
 	var div = util.createElement('div')
 
 	div.setHtml('')
 	div.appendChild(this.displayWeeks())
 	div.style("position:absolute;left:" + pos.x + "px;top:" + pos.y + 
-			"px;width:" + document.defaultView.getComputedStyle(this.node,"").getPropertyValue("width") +
-			";min-height:" + document.defaultView.getComputedStyle(this.node,"").getPropertyValue("height") + 
+			"px;width:" + document.defaultView.getComputedStyle(this.data.node,"").getPropertyValue("width") +
+			";min-height:" + document.defaultView.getComputedStyle(this.data.node,"").getPropertyValue("height") + 
 			";");
 	div.setAttribute('class', 'datePickerBackground')
 	_s('body').appendChild(div.node)
 }
 
-_datePicker.prototype.hide = function()
+util._datePicker.prototype.hide = function()
 {
-	this.state = 'closed'
+	this.data.state = 'closed'
 	_s('body').node.removeChild(_s('body').node.lastChild)
-	this.node.setAttribute('style', 'display:inline;')
+	this.data.node.setAttribute('style', 'display:inline;')
 }
 
 util.datePicker.initInputTypeDate = function()
@@ -114,53 +142,57 @@ util.datePicker.initInputTypeDate = function()
 	var inps = _sa('input[type=date]')
 	inps.forEach(function(obj)
 	{
-		var dp = new _datePicker(obj)
-		dp.value = obj.value
+		var options = new util.struct([util.options], {value:util.datePicker.options.data.value})
+		var dp = new util.struct(
+			[util._datePicker], 
+			{	node:obj, 
+				value:obj.value,
+				state:'closed', 
+				date:null, 
+				options:options,
+				format:util.locale.datePickerDateFormat,
+				formatshort:util.locale.datePickerDateFormatShort})
+		
 		dp.valueToDate()
-		dp.format = util.locale.datePickerDateFormat
-		if(!String(obj.value).isEmpty())
-			obj.value = dp.date.format(dp.format).toUpperCase()
+		if(	!String(obj.value).isEmpty() && 
+			dp.data.options.get(util.datePicker.flags.expand) && 
+			!dp.data.options.get(util.datePicker.flags.expandonfocus))
+			obj.value = dp.data.date.format(dp.data.format).toUpperCase()
 		util.datePicker.dPickers.push(dp)
 		obj.setAttribute('rel', util.datePicker.dPickers.length)
-		
-		inps[0].addListener('click', function()
+
+		obj.addListener('blur', function()
 		{
-			try
+			var my = this
+			util.eventHandler(function()
 			{
-				var d = this.getAttribute('rel')
+				var d = my.getAttribute('rel')
 				var dp = util.datePicker.dPickers[d-1]
 
-				if(dp.state == 'closed')
+				if(dp.data.state == 'open')
 				{
-					if(String(dp.node.value).isEmpty())
+					dp.hide()
+				}								
+			})
+		})
+		obj.addListener('focus', function()
+		{
+			var my = this
+			util.eventHandler(function()
+			{
+				var d = my.getAttribute('rel')
+				var dp = util.datePicker.dPickers[d-1]
+
+				if(dp.data.state == 'closed')
+				{
+					if(String(dp.data.value).isEmpty())
 					{
-						dp.date = new Date()
+						dp.data.date = new Date()
 						
 					}
 					dp.display()
 				}
-				else
-				{
-					dp.hide()
-				}
-
-			}
-			catch(err)
-			{
-				util.debug.log(err)
-			}
-
+			})
 		})
 	})
 }
-
-util.prepare(function()
-{
-	try{
-		util.datePicker.initInputTypeDate()
-	}
-	catch(err)
-	{
-		util.debug.log(err)
-	}	
-})

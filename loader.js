@@ -8,7 +8,7 @@ var util = util || {
 	{
 		var e = Error(err)
 		this.message = err
-		this.stack = (e.stack && !e.stacktrace?e.stack:(e.stacktrace?e.stacktrace:''))
+		this.stack = (e.stack && !e.stacktrace?e.stack:(e.stacktrace?e.stacktrace:err))
 		return this
 	},
 	
@@ -32,7 +32,7 @@ var util = util || {
 	        'struct', 'options',
 	        'http', 'io', 
 	        'date', 'time', 
-	        'enum', 'combobox',
+	        'unum', 'combobox',
 	        'event', 
 	        
 	        /* util proper */
@@ -107,7 +107,8 @@ var util = util || {
            	'lang/com_lang', 
            	
            	/* module for browsers */
-           	'display', 'datepicker',
+           	'display', 'datePicker', 
+           	'crumbs', 
            	
            	/* map functions */
            	'map', 'geohash',
@@ -158,22 +159,11 @@ var util = util || {
 	initUtil: function()
 	{	
 		var base = ''
-		url = ''
-		var scripts = document.getElementsByTagName('script')
-		for(var c = 0; c < scripts.length; c++)
-		{
-			if(String(scripts[c].src).match(/loader/))
-				base = scripts[c].src
-		}
-		var bs = base.split('/')
-		for(var c = 0; c < bs.length - 1; c++)
-		{
-			url += bs[c] + '/'
-		}
+		url = util.getBaseUrl()
 		for(var c = 0; c < util._mods.length; c++)
 		{
 			this.loadScript(url + util._mods[c])
-		}		
+		}
 		util._t = setInterval("util.waitForLoadCompleted();", 50)
 	},
 	
@@ -184,6 +174,13 @@ var util = util || {
 			clearInterval(util._t)
 
 			util.initLang()
+			util._mods.forEach(function(m)
+			{
+				if(typeof util[m] == 'object')
+					if(typeof util[m]._init == 'function')
+						util[m]._init()
+			})
+			
 			util._t = setInterval("util.waitForLanguageLoaded();", 50)	
 		}		
 	},

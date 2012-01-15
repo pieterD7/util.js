@@ -36,7 +36,7 @@ util.ajax = function(obj)
 			vars += i + '=' + obj.data[i] + '&'
 		}
 	}
-	if(method.match(/GET/i))
+	if(method.match(/GET/i) && vars)
 	{
 		url += '?' + vars
 	}
@@ -55,9 +55,11 @@ util.ajax = function(obj)
 		}
 		else if(http.readyState == 4)
 		{
+
 			if(util.isFunction(obj.onError))
 				obj.onError({status:http.status})
 		}
+
 	}
 	if(method.match(/GET/i))
 	{

@@ -13,7 +13,7 @@ function _s(sel)
 			return new HTMLElement(e)	
 		}
 	}
-	return 
+	return new HTMLElement()
 }
 	
 //@return Array

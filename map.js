@@ -17,8 +17,8 @@ util.toDirection = function(orgLng, orgLat, targetLng, targetLat)
 	var dif_lat = targetLat - orgLat;
 	var dif_long =  targetLng - orgLng;
 
-	dif_long2 = 180 + orgLng - targetLng;
-	dif_long3 = -180 + orgLng - targetLng; 
+	var dif_long2 = 180 + orgLng - targetLng;
+	var dif_long3 = -180 + orgLng - targetLng; 
 
 	if(Math.abs(dif_long3) < Math.abs(dif_long2) && (Math.abs(dif_long3) < Math.abs(dif_long)))
 		dif_lng = dif_long3;

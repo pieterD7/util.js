@@ -4,9 +4,28 @@
 
 util.debug = {
 		
-	getAppState: function(){return 0},
+	getAppState: function()
+	{
+		var ret = ''
+		var n = 0
+		util._mods.forEach(function(mod)
+		{
+			if(util.isObject(util[mod]) && util.isObject(util[mod].options))
+			{
+				if(!n++ == 0)
+					ret += ', ' 
+				ret += 'opt_' + mod + '=' + util[mod].options.data.value
+			}
+		})
+		return ret
+	},
 	msgContainerSel: null,
-	onError:[]
+	onError:[],
+	_init: function()
+	{
+		if(utilConfig.debug)
+			util.debug.setMsgContainerSel('div')		
+	}
 }
 
 util.debug.setGetAppState = function(cb)
@@ -38,7 +57,7 @@ util.debug.log = function(err)
 	'<div class="debugMsgText">' + util.defaultStrings.debugMsg.toFormattedText() + '<br/>' + 
 	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
 	state + '<br/>' + 
-	'<i>' + err + '</i></div>'	
+	'<pre>' + err.stack + '</pre></div>'	
 
 	if(util.isString(util.debug.msgContainerSel) &&
 		_s(util.debug.msgContainerSel))
@@ -57,10 +76,4 @@ util.debug.log = function(err)
 					err)
 		})
 }
-util.prepare(function()
-{
-	if(utilConfig.debug)
-	{
-		util.debug.setMsgContainerSel('div')
-	}	
-})
+

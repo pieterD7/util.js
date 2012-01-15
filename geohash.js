@@ -3,11 +3,6 @@
 // (c) 2008 David Troy
 // Distributed under the MIT License
 
-util.prepare(function()
-{
-	util.geohash._init()
-})
-
 util.geohash = 
 {
 		BITS : [16, 8, 4, 2, 1],
@@ -23,8 +18,7 @@ util.geohash =
 						bottom : { even : "028b" } },
 
 		_init : function()
-		{
-						
+		{						
 			this.NEIGHBORS.bottom.odd = this.NEIGHBORS.left.even
 			this.NEIGHBORS.top.odd = this.NEIGHBORS.right.even
 			this.NEIGHBORS.left.odd = this.NEIGHBORS.bottom.even
@@ -79,7 +73,7 @@ util.geohash.decodeGeoHash = function(geohash) {
 	lat[2] = (lat[0] + lat[1])/2;
 	lon[2] = (lon[0] + lon[1])/2;
 
-	return { latitude: lat, longitude: lon};
+	return { latitude: lat[1], longitude: lon[1]};
 }
 
 util.geohash.encodeGeoHash = function(latitude, longitude) {
@@ -122,3 +116,75 @@ util.geohash.encodeGeoHash = function(latitude, longitude) {
 	}
 	return geohash;
 }
+/*
+ * 	public function enumBetweenGeoHashes($srcHash, $destHash, $n = 2, $chars = 5)
+	{
+
+		if(!isset($srcHash))
+			return;
+		
+		if($srcHash == $destHash)
+		{
+			return $srcHash;
+		}	
+			
+		$hash = substr($srcHash, 0, $chars);
+		$hash2 = substr($destHash, 0, $chars);
+		$dpos = $this->decode($hash2);		
+
+		$hashes = array();
+		$_ha = array($hash);
+		$h = $hash;
+		for($c = 0; $c < 500; $c++)
+		{	
+			$pos = $this->decode($h);
+			$dir = $this->toDirection($pos[1],$pos[0], $dpos[1], $dpos[0]);
+
+			if($n > 0)
+			{
+				foreach($this->dirs as $dd)
+				{
+					$hh = $this->calculateAdjacent($h, $dd);
+					if(!in_array($hh, $this->seas))
+						$_ha[] = $hh;
+				}
+			}
+			else 
+			{
+				$hh = $this->calculateAdjacent($h, $dir);
+					if(!in_array($hh, $this->seas))
+						$_ha[] = $hh;
+			}
+			$hn = $this->calculateAdjacent($h, $dir);
+			$fin = false;
+			foreach($this->dirs as $d)
+			{
+				$ch = $hn;
+				for($cc = 0; $cc < $n; $cc++)
+				{
+					if(strlen($d) == 2 && $cc == 1) continue;
+					$ad = $this->calculateAdjacent($ch, $d);
+					$ch = $ad;
+					if(!in_array($ad, $this->seas))
+						$_ha[] = $ad;
+					if($ad == $hash2)
+					{
+						$fin = true;
+						break;
+					}	
+			
+				}
+			}
+			if($hn == $hash2 || $fin)
+			{
+				break;
+			}
+			$h = $hn;
+		}
+		$_ha = array_unique($_ha);
+		//sort($_ha, SORT_STRING | SORT_LOCALE_STRING);
+		$s = implode("|", $_ha);
+		return $s;
+	}
+ * 
+ */

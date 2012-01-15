@@ -26,11 +26,13 @@ util.combobox.prototype.refresh = function(value, list)
 {
 	var _l = list.parentNode
 	_l.removeChild(list)
+	var lastEl = _l.childNodes.lastChild
+
 	this.jsondata = util.toJson(this.dataFunc(value))
 	if(this.dropDir == 'up')
 		_l.insertBefore(this._updateList(), _l.childNodes[_l.childNodes.length-1])
 	else
-		_l.insertBefore(this._updateList(), _l.childNodes[_l.childNodes.length])		
+		_l.appendChild(this._updateList())		
 }
 
 util.combobox.prototype._updateList = function()
@@ -74,9 +76,9 @@ util.combobox.prototype._updateList = function()
 		{
 			if(!util.isUndef(this.combProj.noDataHint))
 			{
-				list = document.createElement('div')
-				var li = document.createElement('p')
-				li.html(this.combProj.noDataHint)
+				list = document.createElement('ol')
+				var li = document.createElement('li')
+				li.innerHTML = this.combProj.noDataHint
 				list.appendChild(li)
 			}
 		}
@@ -89,7 +91,7 @@ util.combobox.prototype.display = function(hint)
 	var combCont = this.domEl
 	combCont.setAttribute('class', 'combobox_container')
 	
-	var inp = document.createElement('input')
+	var inp = util.createElement('input')
 	inp.setAttribute('class', 'combobox_input')
 	inp.setAttribute('value', hint)
 	
@@ -97,8 +99,10 @@ util.combobox.prototype.display = function(hint)
 
 	inp.addListener('focus', function()
 	{
-		if(this.value == hint)
+		if(this.value && this.value == hint)
 			this.value = ''
+		else if(inp.node.value && inp.node.value == hint)
+			inp.node.value = ''
 	})
 	
 	inp.addListener('click', function()
@@ -107,20 +111,30 @@ util.combobox.prototype.display = function(hint)
 	
 	inp.addListener('keyup', function()
 	{
-		var n = this.parentNode.childNodes.length
-		my.dropDir == 'up' ? n -= 2 : n -= 1
-		var list = this.parentNode.childNodes[n]
-		my.refresh(this.value, list)
+		if(util.isObject(this.parentNode))
+		{
+			var n = this.parentNode.childNodes.length
+			my.dropDir == 'up' ? n -= 2 : n -= 1
+			var list = this.parentNode.childNodes[n]
+			my.refresh(this.value, list)
+		}
+		else
+		{
+			var n = inp.node.parentNode.childNodes.length
+			my.dropDir == 'up' ? n -= 2 : n -= 1
+			var list = inp.node.parentNode.childNodes[n]
+			my.refresh(inp.node.value, list)			
+		}
 	})
 
 	if(this.dropDir == 'up')
 	{
 		combCont.appendChild(list)
-		combCont.appendChild(inp)
+		combCont.appendChild(inp.node)
 	}
 	else
 	{
-		combCont.appendChild(inp)
+		combCont.appendChild(inp.node)
 		combCont.appendChild(list)		
 	}
 	return combCont

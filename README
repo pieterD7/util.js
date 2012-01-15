@@ -47,17 +47,19 @@
 
 	Goals of util.js:
 	
-	simple, easy to learn, lightweight, powerfull in an object oriented way,
-	specially made for apps, multiple languages & formats,
-	string formatting, number & currency formatting 
+	simple, easy to learn, lightweight, lean & mean, powerfull 
+	in an object oriented way, specially made for apps, multiple 
+	languages & formats, string formatting, number & currency formatting 
 	
 	Util proper is the two files validations.js and util.js :
+	
 ==CODE============================================================================	
 	<script type='text/javascript' src='pathToUtil/validations.js'></script>
 	<script type='text/javascript' src='pathToUtil/util.js'></script>
 ==END=============================================================================	
 	
 	You can also use the full version by using the loader:
+	
 ==CODE============================================================================	
 	<script type="text/javascript">
 	var utilConfig = {
@@ -83,7 +85,7 @@
 	HTML5 datePicker:
 	
 	If you add the datepicker module to the loader, it will add datePicker behaviour
-	to any html input tag with the attribute 'type' set to 'date'. The module is dependant
+	to any html input tag with the attribute 'type' set to 'date'. The module is dependent
 	on the date module and, to a lesser extend, on the current util.locale.
 	
 
@@ -94,10 +96,41 @@
 	
 	ul > li:nth-child(2)  (IE will fail)
 	ul > li:first-child + li (the same intention, but success with IE)
-
 	
 
-Examples:
+	Examples:
+
+	i. builtin elements
+	
+==CODE===========================================================================
+	// Push 'home' breadcrumb
+	// 'home' is a langId, eg. util.lang.home and util._lang['en'].home
+	util.crumbs.push(new util.crumb('home', clientResume, util.crumbs._crumbs.length))
+	// Assign selector
+	util.crumbs.setSel('#crumbs')
+
+	var langs = [{iso_code:'en', label:'english'},
+	             {iso_code:'nl', label:'nederlands'},
+	             {iso_code:'it', label:'italiano'}]
+	util.langbar.setLanguages(langs)
+	
+	// Assign selector
+	util.langbar.display('#langSelector')
+	
+	// Get locale on Android	
+	util.curLang = navigator.util.getLocale();
+	util.langbar.selectLang(util.curLang)
+	
+	// Set what needs to be done when user selects language form langbar
+	util.langbar.setOnUpdate(function()
+	{
+		clientResume()
+	})
+==END============================================================================
+
+
+	ii. util.js dev
+	
 ==CODE============================================================================	
 
 	util.ready(function() // If using the loader
@@ -158,7 +191,7 @@ Examples:
 
 	config.set([option.optionFoo, !option.optionBar])
 
-	config.get() & option.optionFoo
+	config.get() & option.optionFoo // True
 	
 
 

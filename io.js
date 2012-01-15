@@ -4,15 +4,18 @@
 
 util.toJson = function(str)
 {
-	
-	var inp = new String(str).replace(/\n|\r|\t/g, '')
+	if(util.isString(str))
+	{
+		var inp = new String(str).replace(/\n|\r|\t/g, '')
 		inp = inp
 				.replace(/{\s*'/g, '{"')
 				.replace(/:\s*'/g, ':"')
 				.replace(/'\s*:/g, '":')
 				.replace(/'\s*}/g, '"}')
-	var json = JSON.parse(inp)
-	return json
+		var json = JSON.parse(inp)
+		return json
+	}
+	return str
 }
 
 util.toXml = function(str)
@@ -35,52 +38,67 @@ function HTMLElement(o)
  * */
 HTMLElement.prototype.setHtml = function(html)
 {
-	if(this.node && !String(this.node.tagName).match(/TITLE/i))
+	if(!util.isUndef(this.node) && !String(this.node.tagName).match(/TITLE/i))
+	{
 		this.node.innerHTML = html
+	}
 }
 
 HTMLElement.prototype.appendChild = function(o)
 {
-	this.node.appendChild(o)
+	if(this.node)
+		this.node.appendChild(o)
 }
 
 HTMLElement.prototype.removeChild = function(o)
 {
-	this.node.removeChild(o)
+	if(this.node)
+		this.node.removeChild(o)
 }
 
 HTMLElement.prototype.addListener = function(evnt, l)
 {
+if(this.node && util.isFunction(this.node.addListener))
 	this.node.addListener(evnt, l)
+// Weird FF workaround:
+else if(util.isFunction(this.addEventListener))
+	this.addEventListener(evnt, l, false)
+else
+	this.node.attachEvent("on"+evnt, l)
 }
 
 HTMLElement.prototype.val = function(v)
 {
 	if(!util.isUndef(v))	
 		this.node.value = v
-	return this.node.value
+	if(this.node)	
+		return this.node.value
 }
 
 HTMLElement.prototype.style = function(style)
 {
-	if(util.isString(style))
+	if(util.isString(style) && this.node)
 		this.node.setAttribute('style', style)
-	return this.node.style
+	if(this.node)	
+		return this.node.style
 }
 
 HTMLElement.prototype.setAttribute = function(attr, str)
 {
-	this.node.setAttribute(attr, str)
+	if(this.node)
+		this.node.setAttribute(attr, str)
 }
 
 HTMLElement.prototype.focus = function()
 {
-	this.node.focus()
+	if(this.node)
+		this.node.focus()
 }
 
 HTMLElement.prototype.reset = function()
 {
-	this.node.reset()
+	if(this.node)
+		this.node.reset()
 }
 
 HTMLElement.prototype.addClassName = function(className)
