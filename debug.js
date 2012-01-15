@@ -23,7 +23,7 @@ util.debug = {
 	onError:[],
 	_init: function()
 	{
-		if(utilConfig.debug)
+		if(typeof utilConfig === 'object' && utilConfig.debug)
 			util.debug.setMsgContainerSel('div')		
 	}
 }

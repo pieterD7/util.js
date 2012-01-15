@@ -69,7 +69,7 @@ else
 
 HTMLElement.prototype.val = function(v)
 {
-	if(!util.isUndef(v))	
+	if(!util.isUndef(v) && this.node)	
 		this.node.value = v
 	if(this.node)	
 		return this.node.value
