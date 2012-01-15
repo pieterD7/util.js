@@ -16,6 +16,7 @@ util.crumb = function(langId, cb){
 }
 
 util.crumbs = {
+	crumbSeparator: " - ",
 	_crumbs: [],
 	_sel: null	
 }
@@ -23,6 +24,11 @@ util.crumbs = {
 util.crumbs.setSel = function(sel)
 {
 	this._sel = sel
+}
+
+util.crumbs.setCrumbSeparator = function(sep)
+{
+	this.crumbSeparator = sep
 }
 
 util.crumbs.push = function(crumb)
@@ -70,7 +76,7 @@ util.crumbs.display = function(sel)
 		ret += crumb.display()
 		if(i < util.crumbs._crumbs.length - 1)
 		{
-			ret += " - "
+			ret += util.crumbs.crumbSeparator
 		}
 	})
 	_s(util.crumbs._sel).setHtml(ret)
