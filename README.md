@@ -53,14 +53,14 @@
 	
 	Util proper is the two files validations.js and util.js :
 	
-==CODE============================================================================	
+<pre>
 	<script type='text/javascript' src='pathToUtil/validations.js'></script>
 	<script type='text/javascript' src='pathToUtil/util.js'></script>
-==END=============================================================================	
+</pre>
 	
 	You can also use the full version by using the loader:
 	
-==CODE============================================================================	
+<pre>
 	<script type="text/javascript">
 	var utilConfig = {
 		defLocale: 'en',
@@ -68,7 +68,7 @@
 	}
 	</script>
 	<script type='text/javascript' src='pathToUtil/loader.js'></script>
-==END=============================================================================		
+</pre>
 
 	String formatting (util proper):
 	
@@ -102,7 +102,7 @@
 
 	i. builtin elements
 	
-==CODE===========================================================================
+<pre>
 	// Push 'home' breadcrumb
 	// 'home' is a langId, eg. util.lang.home and util._lang['en'].home
 	util.crumbs.push(new util.crumb('home', clientResume))
@@ -126,13 +126,11 @@
 	{
 		clientResume()
 	})
-==END============================================================================
-
+</pre>
 
 	ii. util.js dev
 	
-==CODE============================================================================	
-
+<pre>
 	util.ready(function() // If using the loader
 	{
 		util.debug.setGetAppState(function()
@@ -226,4 +224,4 @@
 	)
 	
 			
-==END=============================================================================
+</pre>
