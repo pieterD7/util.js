@@ -53,14 +53,14 @@
 	
 	Util proper is the two files validations.js and util.js :
 	
-<pre>
+=====
 	<script type='text/javascript' src='pathToUtil/validations.js'></script>
 	<script type='text/javascript' src='pathToUtil/util.js'></script>
-</pre>
+=====
 	
 	You can also use the full version by using the loader:
 	
-<pre>
+=====
 	<script type="text/javascript">
 	var utilConfig = {
 		defLocale: 'en',
@@ -68,7 +68,7 @@
 	}
 	</script>
 	<script type='text/javascript' src='pathToUtil/loader.js'></script>
-</pre>
+======
 
 	String formatting (util proper):
 	
