@@ -1,16 +1,28 @@
 /**
- * 
+ * @param {Number} r Radians
+ * @returns {Number}
  */
 util.toDegrees = function(r)
 {
 	return r * (180 / Math.PI);
 }
 
+/**
+ * @param {Number} d Degrees
+ * @returns {Number}
+ */
 util.toRad = function(d)
 {
 	return d * (Math.PI / 180);
 }
 
+/**
+ * @param {Number} orgLng From logitude
+ * @param {Number} orgLat From latitude
+ * @param {Number} targetLng To logitude
+ * @param {Number} targetLat To latitude
+ * @returns {String} The direction (n, ne, ...)
+ */
 util.toDirection = function(orgLng, orgLat, targetLng, targetLat)
 {
 	var deg = '';

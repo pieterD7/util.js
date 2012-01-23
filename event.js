@@ -1,5 +1,6 @@
 /**
- * 
+ * @description Abstract handler with try/catch
+ * @param {function} cb Callback
  */
 util.eventHandler = function(cb)
 {

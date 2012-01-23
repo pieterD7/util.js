@@ -1,9 +1,26 @@
-/**
- *  
- */
 
+/**
+ * @namespace
+ * @description Modular framework for app interfaces
+ * Tested and developed on:
+ * 	- Android 2.2, 2.3.4 native browser
+	- Chrome 15
+	- Opera 11.60
+	- Opera Mini Simulator 4.2
+	- Opera Mobile Emulator 11.5
+	- Firefox 8 
+	- Safari 5
+	- IE9
+ * 
+ */
 var util = util || {
 
+	/**
+	 * @constructor
+	 * @description Util.js error object
+	 * @memberOf util
+	 * @param {String} err
+	 */
 	error: function(err)
 	{
 		var e = Error(err)
@@ -101,7 +118,7 @@ var util = util || {
                                 'en')),                             
                              
              /* init language */   			
-           	'lang/initLang', 'lang/bank_holidays',
+           	'lang/initLang', 'lang/bankholidays',
            	
            	/* App language blueprint*/
            	'lang/com_lang', 
@@ -123,12 +140,20 @@ var util = util || {
 	/* array with functions to be called after load */
 	_onloads:[],
 	
+	/**
+	 * @memberOf util 
+	 */
 	storeString: function(string, lang)
 	{
 		this._lang[lang][string.store] = string.html
 
 	},
 	
+	/**
+	 * @memberOf util
+	 * @function
+	 * @param {String} fileName Name of module
+	 */
 	loadScript : function(fileName)
 	{
 		var s = document.createElement('script')
@@ -138,6 +163,10 @@ var util = util || {
 		document.getElementsByTagName('head')[0].appendChild(s)
 	},
 	
+	/**
+	 * @memberOf util
+	 * @function
+	 */
 	getBaseUrl : function()
 	{
 		var base = ''
@@ -156,6 +185,10 @@ var util = util || {
 		return url
 	},
 	
+	/**
+	 * @memberOf util
+	 * @description Util.js main init function
+	 */
 	initUtil: function()
 	{	
 		var base = ''
@@ -167,6 +200,9 @@ var util = util || {
 		util._t = setInterval("util.waitForLoadCompleted();", 50)
 	},
 	
+	/**
+	 * @memberOf util
+	 */
 	waitForLoadCompleted: function()	
 	{
 		if(document.readyState == 'complete')
@@ -185,6 +221,9 @@ var util = util || {
 		}		
 	},
 	
+	/**
+	 * @memberOf util
+	 */
 	waitForLanguageLoaded: function()
 	{
 		if(util.isObject(util.lang))
@@ -196,7 +235,10 @@ var util = util || {
 				this.onLoadCompleted(cb)
 		}
 	},
-	
+
+	/**
+	 * @memberOf util
+	 */
 	onLoadCompleted: function(cb)
 	{
 		if(typeof cb === 'function')
@@ -212,6 +254,10 @@ var util = util || {
 	}
 }
 
+/**
+ * @param {function} cb
+ * @description Called after modules have been prepared
+ */
 Object.prototype.ready = function(cb)
 {
 	if(document.readyState == 'complete')
@@ -219,6 +265,11 @@ Object.prototype.ready = function(cb)
 	else
 		util._onloads.push(cb)
 }
+
+/**
+ * @param {function} cb
+ * @description Called after modules loaded
+ */
 Object.prototype.prepare = function(cb)
 {
 		util._onprepare.push(cb)

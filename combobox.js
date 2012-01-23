@@ -1,5 +1,24 @@
 /**
- * 
+ * @class
+ * @example
+var comb = new util.combobox(
+	util.createElement('div'),
+	function(constraint)
+	{
+		return navigator.util.getContactsWithLocation(constraint)
+	}, 
+	{
+		noDataHint: util.lang.error.error_no_addresses_found,
+		projection:['name', 'location'],
+		display:['name'],
+		maxLength:3,
+		itemUrl:"javascript:chooseTrip('%', '%')",
+		itemUrlParams:['name', 'location']
+	},
+	'down'
+)
+var domEl = comb.display(util.lang.combohintlocations)
+_s('.info').appendChild(domEl)
  */
 
 util.combobox = function(domEl, jsjQuery, combProj, dropDir)

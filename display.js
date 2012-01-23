@@ -1,5 +1,6 @@
 /**
- * 
+ * @param {element} obj Element on page
+ * @returns {Object}
  */
 
 util.getCumulativeOffset = function(obj) 

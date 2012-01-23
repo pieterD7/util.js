@@ -4,6 +4,12 @@
 util.lang = null
 util.curLang = ''
 
+/**
+ * @description Formats string
+ * @param {array} ar Array of identifiers
+ * @param {string} as Type of replacements
+ * @param {string} char Replacement character
+ */
 String.prototype.format = function(ar, as, char)
 {
 	var ret = this.toString()

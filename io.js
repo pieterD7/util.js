@@ -1,7 +1,7 @@
 /**
- * 	Written for the V8 engine
+ * @param {String} string Input String
+ * @returns {Object}
  */
-
 util.toJson = function(str)
 {
 	if(util.isString(str))
@@ -17,14 +17,20 @@ util.toJson = function(str)
 	}
 	return str
 }
-
+/**
+ * @param {String} str Input String
+ * @returns {XMLObject}
+ */
 util.toXml = function(str)
 {
    var p = new DOMParser();
    var xml = p.parseFromString(str, "text/xml");
    return xml;
 }
-/* IE doesn't allow prototype extensions for the 
+/**
+ * @constructor
+ * @description 
+ * IE doesn't allow prototype extensions for the 
  * built in Object so we need a crossbrowser workaround.
  * */
 function HTMLElement(o)
@@ -32,6 +38,11 @@ function HTMLElement(o)
 	this.node = o
 	return this
 }
+
+/**
+ * @description Sets innerHTML of object
+ * @param {String} html
+ */
 /*
  * Could not use JQuery name (html) because 
  * of conflicts with IE
@@ -44,18 +55,31 @@ HTMLElement.prototype.setHtml = function(html)
 	}
 }
 
+/**
+ * @description Appends object as child element
+ * @param {Object} Object generated with util.createElement
+ */
 HTMLElement.prototype.appendChild = function(o)
 {
 	if(this.node)
 		this.node.appendChild(o)
 }
 
+/**
+ * @description Removes objects
+ * @param {Object} Object to be removed
+ */
 HTMLElement.prototype.removeChild = function(o)
 {
 	if(this.node)
 		this.node.removeChild(o)
 }
 
+/**
+ * @description Adds listener to object
+ * @param {String} evnt Event
+ * @param {function} l Callback function
+ */
 HTMLElement.prototype.addListener = function(evnt, l)
 {
 if(this.node && util.isFunction(this.node.addListener))
@@ -67,6 +91,11 @@ else
 	this.node.attachEvent("on"+evnt, l)
 }
 
+/**
+ * @description Sets value of object
+ * @param {String} val New Value
+ * @returns {String}
+ */
 HTMLElement.prototype.val = function(v)
 {
 	if(!util.isUndef(v) && this.node)	
@@ -75,6 +104,12 @@ HTMLElement.prototype.val = function(v)
 		return this.node.value
 }
 
+/**
+ * @description Sets css-style. Keeps existing definition, but
+ * overwrites style
+ * @param {String} style Css definitions for this element
+ * @returns {String}
+ */
 HTMLElement.prototype.style = function(style)
 {
 	if(util.isString(style) && this.node)
@@ -83,24 +118,41 @@ HTMLElement.prototype.style = function(style)
 		return this.node.style
 }
 
+/**
+ * @description Sets attribute of element
+ * @param {String} attr Attribute
+ * @param {String} string New attribute value
+ */
 HTMLElement.prototype.setAttribute = function(attr, str)
 {
 	if(this.node)
 		this.node.setAttribute(attr, str)
 }
 
+/**
+ * @description Sets focus to this input element
+ */
 HTMLElement.prototype.focus = function()
 {
 	if(this.node)
 		this.node.focus()
 }
 
+/**
+ * @description Resets this form
+ * 
+ */
 HTMLElement.prototype.reset = function()
 {
 	if(this.node)
 		this.node.reset()
 }
 
+/**
+ * @description Adds classname to this element. Keeps classnames and 
+ * checks if the classname is already applied
+ * @param {String} className Name of class 
+ */
 HTMLElement.prototype.addClassName = function(className)
 {
 	var na = []
@@ -121,24 +173,16 @@ HTMLElement.prototype.addClassName = function(className)
 	}
 }
 
+/**
+ * @description Creates an HTML element
+ * @param {String} type Type of element
+ * @returns {HTMLElement}
+ */
 util.createElement = function(type)
 {
 	return new HTMLElement(document.createElement(type))
 }
-/* 
-Object.prototype.setHtml = function(html)
-{
-	if(!String(this.tagName).match(/TITLE/i))
-		this.innerHTML = html
-	else
-		this.nodeValue = html
-}
 
-Object.prototype.val = function(value)
-{
-	this.value = value
-}
-*/
 // TESTS
 //alert(util.toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
 

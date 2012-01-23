@@ -1,12 +1,22 @@
 /**
- * 
+ * @class
+ * @name util.datePicker
+ * @description Data for datePicker 
  */
-
 util.datePicker = {
 	dPickers:[],
 	dataFormat:'YYYY-MM-DD',
 	flags:[],
 	options:null
+}
+
+/**
+ * @constructor
+ * @name util._datePicker
+ */
+util._datePicker = function()
+{
+	return this
 }
 
 util.prepare(function()
@@ -22,22 +32,37 @@ util.ready(function()
 	util.datePicker.initInputTypeDate()
 })
 
+/**
+ * @field
+ * @name util.datePicker.init
+ */
 util.datePicker.init = function()
 {
-	this.flags = 
-	['expand',	// Drop down list or click to increment/decrement
+	/**
+	 * @field
+	 * @description Avalaible flags:
+	 * 1 expand Drop down list or click to increment/decrement
+	 * 2 incrementworkday Only valid without expand, skips holidays on increment with showholidays
+	 * 3 showholidays Show holidays in dropdown, eg of util.holidays.list 
+     * 4 expandvalueonfocus Expand node values to format on focus eg not on load
+     * 5 expandtoholidayformat Expand to util.locale.datePickerHolidayFormat
+	 * 6 expandenabledrag Enables dropdown list to be scrolled by dragging on mobile devices
+	 */
+	this.flags =
+		
+	[ 'expand',	// Drop down list or click to increment/decrement
 	 'incrementworkday', // Only valid without expand, skips holidays on increment with showholidays
 	 'showholidays', // Show holidays in dropdown, eg of util.holidays.list 
      'expandvalueonfocus', // Expand node values to format on focus eg not on load
      'expandtoholidayformat',	// Expand to util.locale.datePickerHolidayFormat
 	 'expandenabledrag'	// Enables dropdown list to be scrolled by dragging on mobile devices
 	  ].unum()
+	 /**
+	  * @field
+	  * @type util.options
+	  * 
+	  */ 
 	this.options = new util.struct([util.options], {value:0})
-}
-
-util._datePicker = function()
-{
-	return this
 }
 
 util._datePicker.prototype.valueToDate = function()
@@ -137,6 +162,16 @@ util._datePicker.prototype.hide = function()
 	this.data.node.setAttribute('style', 'display:inline;')
 }
 
+/**
+ * @name util.datePicker.initInputTypeDate
+ * @function
+ * @description Function to be called in ready-function initializing datepickers
+ * @example
+ * 	util.datePicker.options.set(
+		[util.datePicker.flags.expand]
+	)
+	util.datePicker.initInputTypeDate()
+ */
 util.datePicker.initInputTypeDate = function()
 {
 	var inps = _sa('input[type=date]')

@@ -1,5 +1,5 @@
-/*
- * crumbs.js
+/**
+ * @class
  * 
  */
 
@@ -7,6 +7,9 @@ util.crumb = function(langId, cb){
 	this.langId = langId
 	this.call = cb
 	this.n = null
+	/**
+	 * @private
+	 */
 	this.display = function()
 	{
 		return "<a 	class='crumb' " +
@@ -15,6 +18,9 @@ util.crumb = function(langId, cb){
 	}
 }
 
+/**
+ * @class
+ */
 util.crumbs = {
 	crumbSeparator: " - ",
 	_crumbs: [],

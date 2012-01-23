@@ -1,9 +1,13 @@
 /**
- * 
+ * @class
  */
 
 util.debug = {
-		
+	
+	/**
+	 * @function
+	 * @description Function to be called on debug
+	 */
 	getAppState: function()
 	{
 		var ret = ''
@@ -28,25 +32,44 @@ util.debug = {
 	}
 }
 
+/**
+ * @function
+ * @description Set function to be called on debug
+ * 
+ */
 util.debug.setGetAppState = function(cb)
 {
 	if(util.isFunction(cb))
 		this.getAppState = cb
 }
 
+/**
+ * @function
+ * @description Set HTML element containing the debug messages
+ * 
+ */
 util.debug.setMsgContainerSel = function(str)
 {
 	if(util.isString(str))
 		this.msgContainerSel = str
 }
 
+/**
+ * @function
+ * @description Sets function to be called on error
+ * 
+ */
 util.debug.setOnError = function(cb)
 {
 	if(util.isFunction(cb))
 		this.onError.push(cb)
 }
 
-
+/**
+ * @function
+ * @description The function displaying the debug info
+ * 
+ */
 util.debug.log = function(err)
 {
 	var state = 0

@@ -1,5 +1,6 @@
 /**
- * 
+ * @param {String} Unique property, can be omitted
+ * @returns {Array}
  */
 
 Array.prototype.unique = function(id)
@@ -28,6 +29,12 @@ Array.prototype.unique = function(id)
 	})
 	return temp
 }
+/**
+ * @param {String} id Identifier
+ * @param {String} sep Separator
+ * @returns {String}
+ * 
+ */
 Array.prototype.joinEach = function(id, sep)
 {
 	var ret = ''
@@ -54,7 +61,13 @@ if(! ('forEach' in Array.prototype))
 	}
 }
 
-/* @return Object */
+/**
+ * @param {Number} form From, can be omitted
+ * @param {Number} to To, can be omitted
+ * @param {util.options} opt Options, can be omitted
+ * @example
+ * var option = ['optionFoo', 'optionBar', 'optionBaz'].unum()  
+ */
 Array.prototype.unum = function(from, to, opt)
 {
 	var ret = {}
@@ -79,6 +92,9 @@ Array.prototype.unum = function(from, to, opt)
 	return ret
 }
 
+/**
+ * @param {function} cb Function to be called per item
+ */
 Object.prototype.forEach = function(cb)
 {
 	if(util.isFunction(cb))

@@ -2,7 +2,10 @@
  * 
  */
 
-//@return Object or HTMLElement
+/**
+ * @param {String} CSS selector
+ * @returns {HTMLElement} 
+ */
 function _s(sel)
 {
 	if(typeof sel === 'string')
@@ -16,7 +19,10 @@ function _s(sel)
 	return new HTMLElement()
 }
 	
-//@return Array
+/**
+ * @param {String} CSS selector
+ * @returns {Array}
+ */
 function _sa(sel)
 {
 	if(typeof sel === 'string')	

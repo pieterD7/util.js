@@ -1,6 +1,7 @@
 // geohash.js
 // Geohash library for Javascript
 // (c) 2008 David Troy
+// modified by Pieter Hoekstra
 // Distributed under the MIT License
 
 util.geohash = 
@@ -38,6 +39,12 @@ util.geohash.refine_interval = function(interval, cd, mask) {
 		interval[1] = (interval[0] + interval[1])/2;
 }
 
+/**
+ * @function 
+ * @param {String} srcHash Source hash
+ * @param {String} dir Direction (n, ne, ...)
+ * 
+ */
 util.geohash.calculateAdjacent = function(srcHash, dir) {
 	srcHash = srcHash.toLowerCase();
 	var lastChr = srcHash.charAt(srcHash.length-1);
@@ -48,6 +55,10 @@ util.geohash.calculateAdjacent = function(srcHash, dir) {
 	return base + this.BASE32[this.NEIGHBORS[dir][type].indexOf(lastChr)];
 }
 
+/**
+ * @param {String} geohash Geo hash
+ * @returns {Object}
+ */
 util.geohash.decodeGeoHash = function(geohash) {
 	var is_even = 1;
 	var lat = []; var lon = [];
@@ -76,6 +87,11 @@ util.geohash.decodeGeoHash = function(geohash) {
 	return { latitude: lat[1], longitude: lon[1]};
 }
 
+/**
+ * @param {Number} latitude Latitude
+ * @param {Number} longitude Longitude
+ * @returns {String}
+ */
 util.geohash.encodeGeoHash = function(latitude, longitude) {
 	var is_even=1;
 	var i=0;

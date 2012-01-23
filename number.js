@@ -1,5 +1,8 @@
 /**
- * 
+ * @example 
+ * var n = Number(0.5001).format('float:2', util.locale) // 0.50
+ * var n = Number(0.5001).format('precision:2', util.locale) // 0.5
+ * var n = Number(10000).format('integer', util.locale) // 10,000  
  */
 
 Number.prototype.format = function(as, locale)

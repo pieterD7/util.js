@@ -4,7 +4,11 @@
  */
 
 
-//@return String
+/**
+ * @returns {string}
+ * @param {string} String
+ * @param {boolean} eraseAllSpace
+ */
 util.trim = function(str, eraseAllSpace)
 {	
 	if(util.isUndef(str)) str = ''
@@ -57,11 +61,12 @@ String.prototype.toAllFirstCharsUppercase = function()
 	return sentence
 }
 
+/**
+ * @description Makes sure phrases start with a capital based on . and are trimmed
+ * Phrases are strings ending with a dot or end of string of at least two words
+ */
 String.prototype.toFormattedText = function(doFormat)
-{
-	// makes sure phrases start with a capital based on '.' and are trimmed
-	// Phrases are strings ending with a dot or end of string of at least two words
-	
+{	
 	var sentences = this.split(".")
 	var ftext = ''
 	var inAbb = false
@@ -112,11 +117,13 @@ util.collectChildNodes = function(el)
 	return this.nodes
 }
 
+/**
+ * @description Limits valid html markup to limit display chars 
+ * adds ending or  ... when string is truncated
+ * 
+ */
 String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
-{
-	// Limits valid html markup to limit display chars 
-	// adds ending or ' ...' when string is truncated
-	
+{	
 	var div = this.toString().toFormattedText(doFormat).parseAsHTML()
 	var formatted = ''
 	var text = ''
@@ -187,12 +194,13 @@ String.prototype.toLimitedFormattedHTML = function(limit, ending, doFormat)
 		return this.toString()
 }
 
+/**
+ * @description fits in as many words as possible when first word in string is shorter then limit
+ * 	else truncates string by limit adds ending or ... when string is truncated
+ * 
+ */
 String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
-{
-	// fits in as many words as possible when first word in string is shorter then limit
-	// else truncates string by limit 
-	// adds ending or ' ...' when string is truncated
-	
+{	
 	var limited = ''
 		
 	if(this.indexOf(' ') < limit && this.indexOf(' ') > 0)
@@ -216,6 +224,10 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 	return limited.toFormattedText(doFormat)+end
 }
 
+/**
+ * @param {String} event Event
+ * @param {function} cb Function to be called
+ */
 Object.prototype.addListener = function(event, cb)
 {
 	// W3C style 

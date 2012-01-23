@@ -1,5 +1,5 @@
 
-/* For a given date, get the ISO week number
+/** For a given date, get the ISO week number
  *
  * Based on information at:
  *
@@ -33,6 +33,10 @@ Date.prototype.getWeek = function() {
    return weekNo;
 }
 
+/**
+ * @param {String} format PHP-like date format
+ * 
+ */
 Date.prototype.format = function(format)
 {
 	var s = []

@@ -1,5 +1,5 @@
 /**
- * 
+ * @class
  */
 
 util.langbar = 
@@ -9,6 +9,12 @@ util.langbar =
 	onUpdate:[]
 }
 
+/**
+ * @private
+ * @param {String} iso_code ISO code
+ * @returns {boolean}
+ * 
+ */
 util.langbar.hasLanguage = function(iso_code)
 {
 	var ret = false
@@ -19,7 +25,10 @@ util.langbar.hasLanguage = function(iso_code)
 	})
 	return ret
 }
-
+/**
+ * @description Sets function to be called when user selects language
+ * @param {function} cb Callback
+ */
 util.langbar.setOnUpdate = function(cb)
 {
 	if(util.isFunction(cb))
@@ -79,6 +88,18 @@ util.langbar.update = function()
 	util.langbar.display(this.sel)
 }
 
+/**
+ * @example
+ * 	var langs = [{iso_code:'en', label:'english'},
+	             {iso_code:'nl', label:'nederlands'},
+	             {iso_code:'it', label:'italiano'}]
+	util.langbar.setLanguages(langs)
+	
+	// Assign selector
+	util.langbar.display('#langSelector')
+
+ * 
+ */
 util.langbar.display = function(sel)
 {
 	if(util.isString(sel) && _s(sel))

@@ -18,6 +18,26 @@ util.HttpStatus = function(uri, cb)
 	this.ajax(opt)
 }
 
+/**
+ * @constructor
+ * @property {function} onSuccess 	Function called on http data
+ * @property {function} onError 	Function called on no http connection
+ * @property {String} 	method 		Type of http connection (GET/POST)
+ * @property {Array} 	data 		Name/value-pairs of data to be sent
+ * @property {String} 	dataType 	Parse data as (xml, json, text)
+ */
+util.ajaxParams = function()
+{
+	this.onSuccess = null
+	this.onError = null
+	this.method = 'GET'
+	this.data = null
+	this.dataType = 'text'
+}
+
+/**
+ * @param {util.ajaxParams} obj
+ */
 util.ajax = function(obj)
 {
 	if(this.isUndef(obj)) return

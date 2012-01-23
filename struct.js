@@ -1,5 +1,6 @@
 /**
- * 
+ * @param {Array} baseObject Put these objects in structure
+ * @returns {util.struct}
  */
 
 util.struct = function(baseObject, data)
@@ -15,12 +16,19 @@ util.struct = function(baseObject, data)
 	return this
 }
 
+/**
+ * @param {Object} baseObject Base object
+ * @param {Object} data Data object
+ * @returns {Object} 
+ */
 util.mixin = function(baseObject, data)
 {
 	var b = util.extend(new baseObject, data)
 	return b	
 }
-
+/**
+ * @private
+ */
 util.extend = function(destination, source) 
 {
 	for (var k in source) 
