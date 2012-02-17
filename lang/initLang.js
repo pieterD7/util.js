@@ -98,19 +98,19 @@ util.initLang = function()
 		util.bankholidays = util._bankholidays[ulang]
 	}	
 	
-	this.HttpStatus(util.getBaseUrl() + '/lang/' + ulang + '/lang_' + ulang + '.js', 
-		function(stat)
-		{
-			var strings = ''
-			if(stat == 200)
-			{
-				
-				{
-					ulang = 'en'
-					strings =  _initLang(util._lang['en'])
-					util.locale = util._locale['en']
-					util.defaultStrings = util._defaultStrings['en']					
-				}
-			}
-		})
+//	this.HttpStatus(util.getBaseUrl() + '/lang/' + ulang + '/lang_' + ulang + '.js', 
+//		function(stat)
+//		{
+//			var strings = ''
+//			if(stat == 200)
+//			{
+//				
+//				{
+//					ulang = 'en'
+//					strings =  _initLang(util._lang['en'])
+//					util.locale = util._locale['en']
+//					util.defaultStrings = util._defaultStrings['en']					
+//				}
+//			}
+//		})
 }

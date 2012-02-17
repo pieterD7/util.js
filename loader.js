@@ -125,7 +125,8 @@ var util = util || {
            	
            	/* module for browsers */
            	'display', 'datePicker', 
-           	'crumbs', 
+           	'crumbs', 'chatbox', 
+           	'dnd',
            	
            	/* map functions */
            	'map', 'geohash',
@@ -205,7 +206,7 @@ var util = util || {
 	 */
 	waitForLoadCompleted: function()	
 	{
-		if(document.readyState === 'complete' || document.readyState == 'interactive')
+		if(document.readyState === 'complete' || document.readyState == 'interactive' && navigator.userAgent.match("/Internet\sExplorer/"))
 		{
 			clearInterval(util._t)
 			

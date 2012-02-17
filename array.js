@@ -101,7 +101,7 @@ util.forEach = function(ar, cb)
 	{
 		for(var c = 0; c < ar.length; c++)
 		{
-			cb(ar[c])
+			cb(ar[c], c)
 		}
 	}
 }

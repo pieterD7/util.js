@@ -439,8 +439,8 @@ HTMLElement.prototype.removeChild = function(o)
  */
 HTMLElement.prototype.addListener = function(evnt, l)
 {
-if(this.node && util.isFunction(this.node.addListener))
-	this.node.addListener(evnt, l)
+if(this.node && util.isFunction(this.node.addEventListener))
+	this.node.addEventListener(evnt, l)
 // Weird FF workaround:
 else if(util.isFunction(this.addEventListener))
 	this.addEventListener(evnt, l, false)
