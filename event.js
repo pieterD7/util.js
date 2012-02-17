@@ -17,8 +17,3 @@ util.eventHandler = function(cb)
 	}
 }
 
-Object.prototype.addListener = function(event, cb)
-{
-	// W3C style 
-	this.addEventListener(event, cb, false)
-}

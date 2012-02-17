@@ -53,9 +53,8 @@ util.initLang = function()
 	var ulang = this.getBestUserLang()	
 	ulang = typeof utilConfig === 'object'? utilConfig.defLocale : 'en'
 	var url = util.getBaseUrl()
-	
-	var locales = typeof utilConfig === 'object' ? utilConfig.locales : []
-	locales.forEach(function(iso_code)
+	var locales = typeof utilConfig.locales === 'object' ? utilConfig.locales : ['en']
+	util.forEach(locales, function(iso_code)
 	{
 		var s = url + 'lang/' + iso_code + '/' + 'lang_' + iso_code 
 		util.loadScript(s)
@@ -66,9 +65,9 @@ util.initLang = function()
 		s = url + 'lang/' + iso_code + '/bank_holidays_' + iso_code
 		util.loadScript(s)
 	})
-	
+
 	if(util.isObject(util._lang[ulang]))
-	{	
+	{
 		/* this is only true if ulang eq utilConfig.defLocale 
 		 * because others need to be loaded yet */
 		util.curLang = ulang
@@ -76,20 +75,30 @@ util.initLang = function()
 		util.locale = util._locale[ulang]
 		util.defaultStrings = util._defaultStrings[ulang]
 		for(var i in strings)
-		{			
-			var o = _s(strings[i].sel) || 'store'
-				if(strings[i].html && o != 'store')
-					o.setHtml(strings[i].html)
-				else if(strings[i].value)
-					o.val(strings[i].value)
-				else if(o == 'store')
-					util.storeString(strings[i], ulang)
+		{	
+			try
+			{
+				var o = _s(strings[i].sel)
+				if(util.isObject(o))
+				{
+					if(strings[i].html && o != 'store')
+						o.setHtml(strings[i].html)
+					else if(strings[i].value)
+						o.val(strings[i].value)
+					else if(o == 'store')
+						util.storeString(strings[i], ulang)
+				}
+			}
+			catch(e)
+			{
+				util.debug.log(i)
+			}
 		}	
 		util.lang = util._lang[ulang]
 		util.bankholidays = util._bankholidays[ulang]
 	}	
 	
-	this.HttpStatus('lang/' + ulang + '/lang_' + ulang + '.js', 
+	this.HttpStatus(util.getBaseUrl() + '/lang/' + ulang + '/lang_' + ulang + '.js', 
 		function(stat)
 		{
 			var strings = ''

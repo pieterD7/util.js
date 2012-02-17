@@ -224,16 +224,6 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 	return limited.toFormattedText(doFormat)+end
 }
 
-/**
- * @param {String} event Event
- * @param {function} cb Function to be called
- */
-Object.prototype.addListener = function(event, cb)
-{
-	// W3C style 
-	this.addEventListener(event, cb, false)
-}
-
 //alert(util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
 //	.toLimitedFormattedText(23))
 

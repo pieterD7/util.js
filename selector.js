@@ -16,7 +16,6 @@ function _s(sel)
 			return new HTMLElement(e)	
 		}
 	}
-	return new HTMLElement()
 }
 	
 /**

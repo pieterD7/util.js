@@ -45,9 +45,9 @@ var util = util || {
 	        /* modules */
 	        'debug', 'langbar', 
 	        'array', 'validations', 
-	        'selector', 'number', 
+	        'io', 'number', 
 	        'struct', 'options',
-	        'http', 'io', 
+	        'http', 'selector', 
 	        'date', 'time', 
 	        'unum', 'combobox',
 	        'event', 
@@ -205,18 +205,19 @@ var util = util || {
 	 */
 	waitForLoadCompleted: function()	
 	{
-		if(document.readyState == 'complete')
+		if(document.readyState === 'complete' || document.readyState == 'interactive')
 		{
 			clearInterval(util._t)
-
+			
 			util.initLang()
-			util._mods.forEach(function(m)
+
+			util.forEach(util._mods.forEach, function(m)
 			{
 				if(typeof util[m] == 'object')
 					if(typeof util[m]._init == 'function')
 						util[m]._init()
 			})
-			
+
 			util._t = setInterval("util.waitForLanguageLoaded();", 50)	
 		}		
 	},
@@ -258,9 +259,9 @@ var util = util || {
  * @param {function} cb
  * @description Called after modules have been prepared
  */
-Object.prototype.ready = function(cb)
+util.ready = function(cb)
 {
-	if(document.readyState == 'complete')
+	if(document.readyState == 'complete' || document.readyState == 'interactive')
 		util.onLoadCompleted(cb)
 	else
 		util._onloads.push(cb)
@@ -270,7 +271,7 @@ Object.prototype.ready = function(cb)
  * @param {function} cb
  * @description Called after modules loaded
  */
-Object.prototype.prepare = function(cb)
+util.prepare = function(cb)
 {
 		util._onprepare.push(cb)
 }

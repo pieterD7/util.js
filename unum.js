@@ -48,9 +48,9 @@ util.unum = function(from, to, opt)
 		util.unum.optUseSpecial = opt.useSpecial
 	
 	var cb = false
-	if(util.isFunction(opt.onunumNext))
+	if(util.isFunction(opt.onUnumNext))
 	{
-		cb = opt.onunumNext
+		cb = opt.onUnumNext
 		cb(from)
 	}
 	else

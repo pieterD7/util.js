@@ -95,13 +95,13 @@ Array.prototype.unum = function(from, to, opt)
 /**
  * @param {function} cb Function to be called per item
  */
-Object.prototype.forEach = function(cb)
+util.forEach = function(ar, cb)
 {
 	if(util.isFunction(cb))
 	{
-		for(var c = 0; c < this.length; c++)
+		for(var c = 0; c < ar.length; c++)
 		{
-			cb(this[c])
+			cb(ar[c])
 		}
 	}
 }

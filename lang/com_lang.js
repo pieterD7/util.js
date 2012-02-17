@@ -7,10 +7,6 @@ function _initLang(lang)
 {
 	var strings = [
 	{
-		sel:'title',
-		html:lang.appName.toAllFirstCharsUppercase()
-	},
-	{
 		store:'lblQHint',
 		html:lang.lblQHint.toLowerCase()
 	},

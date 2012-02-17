@@ -131,97 +131,92 @@
 	ii. util.js dev
 	
 <pre>
-	util.ready(function() // If using the loader
-	{
-		util.debug.setGetAppState(function()
-		{
-			return 'state=' + state + ', abo=' + abo;
-		})
-		util.debug.setMsgContainerSel('.info')
-	
-		var msg = 'fits in as many words as possible when first word in string is shorter then limit'
-			.toLimitedFormattedHTML(23)
-			
-		// msg now eq: 'Fits in as many words ...'
-	})
-	
-	// strip all dots and space:
-		util.trim('1000 AA', true)
-		
-	// format numbers to type and locale
-		var res = 'average of &%'.format([1.5], 'precision:1', '&')
+utilConfig={debug:true, locales: ['en'], defLocale:'en'}
+util.ready(function() // If using the loader
+	    {
+	        util.debug.setGetAppState(function()
+	        {
+	            return 'state=' 
+	        })
+	    
+	        var msg = 'fits in as many words as possible when first word in string is shorter then limit'
+	            .toLimitedFormattedHTML(23)
 
-	// handle input			
-		util.trim(null).isEmpty() // false
-		
-		util.isObject(null) // false
+	  	// msg now eq: 'Fits in as many words ...'
+	        
+	    
+	    // strip all dots and space:
+	        util.trim('1000 AA', true)
 
-	// no parser, just the ones builtin (json and xml)
-		util.toJson("[
-			{'name':'pieter\'s'},
-			{'name':'lo  \\\\  pi'},
-			{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name		
-	
-	// with a struct:	
-		var msg = new util.struct([String], {msg1:'total %', msg2:'Bye '})
-		var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:2'])
-		var m = msg.toLimitedFormattedText.apply(d, [15])
+	    // format numbers to type and locale
+	        var res = 'average of &%'.format([1.5], 'precision:1', '&')
 
+	    // handle input         
+	        util.trim(null).isEmpty() // false
+	        
+	        util.isObject(null) // false
+	        
+	    // no parser, just the ones builtin (json and xml)
+	       alert(util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)       
 
-	// example enum:
-		util.unum('1000', '1002').forEach(function(pnumber)
-		{
-			util.unum(pnumber + 'AZ', pnumber + 'BB', 
-			{
-				regexp:RegExp(/\d{4}[A-Z]{2}/),
-				onunumNext:function(pcode)
-				{
-					alert(pcode)
-				}
-			})
-		})	
+	    // with a struct:   
+	        var msg = new util.struct([String], {msg1:'total %', msg2:'Bye '})
+	        var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:2'])
+	        var m = msg.toLimitedFormattedText.apply(d, [15])
 
+	    // example enum:
+	        util.unum('1000', '1002').forEach(function(pnumber)
+	        {
+	            util.unum(pnumber + 'AZ', pnumber + 'BB', 
+	            {
+	                regexp:RegExp(/\d{4}[A-Z]{2}/),
+	                onUnumNext:function(pcode)
+	                {
+	                    alert(pcode)
+	                }
+	            })
+	        })  
 
-	// example options:
-	option = ['optionFoo', 'optionBar', 'optionBaz'].unum()
-                    
-	config = new util.struct([util.options], {value:0})
+	    // example options:
+	    option = ['optionFoo', 'optionBar', 'optionBaz'].unum()
+	                    
+	    config = new util.struct([util.options], {value:0})
 
-	config.set([option.optionFoo, !option.optionBar])
+	    config.set([option.optionFoo, !option.optionBar])
 
-	config.get() & option.optionFoo // True
-	
+	    config.get() & option.optionFoo // True
+	    
 
+	    // example cardgame setup
+	    var deck = []
+	    var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
+	    
+	    function card()
+	    {   
+	        return this
+	    }
+	    card.prototype.display = function()
+	    {
+	        alert(set[this.kind].toString() + " " + this.name)
+	    }
 
-	// example cardgame setup
-	var deck = []
-	var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
-	
-	function card()
-	{	
-		return this
-	}
-	card.prototype.display = function()
-	{
-		alert(set[this.data.kind].toString().toFirstCharUppercase() + " " + this.data.name)
-	}
-
-	util.unum('A', 'D')
-	 .forEach(
-		function(kind)
-		{
-			util.unum('AA', 'AD')
-			 .concat(util.unum(2, 10))
-				.forEach(
-					function(n)
-					{
-						var c = util.mixin(card, {kind:kind, name:n, value:n})
-						deck.push(c)
-						c.display()
-					}
-				)		
-		}
-	)
-	
+	    var deck = []
+	    util.unum('A', 'D')
+	     .forEach(
+	        function(kind)
+	        {
+	            util.unum('AA', 'AD')
+	             .concat(util.unum(2, 10))
+	                .forEach(
+	                    function(n)
+	                    {
+	                        var c = util.mixin(card, {kind:kind, name:n, value:n})
+	                        deck.push(c)
+	                   	  //	c.display()
+	                    }
+	                )       
+	        }
+	    )
+})	
 			
 </pre>
