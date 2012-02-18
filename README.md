@@ -165,7 +165,7 @@ util.ready(function() // If using the loader
 	        var res = 'average of &%'.format([1.5], 'precision:1', '&')
 
 	    // handle input         
-	        util.trim(null).isEmpty() // false
+	        util.trim(null).isEmpty() // true
 	        
 	        util.isObject(null) // false
 	        
