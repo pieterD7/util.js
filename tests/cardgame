@@ -1,0 +1,140 @@
+/**
+ * 
+ */
+
+var set = {h:'harten', d:'ruiten', c:'klaveren', s:'schoppen', j:'boer', k:'heer', q:'vrouw', a:'aas', t:'10'}
+
+
+util.cardgame = {
+	tryToMove:null,
+	players:['koos', 'pieter', 'karin', 'wampy']
+	
+}
+util.card = function()
+{	
+	return this
+}
+
+util.card.prototype.toString = function()
+{
+	var ret = set[this.kind].toFirstCharUppercase() + ' '
+	ret += util.isNumber(this.name) ? this.name : set[this.name].toFirstCharUppercase()
+	return ret
+}
+
+util.card.prototype.create = function(visible) 
+{
+	var i = util.createElement('img')
+	var my = this
+	if(util.isBool(visible) && visible)
+	{
+		i.setAttribute('title', this.toString())
+		i.setAttribute('src', 'cards/' + this.name + this.kind + '.gif')
+		util.dnd.draggableElement(i, function(){util.cardgame.tryToMove = my})
+		util.dnd.dropArea(i, function(){util.cardgame.move(util.cardgame.tryToMove, my)})
+	}
+	else
+	{
+		i.addListener('mousedown', function(){util.cardgame.tryToMove = null;})
+		i.setAttribute('src', 'cards/b.gif')
+	}
+	return i
+}
+
+util.cardgame.move = function(from, to)
+{
+	alert(util.cardgames.hearths.count[from.name + from.kind] || 0)
+}
+
+util.cardgame.initPlayers = function(sels, game)
+{
+	if(util.isObject(sels))
+	{
+		util.forEach(sels, function(sel, i)
+		{
+			var o = _s(sel)
+			if(o)
+				o.setHtml(util.cardgame.players[i].toLimitedFormattedText(12).toFirstCharUppercase())			
+		})
+	}
+}
+
+util.cardgame.init = function()
+{
+	var deck = []
+
+	var a = util.forEach(['d', 'c', 'h', 's'],
+		function(kind)
+		{
+			util.forEach(
+				util.unum(7, 9).concat(['t']).concat(['j', 'q', 'k', 'a',]),
+					function(n)
+					{
+						var val = n
+						if(val == 't')
+							val = 10
+						var c = util.mixin(util.card, {kind:kind, name:n, value:val})
+						deck.push(c)
+					}
+				)		
+		}
+	)
+	return deck
+}
+
+util.cardgame.shuffle = function(o)
+{
+	//+ Jonas Raoni Soares Silva
+	//@ http://jsfromhell.com/array/shuffle [v1.0]
+
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o
+}
+
+util.cardgames = {
+		
+		
+}
+
+util.cardgames.hearths = {
+	label:'hearths',
+	players:['n', 's', 'e', 'w'],
+	set:32,
+	count:{ah:1, kh:1, qh:1, jh:1, '7h':1, '8h':1, '9h':1, th:1, jc:2, qs:5}
+}
+
+util.ready(function()
+{
+	util.debug.setMsgContainerSel('#error')
+	
+	var c = new util.chatbox()
+	c.setUrl('http://lotg.nl')
+	c.setNick('pieter')
+	c.setMsgSel('#chatbox')
+	
+	util.cardgame.initPlayers(['.player1.n p.name', '.player1.s p.name', '.player2.e p.name', '.player2.w p.name'], 'hearths')
+	
+	var deck = util.cardgame.shuffle(util.cardgame.init())
+	
+	util.forEach(util.cardgames.hearths.players, function(pl)
+	{
+		for(var c = 0; c < 8; c++)
+		{
+			var card = deck.pop()
+			var i = card.create(pl == 's')
+			var o = _s('.' + pl + ' div')
+			if(o)
+				o.appendChild(i.node)
+
+		}
+		
+	})
+	var i = util.createElement('img')
+	i.setAttribute('src', 'cards/j.gif')
+	_s('#deck').appendChild(i.node)	
+	util.dnd.dropArea(_s('#deck'), function()
+	{
+		var deck = util.mixin(util.card, {kind:'deck'})
+		util.cardgame.move(util.cardgame.tryToMove, deck)})
+	_s("#chatbox textarea").focus()
+})
