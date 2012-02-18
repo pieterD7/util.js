@@ -3,6 +3,21 @@
  */
 
 util.debug = {
+		
+	/** Some browsers don't provide a stacktrace, currently not used. Code
+	 * taken from http://code.google.com/p/greasefire */
+	stack: function() 
+	{
+		var callstack = [];
+		var currentFunction = arguments.callee.caller;
+		while (currentFunction) {
+			var fn = currentFunction.toString();
+			var fname = fn.substring(fn.indexOf("function") + 8, fn.indexOf(' ')) || 'anonymous';
+			callstack.push(fname);
+			currentFunction = currentFunction.caller;
+		}
+		return callstack;
+	},	
 	
 	/**
 	 * @function

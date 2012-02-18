@@ -89,13 +89,26 @@
 	on the date module and, to a lesser extend, on the current util.locale.
 	
 
-	A note on IE9 compatible CSS selectors
+	A note on IE9 compatible CSS selectors:
 	
 	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
 	write compatible selectors like:
 	
 	ul > li:nth-child(2)  (IE will fail)
 	ul > li:first-child + li (the same intention, but success with IE)
+	
+
+	A note on IE9 compatible page loading:
+	
+	Always put your util.ready() function calls at the bottom of the page below
+	the html markup of the body. 
+	e.g.
+	<body>
+	<div id=map></div>
+	<script>util.ready(function(){
+	// my program starts here
+	})</script>
+	</body>
 	
 
 	Examples:
