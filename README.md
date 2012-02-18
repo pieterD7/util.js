@@ -169,7 +169,7 @@ util.ready(function() // If using the loader
 	        
 	        util.isObject(null) // false
 	        
-	    // no parser, just the ones builtin (json and xml)
+	    // no parser, just the ones builtin (json and xml) (Not IE9)
 	       alert(util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)       
 
 	    // with a struct:   
