@@ -53,7 +53,7 @@ var util = util || {
 	        'event', 
 	        
 	        /* util proper */
-	        'util', 'jsjbridge',
+	        'util', 
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 

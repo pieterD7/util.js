@@ -22,7 +22,7 @@ util.trim = function(str, eraseAllSpace)
 	// remove all space
 	if(this.isBool(eraseAllSpace) && eraseAllSpace)
 		s = s.replace(/\s|\./g, '')
-	
+
 	// remove trailing and leading space
 	return s.replace(/^\s|\s$/, '')
 }

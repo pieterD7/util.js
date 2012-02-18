@@ -19,18 +19,6 @@ util._datePicker = function()
 	return this
 }
 
-util.prepare(function()
-{
-	util.datePicker.init()
-})
-
-util.ready(function()
-{
-	util.datePicker.options.set(
-		[util.datePicker.flags.expand]
-	)
-	util.datePicker.initInputTypeDate()
-})
 
 /**
  * @field
@@ -175,7 +163,7 @@ util._datePicker.prototype.hide = function()
 util.datePicker.initInputTypeDate = function()
 {
 	var inps = _sa('input[type=date]')
-	inps.forEach(function(obj)
+	util.forEach(inps, function(obj)
 	{
 		var options = new util.struct([util.options], {value:util.datePicker.options.data.value})
 		var dp = new util.struct(
@@ -231,3 +219,16 @@ util.datePicker.initInputTypeDate = function()
 		})
 	})
 }
+
+util.prepare(function()
+{
+	util.datePicker.init()
+})
+
+util.ready(function()
+{
+	util.datePicker.options.set(
+		[util.datePicker.flags.expand]
+	)
+	util.datePicker.initInputTypeDate()
+})

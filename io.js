@@ -375,8 +375,20 @@ util.toJson = function(str)
  */
 util.toXml = function(str)
 {
-   var p = new DOMParser();
-   var xml = p.parseFromString(str, "text/xml");
+   var p = null
+   var xml = ''
+   if(util.isObject(window.DOMParser))
+   {
+	   p = new DOMParser()
+	   xml = p.parseFromString(str, "text/xml");	   
+   }
+   else
+   {
+		p = new ActiveXObject("Microsoft.XMLDOM");
+		p.async = false
+		p.loadXML(str)
+		xml = p
+   }
    return xml;
 }
 /**
@@ -519,15 +531,21 @@ HTMLElement.prototype.addClassName = function(className)
 	{
 		na = _names.split(' ')
 	}
-	na.forEach(function(name)
+	util.forEach(na, function(name)
 	{
 		str += '.' + name 
 	})
 	if(!String(str).match(RegExp('.' + className)))
 	{
-		var class_ = na.join(' ') + ' ' + className
-		this.node.setAttribute('class', class_)
+		var class_ = util.trim(na.join(' ') + ' ' + className)
+		if(!class_.isEmpty())
+			this.node.setAttribute('class', class_)
 	}
+}
+HTMLElement.prototype.getClassName = function()
+{
+	if(!util.isUndef(this.node))
+		return this.node.getAttribute('class')
 }
 
 /**
@@ -539,9 +557,3 @@ util.createElement = function(type)
 {
 	return new HTMLElement(document.createElement(type))
 }
-
-// TESTS
-//alert(util.toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue)
-
-//alert(util.toJson("{'name':'pieter's'}").name)
-//alert(util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)

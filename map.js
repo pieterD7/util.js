@@ -42,8 +42,8 @@ util.toDirection = function(orgLng, orgLat, targetLng, targetLat)
 	deg = util.toDegrees(Math.atan2(dif_lng, dif_lat));
 	var dir = false
 	
-	var dirs = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
-		.forEach(function(d, i){
+	var dirs = util.forEach(['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'],
+		function(d, i){
 			if(	((deg + 360) % 360 >= i * (360 / 8) - (360 / 16)) &&
 					((deg + 360) % 360 < i * (360 / 8) + (360 / 16)))
 					dir = d;		
@@ -51,5 +51,3 @@ util.toDirection = function(orgLng, orgLat, targetLng, targetLat)
 		})
 	return dir;
 }
-
-//alert(util.toDirection(5.4, 53, 5.3, 52))

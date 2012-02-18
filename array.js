@@ -8,13 +8,13 @@ Array.prototype.unique = function(id)
 	var temp = []
 	var _temp = []
 	var id = util.isUndef(id) ? false : id
-	this.forEach(function(t)
+	util.forEach(this, function(t)
 	{
 		if(id)
 		{
 			if(util.isUndef(_temp[t[id]]))
 			{
-				_temp[t[id]] = true
+					_temp[t[id]] = true
 				temp.push(t)
 			}
 		}
@@ -25,7 +25,8 @@ Array.prototype.unique = function(id)
 				_temp[t] = true
 				temp.push(t)
 			}
-		}		
+		}
+
 	})
 	return temp
 }
@@ -38,28 +39,16 @@ Array.prototype.unique = function(id)
 Array.prototype.joinEach = function(id, sep)
 {
 	var ret = ''
-	var id = util.trim(id)
-	var sep = util.trim(sep)
+	id = util.trim(id)
+	sep = util.trim(sep)
 	var c = this.length
-	this.forEach(function(t, i)
+	util.forEach(this, function(t, i)
 	{
 		ret += t[id] + (i < c-1? sep : '')
 	})
 	return ret
 }
-if(! ('forEach' in Array.prototype))
-{
-	Array.prototype.forEach = function(action)
-	{
-		for(var c = 0; c < this.length; c++)
-		{
-			if(c in this)
-			{
-				action(this[c], c)
-			}
-		}
-	}
-}
+
 
 /**
  * @param {Number} form From, can be omitted
@@ -84,7 +73,7 @@ Array.prototype.unum = function(from, to, opt)
 		to = this.length
 	}
 	var e = util.unum(from, to, opt)
-	this.forEach(
+	util.forEach(this, 
 		function(p)
 		{
 			ret[p] = e[c++]
@@ -93,11 +82,12 @@ Array.prototype.unum = function(from, to, opt)
 }
 
 /**
+ * @param {object} ar Array of items 
  * @param {function} cb Function to be called per item
  */
 util.forEach = function(ar, cb)
 {
-	if(util.isFunction(cb))
+	if(util.isFunction(cb) && util.isObject(ar))
 	{
 		for(var c = 0; c < ar.length; c++)
 		{
@@ -105,6 +95,3 @@ util.forEach = function(ar, cb)
 		}
 	}
 }
-
-//alert([1, 2, 3, 3].unique().join())
-//alert([{name:'ik'},{name:'ik'}, {name:'pieter'}].unique('name').joinEach('name', '|'))

@@ -27,7 +27,7 @@ util.debug = {
 	{
 		var ret = ''
 		var n = 0
-		util._mods.forEach(function(mod)
+		util.forEach(util._mods, function(mod)
 		{
 			if(util.isObject(util[mod]) && util.isObject(util[mod].options))
 			{
@@ -104,7 +104,7 @@ util.debug.log = function(err)
 					htmlstr
 			)
 			
-	this.onError.forEach(
+	util.forEach(this.onError,
 		function(onErr)
 		{
 			if(util.isFunction(onErr))
