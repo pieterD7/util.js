@@ -187,38 +187,7 @@ util.ready(function() // If using the loader
 	    config.set([option.optionFoo, !option.optionBar])
 
 	    config.get() & option.optionFoo // True
-	    
 
-	    // example cardgame setup
-	    var deck = []
-	    var set = {A:'spade',B:'coppe', C:'denari', D:'bastoni'}
-	    
-	    function card()
-	    {   
-	        return this
-	    }
-	    card.prototype.display = function()
-	    {
-	        alert(set[this.kind].toString() + " " + this.name)
-	    }
-
-	    var deck = []
-	    util.unum('A', 'D')
-	     .forEach(
-	        function(kind)
-	        {
-	            util.unum('AA', 'AD')
-	             .concat(util.unum(2, 10))
-	                .forEach(
-	                    function(n)
-	                    {
-	                        var c = util.mixin(card, {kind:kind, name:n, value:n})
-	                        deck.push(c)
-	                   	  //	c.display()
-	                    }
-	                )       
-	        }
-	    )
 })	
 			
 </pre>
