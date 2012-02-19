@@ -207,7 +207,7 @@ var util = util || {
 	 */
 	waitForLoadCompleted: function()	
 	{
-		if(document.readyState === 'complete' || document.readyState == 'interactive' && navigator.userAgent.match("/Internet\sExplorer/"))
+		if(document.readyState === 'complete')
 		{
 			clearInterval(util._t)
 			
