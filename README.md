@@ -99,20 +99,6 @@
 	
 	ul > li:nth-child(2)  (IE will fail)
 	ul > li:first-child + li (the same intention, but success with IE)
-	
-
-	A note on IE9 compatible page loading:
-	
-	Always put your util.ready() function calls at the bottom of the page below
-	the html markup of the body. 
-	e.g.
-	<body>
-	<div id=map></div>
-	<script>util.ready(function(){
-	// my program starts here
-	})</script>
-	</body>
-	
 
 	Examples:
 
