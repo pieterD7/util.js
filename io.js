@@ -403,6 +403,16 @@ function HTMLElement(o)
 	return this
 }
 
+/**
+ * 
+ * 
+ * @returns {Object}
+ */
+HTMLElement.prototype.getNode = function()
+{
+	return this.node
+}
+
 HTMLElement.prototype.addListener = function(event, cb)
 {
 	// W3C style 
@@ -425,12 +435,24 @@ HTMLElement.prototype.setHtml = function(html)
 }
 
 /**
+ * @description Appends innerHTML of object
+ * @param {String} html
+ */
+
+HTMLElement.prototype.appendHtml = function(html)
+{
+	this.setHtml(this.node.innerHTML + html)
+}
+
+/**
  * @description Appends object as child element
  * @param {Object} Object generated with util.createElement
  */
 HTMLElement.prototype.appendChild = function(o)
 {
-	if(this.node)
+	if(o.node && this.node)
+		this.node.appendChild(o.node)
+	else if(this.node)
 		this.node.appendChild(o)
 }
 

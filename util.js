@@ -14,7 +14,7 @@ util.trim = function(str, eraseAllSpace)
 	if(util.isUndef(str)) str = ''
 		
 	if(!util.isString(str))
-		str = new String(str)
+		str = new String()
 		
 	// remove all double space
 	var s = str.replace(/\s\s/g, ' ')
@@ -223,10 +223,4 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 	var end = limit < this.length ? ending : ''
 	return limited.toFormattedText(doFormat)+end
 }
-
-//alert(util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
-//	.toLimitedFormattedText(23))
-
-//alert('fits <a href="javascript:showPage()">in</a> as many b.v. words as. possible when first. <span>word in string </span> <div><p><span>is shorter then limit</span></p></div>'
-//	.toLimitedFormattedHTML(120))
 

@@ -91,6 +91,9 @@
 
 	A note on IE9 compatible CSS selectors:
 	
+	A static meta-tag is required:
+	<meta http-equiv="X-UA-Compatible" content="IE=8">
+	
 	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
 	write compatible selectors like:
 	

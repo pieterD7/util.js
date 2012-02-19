@@ -93,7 +93,3 @@ Date.prototype.format = function(format)
 	}
 	return s.join('')
 }
-
-// Week number 53 ok:
-//alert(new Date('2009', '11', '31').getWeek())
-

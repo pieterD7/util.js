@@ -90,7 +90,6 @@ util.debug.log = function(err)
 	var state = 0
 	if(util.isFunction(util.debug.getAppState))
 		state = util.debug.getAppState()
-	
 	var htmlstr = '<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
 	'<div class="debugMsgText">' + util.defaultStrings.debugMsg.toFormattedText() + '<br/>' + 
 	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +

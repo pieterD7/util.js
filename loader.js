@@ -126,10 +126,11 @@ var util = util || {
            	/* module for browsers */
            	'display', 'datePicker', 
            	'crumbs', 'chatbox', 
-           	'dnd',
+           	'dnd', 
            	
            	/* map functions */
            	'map', 'geohash',
+           	'gmaps'
            ]
 	,
 
@@ -219,6 +220,9 @@ var util = util || {
 						util[m]._init()
 			})
 
+			while(cb = util._onprepare.pop())
+				this.onLoadCompleted(cb)
+			
 			util._t = setInterval("util.waitForLanguageLoaded();", 50)	
 		}		
 	},
@@ -231,8 +235,7 @@ var util = util || {
 		if(util.isObject(util.lang))
 		{	
 			clearInterval(util._t)
-			while(cb = util._onprepare.pop())
-				this.onLoadCompleted(cb)
+			
 			while(cb = util._onloads.pop())
 				this.onLoadCompleted(cb)
 		}
@@ -262,10 +265,7 @@ var util = util || {
  */
 util.ready = function(cb)
 {
-	if(document.readyState == 'complete' || document.readyState == 'interactive')
-		util.onLoadCompleted(cb)
-	else
-		util._onloads.push(cb)
+	util._onloads.push(cb)
 }
 
 /**
