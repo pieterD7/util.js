@@ -130,7 +130,7 @@ var util = util || {
            	
            	/* map functions */
            	'map', 'geohash',
-           	'gmaps'
+           	'gmaps', 'finishloading'
            ]
 	,
 
@@ -207,13 +207,14 @@ var util = util || {
 	 */
 	waitForLoadCompleted: function()	
 	{
-		if(document.readyState === 'complete')
+		if(document.readyState === 'complete' &&
+			util.finishloading)
 		{
 			clearInterval(util._t)
 			
 			util.initLang()
 
-			util.forEach(util._mods.forEach, function(m)
+			util.forEach(util._mods, function(m)
 			{
 				if(typeof util[m] == 'object')
 					if(typeof util[m]._init == 'function')
