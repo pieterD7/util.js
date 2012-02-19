@@ -10,7 +10,7 @@ util.gmaps = {
 
 util.gmaps.initialize = function(sel)
 {   
-    _s(sel).style("width:500px;height:300px;")
+    _s(sel).style("width:500px;height:300px;float:left;")
 	var map = new google.maps.Map(_s(sel).getNode(), util.gmaps.goptions);
 }
 util.prepare(function()

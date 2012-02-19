@@ -38,7 +38,7 @@ util.debug = {
 		})
 		return ret
 	},
-	msgContainerSel: null,
+	msgContainerSel: "div",
 	onError:[],
 	_init: function()
 	{
@@ -90,19 +90,22 @@ util.debug.log = function(err)
 	var state = 0
 	if(util.isFunction(util.debug.getAppState))
 		state = util.debug.getAppState()
+		
 	var htmlstr = '<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
 	'<div class="debugMsgText">' + util.defaultStrings.debugMsg.toFormattedText() + '<br/>' + 
 	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
 	state + '<br/>' + 
-	'<pre>' + err.stack + '</pre></div>'	
+	'<pre>' + (err.stack || err.message) + '</pre></div>'	
 
-	if(util.isString(util.debug.msgContainerSel) &&
-		_s(util.debug.msgContainerSel))
-		_s(util.debug.msgContainerSel)
-			.setHtml(
-					htmlstr
-			)
-			
+	if(util.isObject(utilConfig) && utilConfig.debug)
+	{
+		if(util.isString(util.debug.msgContainerSel) &&
+			_s(util.debug.msgContainerSel))
+			_s(util.debug.msgContainerSel)
+				.setHtml(
+						htmlstr
+				)
+	}		
 	util.forEach(this.onError,
 		function(onErr)
 		{

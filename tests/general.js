@@ -68,6 +68,8 @@ util.ready(function()
 	// Strings
 	util.test.assertStr(util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
 			.toLimitedFormattedText(23),
-	"Fits in. As many words ...", "Test14: string formatting")		
+	"Fits in. As many words ...", "Test14: string formatting")
+	
+	//throw(new util.error("ERROR_OK"))
 
 })

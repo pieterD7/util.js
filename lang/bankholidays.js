@@ -56,10 +56,10 @@ util.holidays.getHolidays = function(year)
 		if(util.holidays.options.get(util.holidays.flags.christian))
 			tHolis = tHolis.concat(cHolis)
 			
-		tHolis.forEach(function(holi)
+		util.forEach(tHolis, function(holi)
 		{
 			var day = null
-			if(util.isFunction(util.holidays[holi.calc]))
+			if(util.isObject(holi) && util.isFunction(util.holidays[holi.calc]))
 			{
 				day = util.holidays[holi.calc](year)
 			}
