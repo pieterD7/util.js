@@ -1,3 +1,7 @@
+div#tests				{
+						margin-left: 10px;
+						float:left;
+						}
 .debugMsgHeader			{
 						margin-top:20px;
 						background:#ff8800;

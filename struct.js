@@ -1,5 +1,6 @@
 /**
- * @param {Array} baseObject Put these objects in structure
+ * @param {Object} baseObject 
+ * @data {Array} Put these objects in structure
  * @returns {util.struct}
  */
 

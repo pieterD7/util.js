@@ -73,32 +73,32 @@ util.initLang = function()
 	{
 		/* this is only true if ulang eq utilConfig.defLocale 
 		 * because others need to be loaded yet */
-		util.curLang = ulang
-		strings =  _initLang(util._lang[ulang])
-		util.locale = util._locale[ulang]
-		util.defaultStrings = util._defaultStrings[ulang]
-		for(var i in strings)
-		{	
-			try
-			{
+		try
+		{		
+			util.curLang = ulang
+			strings =  _initLang(util._lang[ulang])
+			util.locale = util._locale[ulang]
+			util.defaultStrings = util._defaultStrings[ulang]
+			for(var i in strings)
+			{	
 				var o = _s(strings[i].sel)
-				if(util.isObject(o))
-				{
-					if(strings[i].html && o != 'store')
-						o.setHtml(strings[i].html)
-					else if(strings[i].value)
-						o.val(strings[i].value)
-					else if(o == 'store')
-						util.storeString(strings[i], ulang)
-				}
-			}
-			catch(e)
-			{
-				util.debug.log(i)
-			}
+					if(util.isObject(o))
+					{
+						if(strings[i].html && o != 'store')
+							o.setHtml(strings[i].html)
+						else if(strings[i].value)
+							o.val(strings[i].value)
+						else if(o == 'store')
+							util.storeString(strings[i], ulang)
+					}
+			}	
+			util.lang = util._lang[ulang]
+			util.bankholidays = util._bankholidays[ulang]
+		}
+		catch(e)
+		{
+			util.debug.log(i)
 		}	
-		util.lang = util._lang[ulang]
-		util.bankholidays = util._bankholidays[ulang]
 	}	
 	
 //	this.HttpStatus(util.getBaseUrl() + '/lang/' + ulang + '/lang_' + ulang + '.js', 

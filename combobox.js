@@ -47,13 +47,61 @@ util.combobox.prototype.refresh = function(value, list)
 	_l.removeChild(list)
 	var lastEl = _l.childNodes.lastChild
 
-	this.jsondata = util.toJson(this.dataFunc(value))
+//	if(!String(value).isEmpty())
+		this.jsondata = util.toJson(this.dataFunc(value))
+//	else
+//		this.jsondata = {}
+	
 	if(this.dropDir == 'up')
 		_l.insertBefore(this._updateList(), _l.childNodes[_l.childNodes.length-1])
 	else
 		_l.appendChild(this._updateList())		
 }
 
+util.combobox.prototype._createListItemIcon = function(c)
+{
+	if(this.combProj.itemUrlIconParams)
+	{
+		var sp = document.createElement('span')
+		var url = this.combProj.itemUrlIcon
+	
+		var item = document.createElement('a')
+		item.innerHTML = 'Wiki'
+
+		for(var ii = 0; ii < this.combProj.itemUrlIconParams.length; ii++)
+		{
+			if(!util.isUndef(this.jsondata.json[c][this.combProj.itemUrlIconParams[ii]]))
+			{
+				url = url.replace(/%/, this.jsondata.json[c][this.combProj.itemUrlIconParams[ii]])
+			}
+		}
+		item.setAttribute('href', url)
+		sp.appendChild(item)
+		return sp		
+	}
+}
+util.combobox.prototype._createListItemText = function(c)
+{
+	var item = document.createElement('a')
+	for(var i = 0; i < this.combProj.displayText.length; i++)
+	{
+		if(!util.isUndef(this.jsondata.json[c][this.combProj.displayText[i]]))
+		{
+			item.innerHTML += this.jsondata.json[c][this.combProj.displayText[i]] + " "
+		}
+	}
+	var url = this.combProj.itemUrl
+	for(var ii = 0; ii < this.combProj.itemUrlParams.length; ii++)
+	{
+		if(!util.isUndef(this.jsondata.json[c][this.combProj.itemUrlParams[ii]]))
+		{
+			url = url.replace(/%/, this.jsondata.json[c][this.combProj.itemUrlParams[ii]])
+		}
+	}
+	item.setAttribute('href', url)
+
+	return item
+}
 util.combobox.prototype._updateList = function()
 {
 	var list = document.createElement('ol')
@@ -70,30 +118,17 @@ util.combobox.prototype._updateList = function()
 			for(var c = 0; c < this.jsondata.json.length && c < max; c++)
 			{
 				var litem = document.createElement('li')
-				var item = document.createElement('a')
-				for(var i = 0; i < this.combProj.display.length; i++)
-				{
-					if(!util.isUndef(this.jsondata.json[c][this.combProj.display[i]]))
-					{
-						item.innerHTML += this.jsondata.json[c][this.combProj.display[i]] + " "
-					}
-				}
-				var url = this.combProj.itemUrl
-				for(var ii = 0; ii < this.combProj.itemUrlParams.length; ii++)
-				{
-					if(!util.isUndef(this.jsondata.json[c][this.combProj.itemUrlParams[ii]]))
-					{
-						url = url.replace(/%/, this.jsondata.json[c][this.combProj.itemUrlParams[ii]])
-					}
-				}
-				item.setAttribute('href', url)
+				var item2 = this._createListItemIcon(c)
+				var item = this._createListItemText(c)
 				litem.appendChild(item)
+				if(!util.isUndef(this.jsondata.json[c]['infoUrl']) && item2)
+					litem.appendChild(item2)
 				list.appendChild(litem)			
 			}
 		}
 		else
 		{
-			if(!util.isUndef(this.combProj.noDataHint))
+			if(	this.combProj.noDataHint)
 			{
 				list = document.createElement('ol')
 				var li = document.createElement('li')
@@ -111,6 +146,7 @@ util.combobox.prototype.display = function(hint)
 	combCont.setAttribute('class', 'combobox_container')
 	
 	var inp = util.createElement('input')
+	inp.setAttribute('type', 'text')
 	inp.setAttribute('class', 'combobox_input')
 	inp.setAttribute('value', hint)
 	
@@ -123,6 +159,12 @@ util.combobox.prototype.display = function(hint)
 		else if(inp.node.value && inp.node.value == hint)
 			inp.node.value = ''
 	})
+
+	inp.addListener('blur', function()
+	{
+		if(String(this.value).isEmpty())
+			this.value = hint
+	})	
 	
 	inp.addListener('click', function()
 	{

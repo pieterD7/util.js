@@ -4,6 +4,10 @@
 // modified by Pieter Hoekstra
 // Distributed under the MIT License
 
+/**
+ * @class 
+ */
+
 util.geohash = 
 {
 		BITS : [16, 8, 4, 2, 1],
@@ -56,7 +60,7 @@ util.geohash.calculateAdjacent = function(srcHash, dir) {
 }
 
 /**
- * @param {String} geohash Geo hash
+ * @param {String} geohash Geohash
  * @returns {Object}
  */
 util.geohash.decodeGeoHash = function(geohash) {

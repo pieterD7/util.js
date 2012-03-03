@@ -27,6 +27,22 @@ util.trim = function(str, eraseAllSpace)
 	return s.replace(/^\s|\s$/, '')
 }
 
+/**
+ * @description Escapes chracters special to RegExp()
+ * @returns {string}
+ */
+
+String.prototype.escapeRegExpSpecialChars = function()
+{	
+	var ret = String(this.toString())
+	var ar = ['+', '*', '(', ')', '[', ']', '?', '!', '{', '}']
+	util.forEach(ar, function(c)
+	{
+		ret = ret.replace(RegExp("\\"+c, "g"), '\\\\\\'+c)
+	})
+	return ret
+}
+
 String.prototype.findFirstNonTagChar = function()
 {
 	var pos = 0

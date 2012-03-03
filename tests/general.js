@@ -6,7 +6,7 @@ util.test = {
 util.test.strOut = function(msg)
 {
 	if(util.test.notify == 1)	
-		_s('div#tests').appendHtml("Test " + msg + " passed<br/>")	
+		_s('div#tests').appendHtml("Test " + msg + " <font color='lime'>passed</font><br/>")	
 }
 util.test.errOut = function(str1, msg)
 {
@@ -70,6 +70,8 @@ util.ready(function()
 			.toLimitedFormattedText(23),
 	"Fits in. As many words ...", "Test14: string formatting")
 	
-	//throw(new util.error("ERROR_OK"))
+	// Number
+	util.test.assertStr(Number(10000).format('integer'), "10.000", "Test15: number formatting")
+	throw(new util.error("ERROR_OK"))
 
 })

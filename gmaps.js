@@ -8,15 +8,22 @@ util.gmaps = {
 	} 
 }
 
-util.gmaps.initialize = function(sel)
+util.gmaps.setGMap = function(sel)
 {   
-    _s(sel).style("width:500px;height:300px;float:left;")
-	var map = new google.maps.Map(_s(sel).getNode(), util.gmaps.goptions);
+	if(util.isObject(google))
+	{
+		_s(sel).style("width:500px;height:300px;float:left;")
+		var map = new google.maps.Map(_s(sel).getNode(), util.gmaps.goptions);
+	}
 }
 util.prepare(function()
 {
-	util.gmaps.goptions = util.extend(util.gmaps.goptions,{
+	if(typeof google !== 'undefined' &&
+		util.isObject(google))
+	{
+		util.gmaps.goptions = util.extend(util.gmaps.goptions,{
 	      center: new google.maps.LatLng(52, 5.2),
 	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    })	
+	    })
+	}
 })

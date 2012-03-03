@@ -87,11 +87,41 @@ Array.prototype.unum = function(from, to, opt)
  */
 util.forEach = function(ar, cb)
 {
+	var br = false
 	if(util.isFunction(cb) && util.isObject(ar))
 	{
 		for(var c = 0; c < ar.length; c++)
 		{
-			cb(ar[c], c)
+			var r = cb(ar[c], c)
+			if(r === true)
+			{
+				br = true
+				break;
+			}
 		}
 	}
+	return br
+}
+
+/**
+ * @description Finds entries in array by id
+ * @param {regexp} name Text to find
+ * @param {string} id (Optional) Property to use for matching
+ */
+Array.prototype.find = function(name, id)
+{
+	var ret = new Array()
+	util.forEach(this, function(el)
+	{
+		if(util.isUndef(id))
+		{
+			if(String(el).match(RegExp(name)))
+				ret.push(el)
+		}
+		else if(el[id].match(RegExp(name)))
+		{
+			ret.push(el)
+		}
+	})
+	return ret
 }

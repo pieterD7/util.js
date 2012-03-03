@@ -18,7 +18,7 @@ util.langbar =
 util.langbar.hasLanguage = function(iso_code)
 {
 	var ret = false
-	this.langs.forEach(function(lang)
+	util.forEach(this.langs, function(lang)
 	{
 		if(lang.iso_code == iso_code)
 			ret = true;
@@ -41,7 +41,7 @@ util.langbar.setLanguages = function(ar)
 {
 	if(util.isObject(ar))
 	{
-		ar.forEach(function(lang)
+		util.forEach(ar, function(lang)
 		{
 			util.langbar.langs.push({iso_code:lang.iso_code, label:lang.label})
 		})
@@ -70,7 +70,7 @@ util.langbar.selectLang = function(iso_code)
 			util.lang = util._lang[iso_code]
 			util.curLang = iso_code
 			util.langbar.update()
-			this.onUpdate.forEach(function(cb)
+			util.forEach(this.onUpdate, function(cb)
 			{
 				cb()
 			})
@@ -105,7 +105,7 @@ util.langbar.display = function(sel)
 	if(util.isString(sel) && _s(sel))
 	{
 		this.sel = sel
-		this.langs.forEach(function(lang)
+		util.forEach(this.langs, function(lang)
 		{
 			if(!String(lang.iso_code)
 				.match(new RegExp("^" + util.curLang + "$")))

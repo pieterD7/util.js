@@ -126,7 +126,7 @@ var util = util || {
            	/* module for browsers */
            	'display', 'datePicker', 
            	'crumbs', 'chatbox', 
-           	'dnd', 
+           	'dnd', 'hud', 'menu',
            	
            	/* map functions */
            	'map', 'geohash',

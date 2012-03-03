@@ -10,7 +10,7 @@ util._defaultStrings.en =
 
 	error:{
 		error_create_database_instance: "Error opening database"},	
-
+		
 	year: 		{s:'year',p:'+s'},
 	month:		{s:'month',p:'+s'},
 	week: 		{s:'week',p:'+s'},
