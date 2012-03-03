@@ -363,7 +363,13 @@ util.toJson = function(str)
 				.replace(/:\s*'/g, ':"')
 				.replace(/'\s*:/g, '":')
 				.replace(/'\s*}/g, '"}')
-				
+				.replace(/,\s*'/g, ',"')
+				.replace(/'\s*,/g, '",')
+				.replace(/\]\s*'/g, ']"')
+				.replace(/'\s*\]/g, '"]')
+				.replace(/\[\s*'/g, '["')
+				.replace(/\[\s*'/g, '["')
+
 		var json = JSON.parse(inp)	
 		return json
 	}

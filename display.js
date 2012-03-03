@@ -38,22 +38,33 @@ util.getStyle = function(el,styleProp)
 		var y = x.currentStyle[styleProp];
 	else if (window.getComputedStyle)
 		var y = document.defaultView.getComputedStyle(x,null).getPropertyValue(styleProp);
-	var r = String(y).replace(/[a-z]/g, '');
-	return Number(r)
+	return y
 }	
+
+util.getScreenX = function()
+{
+	return document.body.clientWidth || document.documentElement.clientWidth	
+}
 
 util.initSpreadColToMax = function()
 {
 	var cols = _sa('.col')
-	var _l = getScreenX()
-	var colWidth = util.getCumulativeOffset(cols[1]).x + 
-					util.getStyle(cols[0], 'margin-right') +
-					util.getStyle(cols[0], 'margin-left');
-	util.forEach(cols, function(col)
+	if(cols.length > 1)
 	{
-		_l -= colWidth
-	})
-	if(_l > colWidth)
-		_s('.spreadColToMax').style('width:' + (_l + colWidth) +  'px;')
+		var _l = util.getScreenX() - (util.getCumulativeOffset(cols[1]).x - parseInt(util.getStyle(cols[0], 'width') || 0))
+		var colWidth = util.getCumulativeOffset(cols[1]).x  +
+						parseInt(util.getStyle(cols[0], 'margin-right') || 0) +
+						parseInt(util.getStyle(cols[0], 'margin-left') || 0)
+							
+		util.forEach(cols, function(col)
+		{
+			_l -= colWidth
+		})
+	
+		if(_l > 0)
+			_s('.spreadColToMax').style(
+					'width:' + (_l + colWidth) +  'px;' +
+					'max-width:' +  (_l + colWidth) +  'px;')
+	}
 }
 

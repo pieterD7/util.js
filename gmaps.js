@@ -12,7 +12,6 @@ util.gmaps.setGMap = function(sel)
 {   
 	if(util.isObject(google))
 	{
-		_s(sel).style("width:500px;height:300px;float:left;")
 		var map = new google.maps.Map(_s(sel).getNode(), util.gmaps.goptions);
 	}
 }
