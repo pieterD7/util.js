@@ -62,7 +62,7 @@ util.langbar.selectLang = function(iso_code)
 				var o = _s(strings[i].sel) || 'store'
 					if(strings[i].html && o != 'store')
 						o.setHtml(strings[i].html)
-					else if(strings[i].value)
+					else if(strings[i].value && o != 'store')
 						o.val(strings[i].value)
 					else if(o == 'store')
 						util.storeString(strings[i], iso_code)
@@ -72,7 +72,7 @@ util.langbar.selectLang = function(iso_code)
 			util.langbar.update()
 			util.forEach(this.onUpdate, function(cb)
 			{
-				cb()
+				cb(iso_code)
 			})
 		}
 	}

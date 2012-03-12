@@ -29,6 +29,11 @@ var util = util || {
 		return this
 	},
 	
+	/* kind of user agent */
+	isTouchDevice: false,
+	
+	isCompatibleUA: false,
+	
 	/* translations */
 	_lang: [],
 	
@@ -50,7 +55,7 @@ var util = util || {
 	        'http', 'selector', 
 	        'date', 'time', 
 	        'unum', 'combobox',
-	        'event', 
+	        'event', 'sprintf',
 	        
 	        /* util proper */
 	        'util', 
@@ -124,13 +129,15 @@ var util = util || {
            	'lang/com_lang', 
            	
            	/* module for browsers */
-           	'display', 'datePicker', 
+           	'css', 'datePicker', 
            	'crumbs', 'chatbox', 
            	'dnd', 'hud', 'menu',
+           	'icons', 'placeholder',
+           	'cpath',
            	
            	/* map functions */
            	'map', 'geohash',
-           	'gmaps', 'finishloading'
+           	'gmaps', 'tests/general', 'finishloading'
            ]
 	,
 
@@ -189,17 +196,39 @@ var util = util || {
 	
 	/**
 	 * @memberOf util
+	 * @descripton sanity check
+	 */
+	sanityCheck: function()
+	{
+		if(! (	typeof document.querySelector === 'function' || 
+				typeof document.querySelector === 'object'))
+		{
+			alert("Check for document.querySelector FAILED.\nPlease upgrade your browser")
+		}
+		else
+		{
+			util.isCompatibleUA = true
+			util.isTouchDevice = "onTouchStart" in document.documentElement
+		}
+	},
+	
+	/**
+	 * @memberOf util
 	 * @description Util.js main init function
 	 */
 	initUtil: function()
 	{	
-		var base = ''
-		url = util.getBaseUrl()
-		for(var c = 0; c < util._mods.length; c++)
+		this.sanityCheck()
+		if(util.isCompatibleUA)
 		{
-			this.loadScript(url + util._mods[c])
+			var base = ''
+				url = util.getBaseUrl()
+				for(var c = 0; c < util._mods.length; c++)
+				{
+					this.loadScript(url + util._mods[c])
+				}
+			util._t = setInterval("util.waitForLoadCompleted();", 50)
 		}
-		util._t = setInterval("util.waitForLoadCompleted();", 50)
 	},
 	
 	/**

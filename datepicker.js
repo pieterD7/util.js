@@ -56,10 +56,13 @@ util.datePicker.init = function()
 util._datePicker.prototype.valueToDate = function()
 {
 	var val = String(this.data.node.value)
-	this.data.date = new Date(val)
+	if(val.isEmpty())
+		this.data.date = new Date()
+	else
+		this.data.date = new Date(val)
 	if( isNaN(this.data.date.getMonth()))
 		throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
-	this.data.value = 0
+	this.data.node.value = this.data.date.toString()
 	this.data.format = util.locale.datePickerDateFormat
 }
 
@@ -73,6 +76,7 @@ util._datePicker.prototype.displayWeeks = function()
 	var selectVal = this
 	div.addListener('click', function()
 	{
+		// echo value
 		selectVal.hide()
 	})	
 	div.setHtml(this.data.date.format(util.locale.datePickerDateFormat).toUpperCase())
@@ -124,6 +128,7 @@ util._datePicker.prototype.displayWeeks = function()
 		}
 		ret.appendChild(d.node)		
 	}
+
 	return ret.node
 }
 
@@ -135,17 +140,28 @@ util._datePicker.prototype.display = function()
 
 	div.setHtml('')
 	div.appendChild(this.displayWeeks())
+	
 	div.style("position:absolute;left:" + pos.x + "px;top:" + pos.y + 
 			"px;width:" + document.defaultView.getComputedStyle(this.data.node,"").getPropertyValue("width") +
 			";min-height:" + document.defaultView.getComputedStyle(this.data.node,"").getPropertyValue("height") + 
 			";");
 	div.setAttribute('class', 'datePickerBackground')
 	_s('body').appendChild(div.node)
+
+	util.forEach(_sa(".datePickerDaySelect"), function(el)
+	{
+		el.addEventListener("click", function()
+		{
+			// select day
+//			alert(this.innerHTML)
+		})
+	})	
 }
 
 util._datePicker.prototype.hide = function()
 {
 	this.data.state = 'closed'
+	this.valueToDate()
 	_s('body').node.removeChild(_s('body').node.lastChild)
 	this.data.node.setAttribute('style', 'display:inline;')
 }
@@ -160,9 +176,9 @@ util._datePicker.prototype.hide = function()
 	)
 	util.datePicker.initInputTypeDate()
  */
-util.datePicker.initInputTypeDate = function()
+util.datePicker.initInputTypeDate = function(sel)
 {
-	var inps = _sa('input[type=date]')
+	var inps = _sa(sel)
 	util.forEach(inps, function(obj)
 	{
 		var options = new util.struct([util.options], {value:util.datePicker.options.data.value})
@@ -184,7 +200,7 @@ util.datePicker.initInputTypeDate = function()
 		util.datePicker.dPickers.push(dp)
 		obj.setAttribute('rel', util.datePicker.dPickers.length)
 
-		obj.addListener('blur', function()
+		obj.addEventListener('blurNO', function()
 		{
 			var my = this
 			util.eventHandler(function()
@@ -198,7 +214,7 @@ util.datePicker.initInputTypeDate = function()
 				}								
 			})
 		})
-		obj.addListener('focus', function()
+		obj.addEventListener('focus', function()
 		{
 			var my = this
 			util.eventHandler(function()
@@ -230,5 +246,4 @@ util.ready(function()
 	util.datePicker.options.set(
 		[util.datePicker.flags.expand]
 	)
-	util.datePicker.initInputTypeDate()
 })

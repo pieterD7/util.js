@@ -3,75 +3,124 @@
 util.test = {
 	notify: 1
 }
-util.test.strOut = function(msg)
+util.test.strOut = function(msg, n)
 {
-	if(util.test.notify == 1)	
-		_s('div#tests').appendHtml("Test " + msg + " <font color='lime'>passed</font><br/>")	
+	if(util.test.notify == 1 && _s('div#tests'))	
+		_s('div#tests').appendHtml(msg + " <a>passed (" + n + "/" + n + ")</a><br/>")	
 }
 util.test.errOut = function(str1, msg)
 {
-	_s('div#tests').appendHtml("<font color='red'>TEST " + msg + " FAILED:</font>" + str1 + "<br/>")
+	if(_s('div#tests'))
+		_s('div#tests').appendHtml("<font color='red'>TEST " + msg + " FAILED:</font>" + "<br/>")
 }
-util.test.assertStr = function(str1, str2, msg)
-{		
-	if(!String(str1).isEmpty() && String(str1).match(new RegExp("^"+str2+"$")))
+util.test.runTests = function(ts)
+{
+	var pass = false
+	util.forEach(ts.tsts, function(t)
 	{
-		this.strOut(msg)
+		if(util.isFunction(t.test))
+		{
+			pass = t.test(t.params[0], t.params[1])
+			if(! pass)
+				util.test.errOut(t.params[0], ts.msg)
+		}
+	})
+	if(pass)
+		util.test.strOut(ts.msg, ts.tsts.length)
+}
+util.test.assertStr = function(str1, str2)
+{		
+	if(!String(str1).isEmpty() && str1 == str2)
+	{
+		return true
 	}
 	else
-		this.errOut(str1, msg)
+		return false
 }
-util.test.assertBool = function(b1, b2, msg)
+util.test.assertBool = function(b1, b2)
 {
 	if(util.isBool(b1) && util.isBool(b2) && b1 == b2)
-		this.strOut(msg)
+		return true
 	else
-		this.errOut(b1, msg)
+		return false
+}
+
+util.test.assertNotNill = function(a)
+{
+	if(!util.isUndef(a))
+		return true
+	else
+		return false
 }
 
 util.ready(function()
 {
+	// Sanity check
+	util.test.runTests({
+		tsts:[{test:util.test.assertNotNill, params:[document.querySelector]}],
+		msg: 'Check1: document.querySelector'
+	})	
+	
 	var d = util.createElement('div')
 	d.addClassName('test1')
 	d.addClassName('test2')
 	d.addClassName('test1')
-	util.test.assertStr(d.getClassName(), "test1 test2", "Test1: addClassName()")
-
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[d.getClassName(), "test1 test2"]}],
+		msg: "Test1: addClassName()"
+	})
+	
 	var n = util.toJson("[{'name':'pieter\'s'},{'name':'lo\\\\pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")
-	util.test.assertStr(n[0].name, "pieter's", "Test2: quotes in json input")
-	util.test.assertStr(n[2].name, 'Kilo zei:"Hoera!"', 'Test3: quotes in json input')
-	util.test.assertStr(n[1].name, "lo\\\\pi", 'Test4: slashes in json input')
-
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[n[0].name, "pieter's"]},
+		      {test:util.test.assertStr, params:[n[2].name,'Kilo zei:"Hoera!"']},
+		      {test:util.test.assertStr, params:[n[1].name, "lo\\pi"]}],
+		msg: "Test2: quotes in json input"
+	})
 	var s = [1, 2, 3, 3].unique().join()
-	util.test.assertStr(s, "1,2,3", "Test5: array")
+	//util.test.assertStr(s, "1,2,3", "Test5: array")
 
-	var s = [{name:'ik'},{name:'ik'}, {name:'pieter'}].unique('name').joinEach('name', '|')
-	util.test.assertStr(s, "ik|pieter", 'Test6: array')
+	var s2 = [{name:'ik'},{name:'ik'}, {name:'pieter'}].unique('name').joinEach('name', '|')
+	//util.test.assertStr(s, "ik|pieter", 'Test6: array')
+	
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[s, "1,2,3"]},
+		      {test:util.test.assertStr, params:[s2, "ik|pieter"]}],
+		msg: 'Test3: array'
+	})
+
 
 	var s = util.toDirection(5.4, 53, 5.3, 52)
-	util.test.assertStr(s, "s", 'Test7: richting')
+
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[s, "s"]}],
+		msg: 'Test4: direction'		
+	})
 
 	var s = util.toXml("<tag>&amp;</tag>").getElementsByTagName('tag')[0].childNodes[0].nodeValue
-	util.test.assertStr(s, "&", 'Test8: ampersand in xml input')
-	
-	// Week number 53 ok:
-	util.test.assertStr(new Date('2009', '11', '31').getWeek(), "53", "Test9: iso weeknr 53")
-	// Week nummer 1 ok:
-	util.test.assertStr(new Date('2014', '11', '29').getWeek(), "1", "Test10: iso weeknr 1")
-	// Week nummer 52 ok:
-	util.test.assertStr(new Date('2012', '0', '1').getWeek(), "52", "Test11: iso weeknr 52")
-	
-	// Validatie:
-	util.test.assertBool(util.trim(null).isEmpty(), true, "Test12 booleans")
-	util.test.assertBool(util.isObject(null), false, "Test13 booleans")
-	
-	// Strings
-	util.test.assertStr(util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
-			.toLimitedFormattedText(23),
-	"Fits in. As many words ...", "Test14: string formatting")
-	
-	// Number
-	util.test.assertStr(Number(10000).format('integer'), "10.000", "Test15: number formatting")
-	throw(new util.error("ERROR_OK"))
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[s, "&"]}],
+		msg: 'Test5: ampersand in xml input'		
+	})
 
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[new Date('2009', '11', '31').getWeek(), "53"]},
+		      {test:util.test.assertStr, params:[new Date('2014', '11', '29').getWeek(), "1"]},
+		      {test:util.test.assertStr, params:[new Date('2012', '0', '1').getWeek(), "52"]}],
+		msg: 'Test6: weeknumber'		
+	})	
+
+	util.test.runTests({
+		tsts:[{test:util.test.assertBool, params:[util.trim(null).isEmpty(), true]},
+		      {test:util.test.assertBool, params:[util.isObject(null), true]}],
+		msg: 'Test7: booleans'		
+	})
+
+	util.test.runTests({
+		tsts:[{test:util.test.assertStr, params:[util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
+		                             			.toLimitedFormattedText(23), "Fits in. As many words ..."]},
+		      {test:util.test.assertStr, params:[Number(10000).format('integer'), "10.000"]}],
+		msg: 'Test8: string formatting'		
+	})
+	
 })

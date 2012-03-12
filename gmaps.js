@@ -8,7 +8,7 @@ util.gmaps = {
 	} 
 }
 
-util.gmaps.setGMap = function(sel)
+util.gmaps.setMap = function(sel)
 {   
 	if(util.isObject(google))
 	{

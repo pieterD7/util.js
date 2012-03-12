@@ -123,5 +123,7 @@ Array.prototype.find = function(name, id)
 			ret.push(el)
 		}
 	})
-	return ret
+	if(ret[0])
+		return ret
+	return null
 }

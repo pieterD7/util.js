@@ -1,7 +1,7 @@
 // geohash.js
 // Geohash library for Javascript
 // (c) 2008 David Troy
-// modified by Pieter Hoekstra
+// utiljs module by Pieter Hoekstra
 // Distributed under the MIT License
 
 /**

@@ -60,13 +60,13 @@ util.combobox.prototype.refresh = function(value, list)
 
 util.combobox.prototype._createListItemIcon = function(c)
 {
-	if(this.combProj.itemUrlIconParams)
+	if(this.combProj.itemUrlIconParams && this.combProj.itemUrlIcon)
 	{
 		var sp = document.createElement('span')
 		var url = this.combProj.itemUrlIcon
 	
 		var item = document.createElement('a')
-		item.innerHTML = 'Wiki'
+		item.innerHTML = util.lang.comboBox_iconText
 
 		for(var ii = 0; ii < this.combProj.itemUrlIconParams.length; ii++)
 		{
@@ -148,27 +148,12 @@ util.combobox.prototype.display = function(hint)
 	var inp = util.createElement('input')
 	inp.setAttribute('type', 'text')
 	inp.setAttribute('class', 'combobox_input')
+	inp.addClassName('valueishint')
 	inp.setAttribute('value', hint)
 	
 	var list = this._updateList()
 
-	inp.addListener('focus', function()
-	{
-		if(this.value && this.value == hint)
-			this.value = ''
-		else if(inp.node.value && inp.node.value == hint)
-			inp.node.value = ''
-	})
-
-	inp.addListener('blur', function()
-	{
-		if(String(this.value).isEmpty())
-			this.value = hint
-	})	
-	
-	inp.addListener('click', function()
-	{
-	})
+	util.placeholder.addListeners(inp, hint)
 	
 	inp.addListener('keyup', function()
 	{

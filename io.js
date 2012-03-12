@@ -383,7 +383,7 @@ util.toXml = function(str)
 {
    var p = null
    var xml = ''
-   if(util.isObject(window.DOMParser))
+   if(util.isFunction(window.DOMParser))
    {
 	   p = new DOMParser()
 	   xml = p.parseFromString(str, "text/xml");	   
@@ -419,11 +419,6 @@ HTMLElement.prototype.getNode = function()
 	return this.node
 }
 
-HTMLElement.prototype.addListener = function(event, cb)
-{
-	// W3C style 
-	this.node.addEventListener(event, cb, false)
-}
 /**
  * @description Sets innerHTML of object
  * @param {String} html
@@ -570,10 +565,45 @@ HTMLElement.prototype.addClassName = function(className)
 			this.node.setAttribute('class', class_)
 	}
 }
+/**
+ * @description Gets class name
+ */
 HTMLElement.prototype.getClassName = function()
 {
 	if(!util.isUndef(this.node))
 		return this.node.getAttribute('class')
+}
+
+/**
+ * @description Removes class name from class attribute
+ * 
+ */
+
+HTMLElement.prototype.removeClassName = function(className)
+{
+	var na = []
+	var str = ''
+	var _names = this.node.getAttribute('class')
+	if(_names)
+	{
+		na = _names.split(' ')
+	}
+	util.forEach(na, function(name)
+	{
+		str += '.' + name 
+	})
+	str = str.replace(RegExp(String("." + className).escapeRegExpSpecialChars()), '')
+		.replace(/[.]/g, ' ')
+	this.node.setAttribute('class', str)
+}
+
+/**
+ * @description Returns filename from document.location.pathname or empty string
+ * @returns {String} filename
+ */
+util.getDocumentNameFromUrl = function()
+{
+	return document.location.pathname.replace(/^.*[\\\/]/, '')	
 }
 
 /**

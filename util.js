@@ -240,3 +240,16 @@ String.prototype.toLimitedFormattedText = function(limit, ending, doFormat)
 	return limited.toFormattedText(doFormat)+end
 }
 
+/**
+ * @description Tests if strings match
+ * @param {String }str
+ * @param {String} opt
+ * @returns {Boolean}
+ */
+
+String.prototype.equals = function(str, opt)
+{
+	if(this.match(RegExp("^" + String(str).escapeRegExpSpecialChars() + "$", opt)))
+		return true
+		
+}
