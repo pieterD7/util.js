@@ -4,9 +4,11 @@
 util._lang.nl = 
 {
 	appName:		'Spelletjes',	
-	submit:			'Zeg het',
+	cardsTitle:		'hartenjagen',	
+	chatSubmit:		'Zeg het',
 	
-	hud_intro: 'Ik ben Hud. Zeg me wat je wilt...',	
-	hud_no_data_hint: 'of een <a href="javascript:void()">overzicht</a> van de mogelijkheden'
+	hud_intro: 'Zoeken...',	
+	hud_no_data_hint: 'of bladeren door het <a href="javascript:util.toggle(\'#sitemap\')">overzicht</a>.',
+	comboBox_iconText: 'Wiki'	
 	
 }
