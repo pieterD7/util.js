@@ -540,12 +540,7 @@ HTMLElement.prototype.reset = function()
 		this.node.reset()
 }
 
-/**
- * @description Adds classname to this element. Keeps classnames and 
- * checks if the classname is already applied
- * @param {String} className Name of class 
- */
-HTMLElement.prototype.addClassName = function(className)
+HTMLElement.prototype.hasClassName = function(cls)
 {
 	var na = []
 	var str = ''
@@ -558,11 +553,23 @@ HTMLElement.prototype.addClassName = function(className)
 	{
 		str += '.' + name 
 	})
-	if(!String(str).match(RegExp('.' + className)))
+	if(String(str).match(RegExp('.' + cls)))
+		return true
+	return false
+}
+
+/**
+ * @description Adds classname to this element. Keeps classnames and 
+ * checks if the classname is already applied
+ * @param {String} className Name of class 
+ */
+HTMLElement.prototype.addClassName = function(className)
+{
+
+	if(!this.hasClassName(className))
 	{
-		var class_ = util.trim(na.join(' ') + ' ' + className)
-		if(!class_.isEmpty())
-			this.node.setAttribute('class', class_)
+		var class_ = util.trim(this.node.getAttribute('class'))
+		this.node.setAttribute('class', class_ + ' ' + className	)
 	}
 }
 /**

@@ -1,8 +1,9 @@
 /**
  * @class
- * @description HUD
+ * @description hud
  * @example
- {	"icons":[{
+ {	"cpath":"kWs %",
+ 	"icons":[{
   		"name":"Cardgame", 
   		"img":"medium/cardgame.png", 
   		"url":"cardgame.html", 
@@ -26,7 +27,7 @@
 		"name":"Array",
 		"synos":["utiljs"],
 		"sitemapEntry":true,
-		"hudEntry":true
+		"hudEntry":true,
 		"cpath":"Da"},
 		{
 		"infoUrl":"javascript:app.registeredMenuHandler2",

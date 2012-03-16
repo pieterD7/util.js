@@ -1,7 +1,8 @@
 /**
  * @class
  * cpath
- * Module to store clickpaths locally and retrieve them w/ the consent of the end user 
+ * @descripton Module to store clickpaths locally and retrieve 
+ * them w/ the consent of the end user 
  */
 
 util.cpath = {
@@ -13,8 +14,8 @@ util.cpath.pushCPath = function(str)
 {
 	var now = new Date()
 	var o = {
-		time:(	now.getFullYear()	+	' ' +
-				now.getMonth()+1) 	+ 	'-' + 
+		time:	now.getFullYear()	+	' ' +
+				(now.getMonth()+1) 	+ 	'-' + 
 				now.getDate() 		+ 	' ' + 
 				now.getHours() 		+ 	':' + 
 				now.getMinutes() 	+ 	':' +
@@ -29,13 +30,13 @@ util.cpath.pushCPath = function(str)
  */
 util.cpath.storePath = function()
 {
-	
+
 }
 
 util.ready(function()
 {
 	if(window.attachEvent)
 		window.attachEvent("onbeforeunload", util.cpath.storePath)
-	else
+	else if(window.addEventListener)
 		window.addEventListener('beforeunload', util.cpath.storePath)	
 })

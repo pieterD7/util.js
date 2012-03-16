@@ -85,8 +85,9 @@ util.getScreenY = function()
 }
 
 /**
- * @description adds space available to the right of the one element with 
- * 	the classname spreadColToMax applied
+ * @description Adds space available to the right of the 
+ * one element width the classname spreadColToMax applied 
+ * w/ width of sel excluded 
  * @param {string} sel
  */
 
