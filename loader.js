@@ -56,6 +56,7 @@ var util = util || {
 	        'date', 'time', 
 	        'unum', 'combobox',
 	        'event', 'sprintf',
+	        'json',
 	        
 	        /* util proper */
 	        'util', 

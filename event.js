@@ -1,35 +1,39 @@
-/**
- * @description Abstract handler with try/catch
- * @param {function} cb Callback
- */
-util.eventHandler = function(cb)
-{
-	if(util.isFunction(cb))
+(function () {
+    "use strict";
+
+	/**
+	 * @description Abstract handler with try/catch
+	 * @param {function} cb Callback
+	 */
+	util.eventHandler = function(cb)
 	{
-		try
+		if(util.isFunction(cb))
 		{
-			return cb()
-		}
-		catch(err)
-		{
-			util.debug.log(err)
+			try
+			{
+				return cb()
+			}
+			catch(err)
+			{
+				util.debug.log(err)
+			}
 		}
 	}
-}
-
-util.fireEvent = function(element, event)
-{
-    if (document.createEventObject)
-    {
-	    // dispatch for IE
-	    var evt = document.createEventObject();
-	    return element.fireEvent('on'+event,evt)
-    }
-    else
-    {
-	    // dispatch for firefox + others
-	    var evt = document.createEvent("HTMLEvents");
-	    evt.initEvent(event, true, true ); // event type,bubbling,cancelable
-	    return !element.dispatchEvent(evt);
-    }
-}
+	
+	util.fireEvent = function(element, event)
+	{
+	    if (document.createEventObject)
+	    {
+		    // dispatch for IE
+		    var evt = document.createEventObject();
+		    return element.fireEvent('on'+event,evt)
+	    }
+	    else
+	    {
+		    // dispatch for firefox + others
+		    var evt = document.createEvent("HTMLEvents");
+		    evt.initEvent(event, true, true ); // event type,bubbling,cancelable
+		    return !element.dispatchEvent(evt);
+	    }
+	}
+})()

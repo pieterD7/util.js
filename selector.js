@@ -2,28 +2,37 @@
  * 
  */
 
-/**
- * @param {String} CSS selector
- * @returns {HTMLElement} 
- */
-function _s(sel)
-{
-	if(typeof sel === 'string')
+var selector = {};
+
+(function () {
+    "use strict";
+    
+	/**
+	 * @param {String} CSS selector
+	 * @returns {HTMLElement} 
+	 */
+	selector._s = function (sel)
 	{
-		var e = document.querySelector(sel)
-		if(e)
+		if(typeof sel === 'string')
 		{
-			return new HTMLElement(e)	
+			var e = document.querySelector(sel)
+			if(e)
+			{
+				return new HTMLElement(e)	
+			}
 		}
 	}
-}
-	
-/**
- * @param {String} CSS selector
- * @returns {Array}
- */
-function _sa(sel)
-{
-	if(typeof sel === 'string')	
-		return document.querySelectorAll(sel)
-}
+		
+	/**
+	 * @param {String} CSS selector
+	 * @returns {Array}
+	 */
+	selector._sa = function(sel)
+	{
+		if(typeof sel === 'string')	
+			return document.querySelectorAll(sel)
+	}
+})();
+
+_s = selector._s
+_sa = selector._sa
