@@ -38,6 +38,7 @@ util.datePicker = {
 	     * 4 expandvalueonfocus Expand node values to format on focus eg not on load
 	     * 5 expandtoholidayformat Expand to util.locale.datePickerHolidayFormat
 		 * 6 expandenabledrag Enables dropdown list to be scrolled by dragging on mobile devices
+		 * 7 expandshowweeknumber Shows weeknumber column in dropdown list
 		 */
 		this.flags =
 			
@@ -46,7 +47,8 @@ util.datePicker = {
 		 'showholidays', // Show holidays in dropdown, eg of util.holidays.list 
 	     'expandvalueonfocus', // Expand node values to format on focus eg not on load
 	     'expandtoholidayformat',	// Expand to util.locale.datePickerHolidayFormat
-		 'expandenabledrag'	// Enables dropdown list to be scrolled by dragging on mobile devices
+		 'expandenabledrag',	// Enables dropdown list to be scrolled by dragging on mobile devices
+	     'expandshowweeknumber' // Shows weeknumber column
 		  ].unum()
 		 /**
 		  * @field
@@ -59,10 +61,12 @@ util.datePicker = {
 	util._datePicker.prototype.valueToDate = function()
 	{
 		var val = String(this.data.node.value)
+	
 		if(val.isEmpty())
 			this.data.date = new Date()
 		else
 			this.data.date = new Date(val)
+		
 		if( isNaN(this.data.date.getMonth()))
 			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
 		this.data.node.value = this.data.date.toString()
@@ -196,8 +200,10 @@ util.datePicker = {
 					options:options,
 					format:util.locale.datePickerDateFormat,
 					formatshort:util.locale.datePickerDateFormatShort})
-			
-			dp.valueToDate()
+			if(!util.datePicker.options.get(util.datePicker.flags.expandvalueonfocus))
+			{
+				dp.valueToDate()
+			}
 			if(	!String(obj.value).isEmpty() && 
 				dp.data.options.get(util.datePicker.flags.expand) && 
 				!dp.data.options.get(util.datePicker.flags.expandonfocus))
@@ -205,7 +211,7 @@ util.datePicker = {
 			util.datePicker.dPickers.push(dp)
 			obj.setAttribute('rel', util.datePicker.dPickers.length)
 	
-			obj.addEventListener('blurNO', function()
+			obj.addEventListener('blur', function()
 			{
 				var my = this
 				util.eventHandler(function()
@@ -231,7 +237,8 @@ util.datePicker = {
 					{
 						if(String(dp.data.value).isEmpty())
 						{
-							dp.data.date = new Date()
+							if(util.datePicker.options.get(util.datePicker.flags.expandvalueonfocus))
+								dp.data.date = new Date()
 							
 						}
 						dp.display()
@@ -245,11 +252,15 @@ util.datePicker = {
 util.prepare(function()
 {
 	util.datePicker.init()
+	util.datePicker.options.set(
+			[util.datePicker.flags.expand, 
+			 util.datePicker.flags.expandvalueonfocus,
+			 util.datePicker.flags.expandshowweeknumber]
+	)
+		
 })
 
 util.ready(function()
 {
-	util.datePicker.options.set(
-		[util.datePicker.flags.expand]
-	)
+
 })

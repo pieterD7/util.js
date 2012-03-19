@@ -50,13 +50,14 @@ util.getBestUserLang = function()
 
 util.initLang = function()
 {
+	
 	var ulang = this.getBestUserLang()	
 	ulang = typeof utilConfig === 'object' && 
 			typeof utilConfig.defLocale === 'object' ? utilConfig.defLocale : 'en'
 	var url = util.getBaseUrl()
 	var locales = ['en']
 	if( typeof utilConfig === 'object')
-		typeof utilConfig.locales === 'object' ? utilConfig.locales : ['en']
+		typeof utilConfig.locales === 'object' ? locales = utilConfig.locales : null
 	util.forEach(locales, function(iso_code)
 	{
 		var s = url + 'lang/' + iso_code + '/' + 'lang_' + iso_code 

@@ -43,12 +43,21 @@ util.hud = {
 	data:null,
 	sitemapSel:null,
 	sitemapColLength:null,
-	tabbarSel:null
+	tabbarSel:null,
+	onGetDictionary:[]
 };
 
 (function () {
     "use strict";
 
+    util.hud.setOnGetDictionary = function(cb)
+    {
+    	if(util.isFunction(cb))
+    	{
+    		util.hud.onGetDictionary.push(cb)
+    	}
+    }
+    
 	/**
 	 * @description initializes the Hud
 	 * @param {string} sel Selector
@@ -72,6 +81,11 @@ util.hud = {
 				util.hud.initTabBar()
 				util.icons.setIcons(data.icons)
 				util.icons.display()
+				util.forEach(util.hud.onGetDictionary, function(cb)
+				{
+					if(util.isFunction(cb))
+						cb()
+				})
 				
 				var comb = new util.combobox(
 					util.createElement('div'),

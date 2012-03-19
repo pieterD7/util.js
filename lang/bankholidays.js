@@ -8,8 +8,8 @@ util.holidays = {
 	options:null
 }
 
-Math.IntDiv  = function(num, dvsr)
-//performs integer division of num/dvsr - eg IntDiv(9,4)=2
+Math.intDiv  = function(num, dvsr)
+//performs integer division of num/dvsr - eg intDiv(9,4)=2
 {
 var negate = false;
 var result = 0;
@@ -84,11 +84,11 @@ util.holidays.EasterWestern = function(year)
    var j = 0;
    var p = 0;
    g = year % 19;
-   c = Math.IntDiv(year, 100);
-   h = (c - Math.IntDiv(c, 4) - Math.IntDiv(8 * c + 13, 25) + 19 * g + 15) % 30;
-   i = h - Math.IntDiv(h, 28) * (1 - Math.IntDiv(h, 28)
-      * Math.IntDiv(29, h + 1) * Math.IntDiv(21 - g, 11));
-   j = (year + Math.IntDiv(year, 4) + i + 2 - c + Math.IntDiv(c, 4)) % 7;
+   c = Math.intDiv(year, 100);
+   h = (c - Math.intDiv(c, 4) - Math.intDiv(8 * c + 13, 25) + 19 * g + 15) % 30;
+   i = h - Math.intDiv(h, 28) * (1 - Math.intDiv(h, 28)
+      * Math.intDiv(29, h + 1) * Math.intDiv(21 - g, 11));
+   j = (year + Math.intDiv(year, 4) + i + 2 - c + Math.intDiv(c, 4)) % 7;
    p = i - j + 28;
    wDay = p;
    wMonth = 4;

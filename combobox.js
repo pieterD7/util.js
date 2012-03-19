@@ -54,10 +54,14 @@ _s('.info').appendChild(domEl)
 	//	else
 	//		this.jsondata = {}
 		
+		var _list = this._updateList(true)
 		if(this.dropDir == 'up')
-			_l.insertBefore(this._updateList(), _l.childNodes[_l.childNodes.length-1])
+			_l.insertBefore(_list.getNode(), _l.childNodes[_l.childNodes.length-1])
 		else
-			_l.appendChild(this._updateList())		
+		{
+			_l.appendChild(_list.getNode())	
+			_list.style('display:block;width:' + util.getStyle(_l.childNodes[0], 'width'))
+		}
 	}
 	
 	util.combobox.prototype._createListItemIcon = function(c)
@@ -104,9 +108,9 @@ _s('.info').appendChild(domEl)
 	
 		return item
 	}
-	util.combobox.prototype._updateList = function()
+	util.combobox.prototype._updateList = function(b)
 	{
-		var list = document.createElement('ol')
+		var list = util.createElement('ol')
 				
 		if(	this.jsondata.json && this.jsondata.json.length > 0 && 
 				util.isObject(this.combProj))
@@ -119,10 +123,11 @@ _s('.info').appendChild(domEl)
 	
 				for(var c = 0; c < this.jsondata.json.length && c < max; c++)
 				{
-					var litem = document.createElement('li')
+					var litem = util.createElement('li')
 					var item2 = this._createListItemIcon(c)
 					var item = this._createListItemText(c)
 					litem.appendChild(item)
+					list.setAttribute('style', "display:block;")
 					if(!util.isUndef(this.jsondata.json[c]['infoUrl']) && item2)
 						litem.appendChild(item2)
 					list.appendChild(litem)			
@@ -130,11 +135,12 @@ _s('.info').appendChild(domEl)
 			}
 			else
 			{
-				if(	this.combProj.noDataHint)
+				if(b && this.combProj.noDataHint)
 				{
-					list = document.createElement('ol')
-					var li = document.createElement('li')
-					li.innerHTML = this.combProj.noDataHint
+					list = util.createElement('ol')
+					var li = util.createElement('li')
+					list.style("display:block;")
+					li.setHtml(this.combProj.noDataHint)
 					list.appendChild(li)
 				}
 			}
@@ -153,7 +159,7 @@ _s('.info').appendChild(domEl)
 		inp.addClassName('valueishint')
 		inp.setAttribute('value', hint)
 		
-		var list = this._updateList()
+		var list = this._updateList(false)
 	
 		util.placeholder.addListeners(inp, hint)
 		
@@ -174,7 +180,11 @@ _s('.info').appendChild(domEl)
 				my.refresh(inp.node.value, list)			
 			}
 		})
-	
+		_s('body').addListener('click', function(e)
+		{
+			_s('.combobox_container ol').style("display:none;")
+		})
+
 		if(this.dropDir == 'up')
 		{
 			combCont.appendChild(list)

@@ -15,10 +15,9 @@ util.cpath = {
     
 	util.cpath.pushCPath = function(str)
 	{
-		alert(str)
 		var now = new Date()
 		var o = {
-			time:	now.getFullYear()	+	' ' +
+			time:	now.getFullYear()	+	'-' +
 					(now.getMonth()+1) 	+ 	'-' + 
 					now.getDate() 		+ 	' ' + 
 					now.getHours() 		+ 	':' + 
