@@ -77,7 +77,7 @@ util.datePicker = {
 			var sp0 = util.createElement('span')
 			var a1 = util.createElement('a')
 			a1.setAttribute('href', 'javascript:util.datePicker.prevMonth(' + id + ')')
-			a1.setHtml("[-]")
+			a1.setHtml("<<")
 			sp0.appendChild(a1)
 			mdiv.appendChild(sp0)
 		}
@@ -89,7 +89,7 @@ util.datePicker = {
 			var sp0 = util.createElement('span')
 			var a1 = util.createElement('a')
 			a1.setAttribute('href', 'javascript:util.datePicker.nextMonth(' + id + ')')			
-			a1.setHtml("[+]")
+			a1.setHtml(">>")
 			sp0.appendChild(a1)
 			mdiv.appendChild(sp0)			
 		}	
@@ -110,6 +110,14 @@ util.datePicker = {
 			selectVal.hide()
 		})	
 		div.setHtml(this.data.date.format(util.locale.datePickerSelectFormat).toUpperCase())
+		var delAnc = util.createElement('span')
+		delAnc.setHtml(" [X]")
+		delAnc.addListener('click', function(e)
+		{
+			 if (e.preventDefault) e.preventDefault(); 
+             if (e.stopPropagation) e.stopPropagation(); 
+		})
+		div.appendChild(delAnc)
 		ret.appendChild(div.node)
 		
 		ret.appendChild(div.node)
@@ -207,34 +215,40 @@ util.datePicker = {
 			util.eventHandler(function()
 			{
 				var xpos1 = null, xpos2 = null
+				var ypos1 = null, ypos2 = null
 				div.addListener("dragstart", function(e)
 				{
 					var pos = util.eventObjectToPos(e)
 					xpos1 = pos.x
+					ypos1 = pos.y
 				})		
 				div.addListener("dragend", function(e)
 				{
 					var pos = util.eventObjectToPos(e)
 					xpos2 = pos.x
-					if(xpos2 > xpos1)
+					ypos2 = pos.y
+					if(	Math.max(xpos2 - xpos1, xpos1 - xpos2) > 
+						Math.max(ypos2 - ypos1, ypos1 - ypos2))
 					{
-						my.data.date = new Date(
-								my.data.date.getFullYear(), 
-								(Number(my.data.date.getMonth()) - 1),
-								my.data.date.getDate()
-						)
-						_s('body').node.removeChild(_s('body').node.lastChild)					
-						my.display(id)
+						if(xpos2 > xpos1)
+						{
+							util.datePicker.prevMonth(id)
+						}
+						else if(xpos1 > xpos2)
+						{
+							util.datePicker.nextMonth(id)			
+						}						
 					}
-					else if(xpos1 > xpos2)
+					else
 					{
-						my.data.date = new Date(
-								my.data.date.getFullYear(), 
-								(Number(my.data.date.getMonth()) + 1),
-								my.data.date.getDate()
-						)
-						_s('body').node.removeChild(_s('body').node.lastChild)					
-						my.display(id)					
+						if(ypos1 > ypos2)
+						{
+							util.datePicker.nextWeek(id)
+						}
+						else if(ypos2 > ypos1)
+						{
+							util.datePicker.prevWeek(id)				
+						}
 					}
 				})
 			})
@@ -252,6 +266,36 @@ util.datePicker = {
 		}
 	}
 
+	util.datePicker.nextWeek = function(i)
+	{
+		util.eventHandler(function()
+		{
+			var dp = util.datePicker.dPickers[i]
+			dp.data.date = new Date(
+					dp.data.date.getFullYear(),
+					dp.data.date.getMonth(),
+					Number(dp.data.date.getDate()) + 7
+			)
+			_s('body').node.removeChild(_s('body').node.lastChild)					
+			dp.display(i)
+		})
+	}
+
+	util.datePicker.prevWeek = function(i)
+	{
+		util.eventHandler(function()
+		{
+			var dp = util.datePicker.dPickers[i]
+			dp.data.date = new Date(
+					dp.data.date.getFullYear(),
+					dp.data.date.getMonth(),
+					Number(dp.data.date.getDate()) - 7
+			)
+			_s('body').node.removeChild(_s('body').node.lastChild)					
+			dp.display(i)
+		})
+	}
+	
 	util.datePicker.nextMonth = function(i)
 	{
 		util.eventHandler(function()
@@ -279,6 +323,24 @@ util.datePicker = {
 			)
 			_s('body').node.removeChild(_s('body').node.lastChild)					
 			dp.display(i)
+		})
+	} 
+	util.datePicker.refresh = function(i)
+	{
+		var dp = util.datePicker.dPickers[i]
+		dp.display(i)
+	}
+	
+	util.datePicker.onResize = function()
+	{
+		util.forEach(util.datePicker.dPickers, function(dp, id)
+		{
+			if(dp.data.state == 'open')
+			{
+				_s('body').node.removeChild(_s('body').node.lastChild)									
+				dp.data.state = 'closed'
+				setTimeout("util.datePicker.refresh(" + id + ")", 200)
+			}
 		})
 	}
 
@@ -310,7 +372,6 @@ util.datePicker = {
 					format:util.locale.datePickerDateFormat,
 					formatshort:util.locale.datePickerDateFormatShort})
 			
-			//dp.valueToDate()
 			if(	!String(obj2.value).isEmpty() && 
 				dp.data.options.get(util.datePicker.flags.expand) && 
 				!dp.data.options.get(util.datePicker.flags.expandonfocus))
@@ -344,6 +405,14 @@ util.datePicker = {
 					}
 				})
 			})
+			if(window.attachEvent)
+			{
+				window.attachEvent("onresize", util.datePicker.onResize)
+			}
+			else
+			{
+				window.addEventListener("resize", util.datePicker.onResize)				
+			}
 		})
 	}
 })()
