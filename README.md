@@ -66,6 +66,9 @@
 		defLocale: 'en',
 		locales: ['it', 'nl']
 	}
+	
+	/* enter ADAPT_CONFIG here as explained on http://adapt.960.gs */
+
 	</script>
 	<script type='text/javascript' src='pathToUtil/loader.js'></script>
 ======
@@ -91,7 +94,7 @@
 
 	A note on IE9 compatible CSS selectors:
 	
-	A static meta-tag is required:
+	A static meta-tag is required for util:
 	<meta http-equiv="X-UA-Compatible" content="IE=8">
 	
 	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
@@ -126,11 +129,28 @@
 	// Set what needs to be done when user selects language form langbar
 	util.langbar.setOnUpdate(function()
 	{
-		clientResume()
+		util.hud.getDictionary(
+				/* url */
+				'data.json',
+				/* selector for input */
+				"#hud", 
+				/* onclick */
+				"javascript:util.menu.choose('%', '%')",
+				/* on icon click */
+				"javascript:util.menu.choose('%', '%')"				
+			)	
 	})
 </pre>
+	ii. utiljs runlevels
+</pre>	
+	1. load modules
+	2. load locale dependant files
+	3. execute function _init of all modules
+	4. execute prepare callbacks
+	5. execute ready callbacks 
+</pre>	
 
-	ii. util.js dev
+	iii. util.js dev
 	
 <pre>
 utilConfig={debug:true, locales: ['en'], defLocale:'en'}
@@ -138,8 +158,17 @@ util.ready(function() // If using the loader
 	    {
 	        util.debug.setGetAppState(function()
 	        {
+	        	/* return string for debug message */
 	            return 'state=' 
 	        })
+	       
+	        var x = util.extend(card, {value:1})
+	         /* x is a card with property value=1 */
+	         util.extend(x, {value:0})
+	         /* x is a card with property value=0 */
+	         
+	        var x = util.struct([card, blackjack], {value:1})
+	        /* x is a struct with property value=1 */ 
 	    
 	        var msg = 'fits in as many words as possible when first word in string is shorter then limit'
 	            .toLimitedFormattedHTML(23)
@@ -156,10 +185,13 @@ util.ready(function() // If using the loader
 	    // handle input         
 	        util.trim(null).isEmpty() // true
 	        
-	        util.isObject(null) // false
+	        util.isObject(null) // true
 	        
 	    // no parser, just the ones builtin (json and xml) (Not IE9)
-	       alert(util.toJson("[{'name':'pieter\'s'},{'name':'lo  \\\\  pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)       
+	       alert(util.toJson("[
+	       		{'name':'pieter\'s'},
+	       		{'name':'lo  \\\\  pi'},
+	       		{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)       
 
 	    // with a struct:   
 	        var msg = new util.struct([String], {msg1:'total %', msg2:'Bye '})
