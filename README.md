@@ -219,7 +219,9 @@ util.ready(function() // If using the loader
 
 	    config.set([option.optionFoo, !option.optionBar])
 
-	    config.get() & option.optionFoo // True
+	    config.get() & option.optionFoo // True, or:
+	    config.get(option.optionBar) // False
+	    config.get(option.optionBaz) // False
 
 })	
 			
