@@ -43,13 +43,18 @@ util.country = {};
 					if(locale == _locale)
 						ii = i - 1
 				})
-				_s('#country').setHtml('')
-				util.forEach(isos, function(is, i)
+				var inps = _sa("select.country")
+				util.forEach(inps, function(_inp)
 				{
-					var opt = util.createElement('option')
-					opt.setHtml(iso[ii * 54 + i])
-					opt.val(is)
-					_s('#country').appendChild(opt)
+					var inp = new HTMLElement(_inp)
+					inp.setHtml('')
+					util.forEach(isos, function(is, i)
+					{
+						var opt = util.createElement('option')
+						opt.setHtml(iso[ii * 54 + i])
+						opt.val(is)
+						inp.appendChild(opt)
+					})					
 				})
 			}
 		})
