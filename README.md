@@ -126,7 +126,7 @@
 	util.curLang = navigator.util.getLocale();
 	util.langbar.selectLang(util.curLang)
 	
-	// Set what needs to be done when user selects language form langbar
+	// Set what needs to be done when user selects language from langbar
 	util.langbar.setOnUpdate(function()
 	{
 		util.hud.getDictionary(

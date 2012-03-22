@@ -144,10 +144,14 @@ util.datePicker = {
 				else if(cc > 0)
 				{
 					dd.addClassName('datePickerDaySelect')
-					var offset =(c-1)*7+cc-this.data.date.getDay()-7
+					
+					var day = null
+					this.data.date.getDay() == 0? day = 7 : day = this.data.date.getDay()
+					var offset =(c-1)*7+cc-day
+					var dday = new Date(this.data.date.getFullYear(), this.data.date.getMonth(), this.data.date.getDate()+offset)
+					dd.setAttribute('rel', dday.getMonth() + 1)
 					dd.setHtml(
-							new Date(this.data.date.getFullYear(), this.data.date.getMonth(), this.data.date.getDate()+offset)
-						.getDate())
+						dday.getDate())
 					if(offset == 0)
 					{
 						dd.addClassName('datePickerSelectedDay')
@@ -190,9 +194,10 @@ util.datePicker = {
 			el.addEventListener("click", function()
 			{
 				// select day
-				my.data.date = new Date(my.data.date.getFullYear(), my.data.date.getMonth(), el.innerHTML)
+				var deltaMonth = Number(el.getAttribute('rel') - my.data.date.getMonth()) - 1
+				my.data.date = new Date(my.data.date.getFullYear(), my.data.date.getMonth() + deltaMonth, el.innerHTML)
 				_s('body').node.removeChild(_s('body').node.lastChild)									
-				my.display()
+				my.display(id)
 			})
 		})	
 		if(util.datePicker.options.get(
@@ -219,7 +224,7 @@ util.datePicker = {
 								my.data.date.getDate()
 						)
 						_s('body').node.removeChild(_s('body').node.lastChild)					
-						my.display()
+						my.display(id)
 					}
 					else if(xpos1 > xpos2)
 					{
@@ -229,7 +234,7 @@ util.datePicker = {
 								my.data.date.getDate()
 						)
 						_s('body').node.removeChild(_s('body').node.lastChild)					
-						my.display()					
+						my.display(id)					
 					}
 				})
 			})
