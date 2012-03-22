@@ -1,0 +1,450 @@
+##http://download.geonames.org/export/dump/countryInfo.txt, OpenOffice en 
+##Google Translate (de, pl, es, en, nl, it)
+##SAVE AS UTF-8
+#iso
+AD
+AL
+AT
+AX
+BA
+BE
+BG
+BY
+CH
+CY
+CZ
+DE
+DK
+EE
+ES
+FI
+FO
+FR
+GB
+GG
+GI
+GR
+HR
+HU
+IE
+IM
+IS
+IT
+JE
+XK
+LI
+LT
+LU
+LV
+MC
+MD
+ME
+MK
+MT
+NL
+NO
+PL
+PT
+RO
+RS
+RU
+SE
+SI
+SJ
+SK
+SM
+UA
+VA
+CS
+#
+#en
+Andorra
+Albania
+Austria
+Aland Islands
+Bosnia and Herzegovina
+Belgium
+Bulgaria
+Belarus
+Switzerland
+Cyprus
+Czech Republic
+Germany
+Denmark
+Estonia
+Spain
+Finland
+Faroe Islands
+France
+United Kingdom
+Guernsey
+Gibraltar
+Greece
+Croatia
+Hungary
+Ireland
+Isle of Man
+Iceland
+Italy
+Jersey
+Kosovo
+Liechtenstein
+Lithuania
+Luxembourg
+Latvia
+Monaco
+Moldova
+Montenegro
+Macedonia
+Malta
+Netherlands
+Norway
+Poland
+Portugal
+Romania
+Serbia
+Russia
+Sweden
+Slovenia
+Svalbard and Jan Mayen
+Slovakia
+San Marino
+Ukraine
+Vatican
+Serbia and Montenegro
+#
+#nl
+Andorra
+Albanië
+Oostenrijk
+Aland-eilanden
+Bosnië-Herzegovina
+België
+Bulgarije
+Wit-Rusland
+Zwitserland
+Cyprus
+Tsjechische Republiek
+Duitsland
+Denemarken
+Estland
+Spanje
+Finland
+Faeröer
+Frankrijk
+Verenigd Koninkrijk
+Guernsey
+Gibraltar
+Griekenland
+Kroatië
+Hongarije
+Ierland
+Isle of Man
+IJsland
+Italië
+Jersey
+Kosovo
+Liechtenstein
+Litouwen
+Luxemburg
+Letland
+Monaco
+Moldavië
+Montenegro
+Macedonië
+Malta
+Nederland
+Noorwegen
+Polen
+Portugal
+Roemenië
+Servië
+Rusland
+Zweden
+Slovenië
+Svalbard en Jan Mayen
+Slowakije
+San Marino
+Oekraïne
+Vaticaan
+Servië en Montenegro
+#
+#de
+Andorra
+Albanien
+Österreich
+Aland-Inseln
+Bosnien und Herzegowina
+Belgien
+Bulgarien
+Weißrussland
+Schweiz
+Zypern
+Tschechische Republik
+Deutschland
+Dänemark
+Estland
+Spanien
+Finnland
+Färöer-Inseln
+Frankreich
+Vereinigtes Königreich
+guernsey
+Gibraltar
+Griechenland
+Kroatien
+Ungarn
+Irland
+Isle of Man
+Island
+Italien
+Jersey
+Kosovo
+Liechtenstein
+Litauen
+Luxemburg
+Lettland
+Monaco
+Moldawien
+Montenegro
+Mazedonien
+Malta
+Niederlande
+Norwegen
+Polen
+Portugal
+Rumänien
+Serbien
+Russland
+Schweden
+Slowenien
+Svalbard und Jan Mayen
+Slowakei
+San Marino
+Ukraine
+Vatikan
+Serbien und Montenegro
+#
+#fr
+Andorre
+Albanie
+Autriche
+Iles Aland
+Bosnie-Herzégovine
+Belgique
+Bulgarie
+Belarus
+Suisse
+Chypre
+République tchèque
+Allemagne
+Danemark
+Estonie
+Espagne
+Finlande
+Iles Féroé
+France
+Royaume-Uni
+Guernesey
+Gibraltar
+Grèce
+Croatie
+Hongrie
+Irlande
+Isle of Man
+Islande
+Italie
+Jersey
+Kosovo
+le Liechtenstein
+Lituanie
+Luxembourg
+Lettonie
+Monaco
+Moldavie
+Monténégro
+Macédoine
+Malte
+Pays-Bas
+Norvège
+Pologne
+Portugal
+Roumanie
+Serbie
+Russie
+Suède
+la Slovénie
+Svalbard et Jan Mayen
+la Slovaquie
+Saint-Marin
+Ukraine
+Vatican
+Serbie et Monténégro
+#
+#it
+Andorra
+Albania
+Austria
+Aland Islands
+Bosnia-Erzegovina
+Belgio
+Bulgaria
+bielorussia
+Svizzera
+Cipro
+Repubblica ceca
+Germania
+Danimarca
+Estonia
+Spagna
+Finlandia
+Isole Fær Øer
+Francia
+Regno Unito
+maglione
+Gibilterra
+Grecia
+Croazia
+Ungheria
+Irlanda
+Isle of Man
+Islanda
+Italia
+maglia
+Kosovo
+Liechtenstein
+Lituania
+Lussemburgo
+Lettonia
+Monaco
+Moldova
+Montenegro
+Macedonia
+Malta
+Paesi Bassi
+Norvegia
+Polonia
+Portogallo
+Romania
+Serbia
+Russia
+Svezia
+Slovenia
+Svalbard e Jan Mayen
+Slovacchia
+San Marino
+Ucraina
+Vaticano
+Serbia e Montenegro
+#
+#es
+Andorra
+Albania
+Austria
+Islas Aland
+Bosnia y Herzegovina
+Bélgica
+Bulgaria
+Belarús
+Suiza
+Chipre
+la República Checa
+Alemania
+Dinamarca
+Estonia
+España
+Finlandia
+las Islas Feroe
+Francia
+Reino Unido
+Guernesey
+Gibraltar
+Grecia
+Croacia
+Hungría
+Irlanda
+Isla de Man.
+Islandia
+Italia
+jersey
+Kosovo
+Liechtenstein
+Lituania
+Luxemburgo
+Letonia
+Mónaco
+Moldova
+Montenegro
+Macedonia
+Malta
+Países Bajos
+Noruega
+Polonia
+Portugal
+Rumania
+Serbia
+Rusia
+Suecia
+Eslovenia
+Svalbard y Jan Mayen
+Eslovaquia
+San Marino
+Ucrania
+Vaticano
+Serbia y Montenegro
+#
+#pl
+Andora
+Albania
+Austria
+Wyspy Alandzkie
+Bośnia i Hercegowina
+Belgia
+Bułgaria
+Białoruś
+Szwajcaria
+Cypr
+Czechy
+Niemcy
+Dania
+Estonia
+Hiszpania
+Finlandia
+Wyspy Owcze
+Francja
+Zjednoczone Królestwo
+wyspie Guernsey
+Gibraltar
+Grecja
+Chorwacja
+Węgry
+Irlandia
+Isle of Man
+Islandia
+Włochy
+Jersey
+Kosowo
+Liechtenstein
+Litwa
+Luksemburg
+Łotwa
+Monako
+Mołdawia
+Czarnogóra
+Macedonia
+Malta
+Niderlandy
+Norwegia
+Polska
+Portugalia
+Rumunia
+Serbia
+Rosja
+Szwecja
+Słowenia
+Svalbard i Jan Mayen
+Słowacja
+San Marino
+Ukraina
+Watykan
+Serbia i Czarnogóra
