@@ -134,7 +134,7 @@ util.menu = {
 	
 	util.menu.showMap = function(place)
 	{
-		util.gmaps.setMap("#gmap")
+		util.gmaps.showMap(place)
 	}
 })();
 

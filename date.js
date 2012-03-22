@@ -76,7 +76,7 @@ Date.prototype.format = function(format)
 		}
 		else  if (format[c] == 'm')
 		{
-			s.push(util.defaultStrings['monthsshort'][(this.getMonth())])
+			s.push(util.defaultStrings['monthsshort'][(this.getMonth() + 1)])
 		}		
 		else if(format[c] == 'Y' && format[c+1] == 'Y' && format[c+2] == 'Y' && format[c+3] == 'Y')
 		{

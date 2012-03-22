@@ -32,6 +32,8 @@ var util = util || {
 	/* kind of user agent */
 	isTouchDevice: false,
 	
+	hasLocalStorage: false,
+	
 	isCompatibleUA: false,
 	
 	/* translations */
@@ -56,10 +58,7 @@ var util = util || {
 	        'date', 'time', 
 	        'unum', 'combobox',
 	        'event', 'sprintf',
-	        'json',
-	        
-	        /* util proper */
-	        'util', 
+	        'json', 'string', 
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 
@@ -115,7 +114,7 @@ var util = util || {
                             'en')) + 
               
               
-              '/bank_holidays_' +                               
+              '/bankholidays_' +                               
               	(	typeof utilConfig != 'undefined' && 
                         typeof utilConfig.defLocale != 'undefined' ? 
                                utilConfig.defLocale : 
@@ -126,7 +125,7 @@ var util = util || {
              /* init language */   			
            	'lang/initLang', 'lang/bankholidays',
            	
-           	/* App language blueprint*/
+           	/* App language blueprint */
            	'lang/com_lang', 
            	
            	/* module for browsers */
@@ -134,11 +133,20 @@ var util = util || {
            	'crumbs', 'chatbox', 
            	'dnd', 'hud', 'menu',
            	'icons', 'placeholder',
-           	'cpath',
+           	'cpath', 'fractal',
+           	
+           	/* the js part of the 960 grid layout 
+           	 * from http://adapt.960.gs */
+           	'adapt',
+           	
+           	/* html5 local storage */
+           	'sql', 'localstorage',
            	
            	/* map functions */
            	'map', 'geohash',
-           	'gmaps', 'tests/general', 'finishloading'
+           	'gmaps', 
+           	
+           	'tests/general', 'finishloading'
            ]
 	,
 
@@ -204,12 +212,14 @@ var util = util || {
 		if(! (	typeof document.querySelector === 'function' || 
 				typeof document.querySelector === 'object'))
 		{
-			alert("Check for document.querySelector FAILED.\nPlease upgrade your browser")
+			alert("Check for document.querySelector FAILED.\nPlease upgrade your browser " +
+					"or read http://msdn.microsoft.com/en-us/library/cc288326(v=vs.85).aspx")
 		}
 		else
 		{
 			util.isCompatibleUA = true
 			util.isTouchDevice = "onTouchStart" in document.documentElement
+			util.hasLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
 		}
 	},
 	

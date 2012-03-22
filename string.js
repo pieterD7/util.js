@@ -34,16 +34,34 @@
 	 * @description Escapes chracters special to RegExp()
 	 * @returns {string}
 	 */
-	
 	String.prototype.escapeRegExpSpecialChars = function()
-	{	
-		var ret = String(this.toString())
-		var ar = ['+', '*', '(', ')', '[', ']', '?', '!', '{', '}']
-		util.forEach(ar, function(c)
-		{
-			ret = ret.replace(RegExp("\\"+c, "g"), '\\\\\\'+c)
-		})
-		return ret
+	{
+		var specials = [
+            // order matters for these
+              "-"
+            , "["
+            , "]"
+            // order doesn't matter for any of these
+            , "/"
+            , "{"
+            , "}"
+            , "("
+            , ")"
+            , "*"
+            , "+"
+            , "?"
+            , "."
+            , "\\"
+            , "^"
+            , "$"
+            , "|"
+          ]
+
+          // I choose to escape every character with '\'
+          // even though only some strictly require it when inside of []
+        var regex = RegExp('[' + specials.join('\\') + ']', 'g')
+
+        return this.replace(regex, "\\$&");
 	}
 	
 	String.prototype.findFirstNonTagChar = function()

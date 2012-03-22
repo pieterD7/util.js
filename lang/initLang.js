@@ -66,7 +66,7 @@ util.initLang = function()
 		util.loadScript(s)
 		s = url + 'lang/' + iso_code + '/' + 'locale_' + iso_code
 		util.loadScript(s)		
-		s = url + 'lang/' + iso_code + '/bank_holidays_' + iso_code
+		s = url + 'lang/' + iso_code + '/bankholidays_' + iso_code
 		util.loadScript(s)
 	})
 
@@ -87,8 +87,10 @@ util.initLang = function()
 					{
 						if(strings[i].html && o != 'store')
 							o.setHtml(strings[i].html)
-						else if(strings[i].value)
+						else if(strings[i].value && o != 'store')
 							o.val(strings[i].value)
+						else if(strings[i].placeholder && o != 'store')
+							o.placeholder(strings[i].placeholder)
 						else if(o == 'store')
 							util.storeString(strings[i], ulang)
 					}

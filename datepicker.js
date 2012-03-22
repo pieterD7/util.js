@@ -12,7 +12,7 @@ util.datePicker = {
 
 (function () {
     "use strict";
-    
+
 	/**
 	 * @constructor
 	 * @name util._datePicker
@@ -25,9 +25,9 @@ util.datePicker = {
 	
 	/**
 	 * @field
-	 * @name util.datePicker.init
+	 * @name util.datePicker._init
 	 */
-	util.datePicker.init = function()
+	util.datePicker._init = function()
 	{
 		/**
 		 * @field
@@ -35,18 +35,16 @@ util.datePicker = {
 		 * 1 expand Drop down list or click to increment/decrement
 		 * 2 incrementworkday Only valid without expand, skips holidays on increment with showholidays
 		 * 3 showholidays Show holidays in dropdown, eg of util.holidays.list 
-	     * 4 expandvalueonfocus Expand node values to format on focus eg not on load
-	     * 5 expandtoholidayformat Expand to util.locale.datePickerHolidayFormat
-		 * 6 expandenabledrag Enables dropdown list to be scrolled by dragging on mobile devices
-		 * 7 expandshowweeknumber Shows weeknumber column in dropdown list
+	     * 4 expandtoholidayformat Expand to util.locale.datePickerHolidayFormat if applicable
+		 * 5 expandenabledrag Enables dropdown list to be scrolled by dragging on mobile devices
+		 * 6 expandshowweeknumber Shows weeknumber column in dropdown list
 		 */
 		this.flags =
 			
 		[ 'expand',	// Drop down list or click to increment/decrement
 		 'incrementworkday', // Only valid without expand, skips holidays on increment with showholidays
 		 'showholidays', // Show holidays in dropdown, eg of util.holidays.list 
-	     'expandvalueonfocus', // Expand node values to format on focus eg not on load
-	     'expandtoholidayformat',	// Expand to util.locale.datePickerHolidayFormat
+	     'expandtoholidayformat',	// Expand to util.locale.datePickerHolidayFormat if applicable
 		 'expandenabledrag',	// Enables dropdown list to be scrolled by dragging on mobile devices
 	     'expandshowweeknumber' // Shows weeknumber column
 		  ].unum()
@@ -60,20 +58,45 @@ util.datePicker = {
 	
 	util._datePicker.prototype.valueToDate = function()
 	{
-		var val = String(this.data.node.value)
-	
-		if(val.isEmpty())
+		var val = this.data.date
+		if(String(val).isEmpty())
 			this.data.date = new Date()
-		else
-			this.data.date = new Date(val)
 		
 		if( isNaN(this.data.date.getMonth()))
 			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
-		this.data.node.value = this.data.date.toString()
+		this.data.node.value = this.data.date.format(util.locale.datePickerDateFormat)
 		this.data.format = util.locale.datePickerDateFormat
 	}
 	
-	util._datePicker.prototype.displayWeeks = function()
+	util._datePicker.prototype.createMonthRow = function(id)
+	{
+		var mdiv = util.createElement('div')
+		mdiv.addClassName('datePickerSelectedMonth')
+		if(!util.isTouchDevice)
+		{
+			var sp0 = util.createElement('span')
+			var a1 = util.createElement('a')
+			a1.setAttribute('href', 'javascript:util.datePicker.prevMonth(' + id + ')')
+			a1.setHtml("[-]")
+			sp0.appendChild(a1)
+			mdiv.appendChild(sp0)
+		}
+		var sp1 = util.createElement('span')
+		sp1.setHtml(this.data.date.format("M").toUpperCase())
+		mdiv.appendChild(sp1)
+		if(!util.isTouchDevice)
+		{
+			var sp0 = util.createElement('span')
+			var a1 = util.createElement('a')
+			a1.setAttribute('href', 'javascript:util.datePicker.nextMonth(' + id + ')')			
+			a1.setHtml("[+]")
+			sp0.appendChild(a1)
+			mdiv.appendChild(sp0)			
+		}	
+		return mdiv
+	}
+	
+	util._datePicker.prototype.displayWeeks = function(id)
 	{
 		var ret = util.createElement('div')
 		ret.addClassName('datePickerContainer')
@@ -81,21 +104,26 @@ util.datePicker = {
 		var div = util.createElement('div')
 		div.addClassName('datePickerSelector')
 		var selectVal = this
-		div.addListener('click', function()
+		div.addListener('click', function(e)
 		{
-			// echo value
+			e.preventDefault()
 			selectVal.hide()
 		})	
-		div.setHtml(this.data.date.format(util.locale.datePickerDateFormat).toUpperCase())
+		div.setHtml(this.data.date.format(util.locale.datePickerSelectFormat).toUpperCase())
 		ret.appendChild(div.node)
 		
 		ret.appendChild(div.node)
+		
+		var mdiv = this.createMonthRow(id)
+		ret.appendChild(mdiv)
 		
 		for(var c = 0; c < 6; c++)
 		{
 			var d = util.createElement('div')
 			d.setAttribute('class', 'datePickerRow')
-			for(var cc = 0; cc < 8; cc++)
+			var start = null
+			util.datePicker.options.get(util.datePicker.flags.expandshowweeknumber)? start = 0 : start = 1;
+			for(var cc = start; cc < 8; cc++)
 			{
 				var dd = util.createElement('div')
 				dd.setAttribute('class', 'datePickerDay')
@@ -139,41 +167,115 @@ util.datePicker = {
 		return ret.node
 	}
 	
-	util._datePicker.prototype.display = function()
+	util._datePicker.prototype.display = function(id)
 	{
+		var div = util.createElement('div')
 		this.data.state = 'open'
 		var pos = util.getCumulativeOffset(this.data.node)
-		var div = util.createElement('div')
 	
 		div.setHtml('')
-		div.appendChild(this.displayWeeks())
+		div.appendChild(this.displayWeeks(id))
 		
 		div.style("position:absolute;left:" + pos.x + "px;top:" + pos.y + 
 				"px;width:" + document.defaultView.getComputedStyle(this.data.node,"").getPropertyValue("width") +
 				";min-height:" + document.defaultView.getComputedStyle(this.data.node,"").getPropertyValue("height") + 
 				";");
 		div.setAttribute('class', 'datePickerBackground')
+		div.setAttribute('draggable', "true")
 		_s('body').appendChild(div.node)
 	
+		var my = this
 		util.forEach(_sa(".datePickerDaySelect"), function(el)
 		{
 			el.addEventListener("click", function()
 			{
 				// select day
-	//			alert(this.innerHTML)
+				my.data.date = new Date(my.data.date.getFullYear(), my.data.date.getMonth(), el.innerHTML)
+				_s('body').node.removeChild(_s('body').node.lastChild)									
+				my.display()
 			})
 		})	
+		if(util.datePicker.options.get(
+				util.datePicker.flags.expandenabledrag))
+		{
+			var my = this
+			util.eventHandler(function()
+			{
+				var xpos1 = null, xpos2 = null
+				div.addListener("dragstart", function(e)
+				{
+					var pos = util.eventObjectToPos(e)
+					xpos1 = pos.x
+				})		
+				div.addListener("dragend", function(e)
+				{
+					var pos = util.eventObjectToPos(e)
+					xpos2 = pos.x
+					if(xpos2 > xpos1)
+					{
+						my.data.date = new Date(
+								my.data.date.getFullYear(), 
+								(Number(my.data.date.getMonth()) - 1),
+								my.data.date.getDate()
+						)
+						_s('body').node.removeChild(_s('body').node.lastChild)					
+						my.display()
+					}
+					else if(xpos1 > xpos2)
+					{
+						my.data.date = new Date(
+								my.data.date.getFullYear(), 
+								(Number(my.data.date.getMonth()) + 1),
+								my.data.date.getDate()
+						)
+						_s('body').node.removeChild(_s('body').node.lastChild)					
+						my.display()					
+					}
+				})
+			})
+		}	
 	}
 	
 	util._datePicker.prototype.hide = function()
 	{
-		this.data.state = 'closed'
-		this.valueToDate()
-		_s('body').node.removeChild(_s('body').node.lastChild)
-		this.data.node.setAttribute('style', 'display:inline;')
+		if(this.data.state == 'open')
+		{
+			this.data.state = 'closed'
+			this.valueToDate()
+			_s('body').node.removeChild(_s('body').node.lastChild)
+			this.data.node.setAttribute('style', 'display:inline;')
+		}
 	}
 
-
+	util.datePicker.nextMonth = function(i)
+	{
+		util.eventHandler(function()
+		{
+			var dp = util.datePicker.dPickers[i]
+			dp.data.date = new Date(
+					dp.data.date.getFullYear(), 
+					(Number(dp.data.date.getMonth()) + 1),
+					dp.data.date.getDate()
+			)
+			_s('body').node.removeChild(_s('body').node.lastChild)					
+			dp.display(i)				
+		})	
+	}
+	
+	util.datePicker.prevMonth = function(i)
+	{
+		util.eventHandler(function()
+		{		
+			var dp = util.datePicker.dPickers[i]
+			dp.data.date = new Date(
+					dp.data.date.getFullYear(), 
+					(Number(dp.data.date.getMonth()) - 1),
+					dp.data.date.getDate()
+			)
+			_s('body').node.removeChild(_s('body').node.lastChild)					
+			dp.display(i)
+		})
+	}
 
 	/**
 	 * @name util.datePicker.initInputTypeDate
@@ -190,43 +292,33 @@ util.datePicker = {
 		var inps = _sa(sel)
 		util.forEach(inps, function(obj)
 		{
+			var obj2 = new HTMLElement(obj)
 			var options = new util.struct([util.options], {value:util.datePicker.options.data.value})
 			var dp = new util.struct(
 				[util._datePicker], 
 				{	node:obj, 
+					id:util.datePicker.dPickers.length,
 					value:obj.value,
 					state:'closed', 
 					date:null, 
 					options:options,
 					format:util.locale.datePickerDateFormat,
 					formatshort:util.locale.datePickerDateFormatShort})
-			if(!util.datePicker.options.get(util.datePicker.flags.expandvalueonfocus))
-			{
-				dp.valueToDate()
-			}
-			if(	!String(obj.value).isEmpty() && 
+			
+			//dp.valueToDate()
+			if(	!String(obj2.value).isEmpty() && 
 				dp.data.options.get(util.datePicker.flags.expand) && 
 				!dp.data.options.get(util.datePicker.flags.expandonfocus))
-				obj.value = dp.data.date.format(dp.data.format).toUpperCase()
+				obj2.value = dp.data.date.format(dp.data.format).toUpperCase()
 			util.datePicker.dPickers.push(dp)
-			obj.setAttribute('rel', util.datePicker.dPickers.length)
+			obj2.getNode().setAttribute('rel', util.datePicker.dPickers.length)
 	
-			obj.addEventListener('blur', function()
+			obj2.addListener('focus', function()
 			{
-				var my = this
-				util.eventHandler(function()
+				util.forEach(util.datePicker.dPickers, function(dp)
 				{
-					var d = my.getAttribute('rel')
-					var dp = util.datePicker.dPickers[d-1]
-	
-					if(dp.data.state == 'open')
-					{
-						dp.hide()
-					}								
+					dp.hide()
 				})
-			})
-			obj.addEventListener('focus', function()
-			{
 				var my = this
 				util.eventHandler(function()
 				{
@@ -237,11 +329,13 @@ util.datePicker = {
 					{
 						if(String(dp.data.value).isEmpty())
 						{
-							if(util.datePicker.options.get(util.datePicker.flags.expandvalueonfocus))
+							if(!dp.data.date)
+							{
 								dp.data.date = new Date()
+							}
 							
 						}
-						dp.display()
+						dp.display(dp.data.id)
 					}
 				})
 			})
@@ -250,14 +344,12 @@ util.datePicker = {
 })()
 
 util.prepare(function()
-{
-	util.datePicker.init()
+{	
 	util.datePicker.options.set(
-			[util.datePicker.flags.expand, 
-			 util.datePicker.flags.expandvalueonfocus,
-			 util.datePicker.flags.expandshowweeknumber]
-	)
-		
+		[util.datePicker.flags.expand, 
+		 util.datePicker.flags.expandenabledrag,
+		 util.datePicker.flags.expandshowweeknumber]
+	)	
 })
 
 util.ready(function()

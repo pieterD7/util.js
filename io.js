@@ -88,6 +88,14 @@ function HTMLElement(o)
 		}
 	}
 	
+	HTMLElement.prototype.placeholder = function(str)
+	{
+		if(!util.isUndef(this.node))
+		{
+			this.node.setAttribute('placeholder', str)
+		}
+	}
+	
 	/**
 	 * @description Appends innerHTML of object
 	 * @param {String} html
@@ -222,7 +230,7 @@ function HTMLElement(o)
 		if(!this.hasClassName(className))
 		{
 			var class_ = util.trim(this.node.getAttribute('class'))
-			this.node.setAttribute('class', class_ + ' ' + className	)
+			this.node.setAttribute('class', util.trim(class_ + ' ' + className))
 		}
 	}
 	/**
@@ -254,7 +262,7 @@ function HTMLElement(o)
 		})
 		str = str.replace(RegExp(String("." + className).escapeRegExpSpecialChars()), '')
 			.replace(/[.]/g, ' ')
-		this.node.setAttribute('class', str)
+		this.node.setAttribute('class', util.trim(str))
 	}
 	
 	/**

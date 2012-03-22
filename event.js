@@ -36,4 +36,19 @@
 		    return !element.dispatchEvent(evt);
 	    }
 	}
+	
+	util.eventObjectToPos = function(e)
+	{
+		if(e.pageX && e.pageY)
+		{
+			return {x:e.pageX, y:e.pageY}
+		}
+		else
+		{
+			var x = e.clientX + document.body.scrollLeft - document.body.clientLeft
+			var y = e.clientY + document.body.scrollTop - document.body.clientTop
+			return {x:x, y:y}
+		}
+	}
+	
 })()

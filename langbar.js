@@ -68,6 +68,8 @@ util.langbar =
 							o.setHtml(strings[i].html)
 						else if(strings[i].value && o != 'store')
 							o.val(strings[i].value)
+						else if(strings[i].placeholder && o != 'store')
+							o.placeholder(strings[i].placeholder)							
 						else if(o == 'store')
 							util.storeString(strings[i], iso_code)
 				}	

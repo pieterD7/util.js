@@ -1,17 +1,17 @@
 // TESTS
 
 util.test = {
-	notify: 1
+	notify: true
 }
 util.test.strOut = function(msg, n)
 {
-	if(util.test.notify == 1 && _s('div#tests'))	
-		_s('div#tests').appendHtml(msg + " <a>passed (" + n + "/" + n + ")</a><br/>")	
+	if(util.test.notify == 1 && _s('#tests'))	
+		_s('#tests').appendHtml(msg + " <a>passed&nbsp;(" + n + "/" + n + ")</a><br/>")	
 }
 util.test.errOut = function(str1, msg)
 {
-	if(_s('div#tests'))
-		_s('div#tests').appendHtml("<font color='red'>TEST " + msg + " FAILED:</font>" + "<br/>")
+	if(_s('#tests'))
+		_s('#tests').appendHtml("<font color='red'>TEST " + msg + " FAILED:</font>" + String(str1).escapeRegExpSpecialChars()+ "<br/>")
 }
 util.test.runTests = function(ts)
 {
@@ -30,7 +30,8 @@ util.test.runTests = function(ts)
 }
 util.test.assertStr = function(str1, str2)
 {		
-	if(!String(str1).isEmpty() && str1 == str2)
+	if(!String(str1).isEmpty() && 
+		String(str1).equals(str2))
 	{
 		return true
 	}
@@ -44,7 +45,13 @@ util.test.assertBool = function(b1, b2)
 	else
 		return false
 }
-
+util.test.assertNumber = function(b1, b2)
+{
+	if(util.isNumber(b1) && b1 == b2)
+		return true
+	else
+		return false
+}
 util.test.assertNotNill = function(a)
 {
 	if(!util.isUndef(a))
@@ -58,16 +65,23 @@ util.ready(function()
 	// Sanity check
 	util.test.runTests({
 		tsts:[{test:util.test.assertNotNill, params:[document.querySelector]}],
-		msg: 'Check1: document.querySelector'
+		msg: util.lang.tests_check1
 	})	
 	
 	var d = util.createElement('div')
 	d.addClassName('test1')
 	d.addClassName('test2')
 	d.addClassName('test1')
+
+	var dd = util.createElement('div')
+	dd.addClassName('test1')
+	dd.addClassName('test2')
+	dd.removeClassName('test2')
+	
 	util.test.runTests({
-		tsts:[{test:util.test.assertStr, params:[d.getClassName(), "test1 test2"]}],
-		msg: "Test1: addClassName()"
+		tsts:[{test:util.test.assertStr, params:[d.getClassName(), "test1 test2"]},
+		      {test:util.test.assertStr, params:[dd.getClassName(), "test1"]}],
+		msg: "Test1: add/removeClassName()"
 	})
 	
 	var n = util.toJson("[{'name':'pieter\'s'},{'name':'lo\\\\pi'},{'name':'Kilo zei:\\\"Hoera!\\\"'}]")
@@ -121,6 +135,13 @@ util.ready(function()
 		                             			.toLimitedFormattedText(23), "Fits in. As many words ..."]},
 		      {test:util.test.assertStr, params:[Number(10000).format('integer'), "10.000"]}],
 		msg: 'Test8: string formatting'		
-	})
+	})	
 	
+	var a = ['optionFoo', 'optionBar', 'optionBaz'].unum()
+	util.test.runTests({
+		tsts:[{test:util.test.assertNumber, params:[a.optionFoo, 1]},
+		      {test:util.test.assertNumber, params:[a.optionBar, 2]},
+		      {test:util.test.assertNumber, params:[a.optionBaz, 4]}],
+		  msg:"Test9: enum"
+	})	
 })

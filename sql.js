@@ -8,3 +8,8 @@ util.sql = {};
 	
 	
 })();
+
+util.ready(function()
+{
+	//alert(util.hasLocalStorage)
+})

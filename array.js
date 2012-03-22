@@ -66,7 +66,7 @@ Array.prototype.unum = function(from, to, opt)
 		var opt = opt || {}
 		opt.optunumFlags = true
 		from = 1
-		to = Math.pow(this.length, 2)
+		to = Math.pow(this.length+1, 2)
 	}
 	else if(!util.isUndef(from) && util.isUndef(to) && from == 0)
 	{
