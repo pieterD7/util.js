@@ -168,7 +168,7 @@ util.ready(function() // If using the loader
 	         /* x is a card with property value=0 */
 	         
 	        var x = util.struct([card, blackjack], {value:1})
-	        /* x is a struct with property value=1 */ 
+	        /* x is a struct with property data.value=1 */ 
 	    
 	        var msg = 'fits in as many words as possible when first word in string is shorter then limit'
 	            .toLimitedFormattedHTML(23)
