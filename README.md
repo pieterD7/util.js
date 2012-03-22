@@ -174,6 +174,7 @@ util.ready(function() // If using the loader
 	            .toLimitedFormattedHTML(23)
 
 	  	// msg now eq: 'Fits in as many words ...'
+	  	// Consider css text-overflow: ellipse
 	        
 	    
 	    // strip all dots and space:
