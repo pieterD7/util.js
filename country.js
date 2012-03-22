@@ -44,9 +44,9 @@ util.country = {};
 						ii = i - 1
 				})
 				var inps = _sa("select.country")
-				var set = []
 				util.forEach(inps, function(_inp)
 				{
+					var set = []
 					var inp = new HTMLElement(_inp)
 					inp.setHtml('')
 					var opt = util.createElement('option')
