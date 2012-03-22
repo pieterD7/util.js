@@ -142,7 +142,7 @@
 	})
 </pre>
 	ii. utiljs runlevels
-</pre>	
+<pre>	
 	1. load modules
 	2. load locale dependant files
 	3. execute function _init of all modules
