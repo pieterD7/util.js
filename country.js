@@ -48,6 +48,10 @@ util.country = {};
 				{
 					var inp = new HTMLElement(_inp)
 					inp.setHtml('')
+					var opt = util.createElement('option')
+					opt.setHtml(_inp.getAttribute('placeholder'))
+					opt.val('')
+					inp.appendChild(opt)
 					util.forEach(isos, function(is, i)
 					{
 						var opt = util.createElement('option')
