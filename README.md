@@ -50,9 +50,7 @@
 	simple, easy to learn, lightweight, lean & mean, powerfull 
 	in an object oriented way, specially made for apps, multiple 
 	languages & formats, string formatting, number & currency formatting 
-	
-	Util proper is the two files validations.js and util.js :
-	
+		
 =====
 	<script type='text/javascript' src='pathToUtil/validations.js'></script>
 	<script type='text/javascript' src='pathToUtil/util.js'></script>
@@ -95,7 +93,9 @@
 	A note on IE9 compatible CSS selectors:
 	
 	A static meta-tag is required for util:
+	<pre>
 	<meta http-equiv="X-UA-Compatible" content="IE=8">
+	</pre>
 	
 	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
 	write compatible selectors like:
