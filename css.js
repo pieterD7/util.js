@@ -40,7 +40,7 @@ util.css = {};
 		{
 			if(util.isBool(b) && b)
 				_s(sel).style("display:block;")
-			else if((util.isBool(b) && !b) || _s("#sitemap").node.style.display == 'block')
+			else if((util.isBool(b) && !b) || _s(sel).node.style.display != 'none')
 			// b = false or undef : force hide or toggle off			
 				_s(sel).style("display:none;")
 			else
