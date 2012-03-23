@@ -94,7 +94,7 @@
 	
 	A static meta-tag is required for util:
 	<pre>
-	<meta http-equiv="X-UA-Compatible" content="IE=8">
+	&lt;meta http-equiv="X-UA-Compatible" content="IE=8">
 	</pre>
 	
 	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
