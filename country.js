@@ -20,12 +20,13 @@ util.country = {};
 				var lines = data.split(RegExp("\n"))
 				util.forEach(lines, function(line)
 				{
+					line = line.replace("\r", '')
 					if(line.substring(0, 2) == '##')
 						return
 					if(line.substring(0, 2).match(/[#]\w/))
 					{
 						inPart = true
-						c.push(line.replace("#", "").substring(0,2))
+						c.push(line.replace("#", ""))
 					}
 					else if(line.substring(0, 1) == '#')
 					{
