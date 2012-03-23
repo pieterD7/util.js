@@ -9,6 +9,8 @@ util.country = {};
 	
 	util.country.init = function(locale)
 	{
+		if(util.isUndef(locale))
+			var locale = 'en'
 		util.ajax(
 		{
 			url:'utiljs/countriesEurope.txt',
@@ -52,11 +54,12 @@ util.country = {};
 					inp.setHtml('')
 					var opt = util.createElement('option')
 					opt.setHtml(_inp.getAttribute('placeholder'))
+					opt.addClassName('valueishint') // doesn't do much (Chrome)
 					opt.val('')
 					inp.appendChild(opt)
 					util.forEach(isos, function(is, i)
 					{
-						set.push({iso:is, txt:iso[ii * 54 + i]})
+						set.push({iso:is, txt:iso[ii * isos.length + i]})
 					})
 					set.sort(function(a, b)
 					{
@@ -82,5 +85,5 @@ util.country = {};
 
 util.ready(function()
 {
-	util.country.init(util.lang)
+	util.country.init(util._selectedLocale)
 })
