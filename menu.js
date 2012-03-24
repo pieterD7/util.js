@@ -64,6 +64,15 @@
 		var docName = util.getDocumentNameFromUrl() || util.index
 		return util.isInContext(docName, context)
 	}
+
+	/**
+	 * @description Returns filename from document.location.pathname or empty string
+	 * @returns {String} filename
+	 */
+	util.getDocumentNameFromUrl = function()
+	{
+		return document.location.pathname.replace(/^.*[\\\/]/, '')	
+	}
 	
 	/**
 	 * @description Checks if url or lastUrl is active

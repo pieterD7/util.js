@@ -266,15 +266,6 @@ function HTMLElement(o)
 	}
 	
 	/**
-	 * @description Returns filename from document.location.pathname or empty string
-	 * @returns {String} filename
-	 */
-	util.getDocumentNameFromUrl = function()
-	{
-		return document.location.pathname.replace(/^.*[\\\/]/, '')	
-	}
-	
-	/**
 	 * @description Creates an HTML element
 	 * @param {String} type Type of element
 	 * @returns {HTMLElement}
