@@ -72,7 +72,7 @@
 	{
 		var bb = false
 		var lastUrl = lastUrl || util.lastUrl
-		var url = url.split(":").splice(0,2).join(":") 
+		var url = url.split(":").splice(0,3).join(":") 
 		
 		if(util.isString(lastUrl))
 		{
@@ -105,7 +105,7 @@
 				
 			// Split url and join first two elements
 			// and store as lastUrl
-			util.lastUrl = url.split(":").slice(0,2).join(':')
+			util.lastUrl = url
 			
 			// Need to find menu handler or is it an http url?
 			if(String(url).match(/^javascript:/))
@@ -140,10 +140,6 @@
 		alert("Notification " + str)
 	}
 	
-	util.menu.prototype.showMap = function(place)
-	{
-		util.gmaps.showMap(place)
-	}
 })();
 
 util.ready(function()
