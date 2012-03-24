@@ -39,22 +39,24 @@
 }
  */
 
-util.hud = {
-	data:null,
-	sitemapSel:null,
-	sitemapColLength:null,
-	tabbarSel:null,
-	onGetDictionary:[]
-};
-
 (function () {
     "use strict";
 
-    util.hud.setOnGetDictionary = function(cb)
+    util.hud = function(menu, icons){
+		this.data = null
+		this.sitemapSel = null
+		this.sitemapColLength = null,
+		this.tabbarSel = null,
+		this.onGetDictionary = []
+		this.icons = icons;
+		this.menu = menu
+	};   
+    
+    util.hud.prototype.setOnGetDictionary = function(cb)
     {
     	if(util.isFunction(cb))
     	{
-    		util.hud.onGetDictionary.push(cb)
+    		this.onGetDictionary.push(cb)
     	}
     }
     
@@ -62,26 +64,27 @@ util.hud = {
 	 * @description initializes the Hud
 	 * @param {string} sel Selector
 	 */
-	util.hud.getDictionary = function(dictUrl, sel, itemUrl, iconUrl)
+	util.hud.prototype.getDictionary = function(dictUrl, sel, itemUrl, iconUrl)
 	{
 		if(sel)
 			_s(sel).setHtml('')
 		if(!itemUrl)
 			return
 	
-		var ret = new Array()		
+		var ret = new Array()
+		var my = this
 		util.ajax({
 			url: dictUrl, 
 			dataType:'json',
 			onSuccess: function(data)
 			{
-				util.hud.data = data.dict
-				util.hud.alldata = data
-				util.hud.initSitemap()
-				util.hud.initTabBar()
-				util.icons.setIcons(data.icons)
-				util.icons.display()
-				util.forEach(util.hud.onGetDictionary, function(cb)
+				my.data = data.dict
+				my.alldata = data
+				my.initSitemap()
+				my.initTabBar()
+				my.icons.setIcons(data.icons)
+				my.icons.display()
+				util.forEach(my.onGetDictionary, function(cb)
 				{
 					if(util.isFunction(cb))
 						cb()
@@ -91,7 +94,7 @@ util.hud = {
 					util.createElement('div'),
 					function(constraint)
 					{
-						return util.hud.getDictItemsByName(constraint)
+						return my.getDictItemsByName(constraint)
 					}, 
 					{
 						noDataHint: util.lang.hud_no_data_hint,
@@ -112,7 +115,7 @@ util.hud = {
 		})
 	}
 	
-	util.hud.findMatches = function(s, regExp, joinChar)
+	util.hud.prototype.findMatches = function(s, regExp, joinChar)
 	{
 		var c = ','
 		if(util.isString(joinChar))
@@ -125,28 +128,29 @@ util.hud = {
 		return false	
 	}
 	
-	util.hud.getDictItemsByName = function(n)
+	util.hud.prototype.getDictItemsByName = function(n)
 	{
 		try
 		{
+			var my = this
 			var ret = []
 			var retreg = []
 			var names = String(n).split(' ')
-			var data = util.hud.data
+			var data = this.data
 	
 			// Hide sitemap if any
-			util.toggle(util.hud.sitemapSel, false)
+			util.toggle(this.sitemapSel, false)
 			
 			// Return empty set when query is empty
 			if(util.trim(n).isEmpty()) return {json:null}
 			
 			// Regular expressions
-			util.forEach(util.hud.alldata.regExps, function(regex)
+			util.forEach(this.alldata.regExps, function(regex)
 			{
-				var fnd = util.hud.findMatches(n, regex.regExp)
+				var fnd = my.findMatches(n, regex.regExp)
 				if(fnd)
 				{
-					var it = util.hud.data.find(regex.matchEntry, "name")
+					var it = my.data.find(regex.matchEntry, "name")
 					if(it[0])
 					{
 						retreg.push(util.extend(it[0],{param:fnd}))
@@ -200,25 +204,25 @@ util.hud = {
 		}
 	}
 	
-	util.hud.setTabBar = function(sel)
+	util.hud.prototype.setTabBar = function(sel)
 	{
-		util.hud.tabbarSel = sel
+		this.tabbarSel = sel
 	}
 	/**
 	 * @description (Re)draws tabs and applies css class .activeTab
 	 */
-	util.hud.initTabBar = function(lastUrl)
+	util.hud.prototype.initTabBar = function()
 	{
+		var my = this
 		var s = _s(this.tabbarSel)
 		if(s)
 		{	
 			s.setHtml('')
-			var tbs_ = util.hud.alldata.tabItems
+			var tbs_ = this.alldata.tabItems
 			var tbs = tbs_.sort(function(a, b){return a.ord -  b.ord})
 				
 			util.forEach(tbs, function(it, i)
-			{
-				
+			{			
 				var url = ''
 				var urlar = it.url.split(':')
 	
@@ -229,40 +233,40 @@ util.hud = {
 				else
 					url = urlar[0]
 	
-				var incontext = util.menu.documentNameIsInContext(it.context) || 
-								util.menu.lastUrlIsInContext(it.context)
-				var active = util.menu.isActiveLink(url, lastUrl)
+				var incontext = util.documentNameIsInContext(it.context) || 
+								util.lastUrlIsInContext(it.context)
+				var active = util.isActiveLink(url, util.lastUrl)
 				if(util.isUndef(it.context) || incontext)
 				{
 					var t = util.createElement('span')
 					var a = util.createElement('a')
 					if(active) t.addClassName("activeTab")
-					url = util.hud.makeUrlStr(url, it.cpath)
+					url = util.makeUrlStr(url, it.cpath)
 					a.setAttribute('href', url)
 					a.setHtml(String(it.name).toFirstCharUppercase())
 					t.appendChild(a)
-					_s(util.hud.tabbarSel).appendChild(t)
+					_s(my.tabbarSel).appendChild(t)
 				}
 			})
 		}
 	}
 	
-	util.hud.makeUrlStr = function(url, cpath)
+	util.makeUrlStr = function(url, cpath)
 	{
-		var url = "javascript:util.menu.follow('" + url + "'"
+		var url = "javascript:util.follow('" + url + "'"
 		if(cpath) url += ",'" + cpath + "'"
 		url += ")"
 		return url
 	}
 	
-	util.hud.setSitemap = function(sel, lengthOfCol)
+	util.hud.prototype.setSitemap = function(sel, lengthOfCol)
 	{
 		var cl = lengthOfCol || 4
-		util.hud.sitemapSel = sel
-		util.hud.sitemapColLength = cl
+		this.sitemapSel = sel
+		this.sitemapColLength = cl
 	}
 	
-	util.hud.initSitemap = function()
+	util.hud.prototype.initSitemap = function()
 	{
 		var s = _s(this.sitemapSel)
 		if(s)
@@ -276,13 +280,13 @@ util.hud = {
 	//		s.appendChild(msg)
 			var ul = null, d = null;
 			var ii = 0;
-			
-			util.forEach(util.hud.data, function(en, i)
+			var my = this
+			util.forEach(this.data, function(en, i)
 			{
 				if(!en.sitemapEntry || en.sitemapEntry === false)
 					return 
 				// rows = this.sitemapColLength
-				if(ii++ % util.hud.sitemapColLength == 0)
+				if(ii++ % my.sitemapColLength == 0)
 				{
 					d = util.createElement('div')
 					d.addClassName('sitemapCol')
@@ -292,7 +296,7 @@ util.hud = {
 				var li = util.createElement('li')
 				var a = util.createElement('a')
 				a.setHtml(en.name)
-				var url = util.hud.makeUrlStr(en.infoUrl, en.cpath)
+				var url = util.makeUrlStr(en.infoUrl, en.cpath)
 				a.setAttribute('href', url)
 				li.appendChild(a)
 				ul.appendChild(li)

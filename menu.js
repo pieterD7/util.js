@@ -1,16 +1,16 @@
 /**
  *	Menu for hud data
- */
-
-util.menu = {
-	menuHandlers:[],
-	lastUrl:null,
-	index:"^index\.html|^index\.php"
-};
+*/
 
 (function () {
     "use strict";
- 
+
+    util.menuHandlers = []   
+    util.index = "^index\.html|^index\.php"
+    	
+    util.menu = function(){
+
+    	};
 
 	/**
 	 * @description registers handler for menu click so the handler can be found by its name
@@ -18,10 +18,10 @@ util.menu = {
 	 * @example
 	 * util.menu.registerMenuHandler({name:'util.menu.notify', cb:util.menu.notify})
 	 */
-	util.menu.registerMenuHandler = function(m)
+	util.menu.prototype.registerMenuHandler = function(m)
 	{
 		if(util.isFunction(m.cb))	
-			util.menu.menuHandlers.push({name:m.name,cb:m.cb})
+			util.menuHandlers.push(m)
 	}
 	
 	/**
@@ -32,7 +32,7 @@ util.menu = {
 	 * @returns {boolean}
 	 */
 	
-	util.menu.isInContext = function(url, context)
+	util.isInContext = function(url, context)
 	{
 		var cntxtar = String(context).split("|")
 		var incontext = false
@@ -50,33 +50,35 @@ util.menu = {
 	 * @description Checks if last url is in context
 	 * @param {String} context String w/ | separated contexts
 	 */
-	util.menu.lastUrlIsInContext = function(context)
+	util.lastUrlIsInContext = function(context)
 	{
-		return util.menu.isInContext(util.menu.lastUrl, context)
+		return util.isInContext(this.lastUrl, context)
 	}
 	
 	/**
 	 * @description Check if current document name is in context
 	 * @param {String} context String w/ | separated contexts
 	 */
-	util.menu.documentNameIsInContext = function(context)
+	util.documentNameIsInContext = function(context)
 	{
-		var docName = util.getDocumentNameFromUrl() || util.menu.index
-		return util.menu.isInContext(docName, context)
+		var docName = util.getDocumentNameFromUrl() || util.index
+		return util.isInContext(docName, context)
 	}
 	
 	/**
 	 * @description Checks if url or lastUrl is active
 	 */
-	util.menu.isActiveLink = function(url, lastUrl)
+	util.isActiveLink = function(url, lastUrl)
 	{
 		var bb = false
-	
+		var lastUrl = lastUrl || util.lastUrl
+		var url = url.split(":").splice(0,2).join(":") 
+		
 		if(util.isString(lastUrl))
 		{
 			if(String(lastUrl).match(RegExp(url)))
 				bb = true
-		}			
+		}	
 		if(util.getDocumentNameFromUrl().match(RegExp(url.escapeRegExpSpecialChars())) ||
 			(util.getDocumentNameFromUrl().isEmpty() && url.match(RegExp(this.index))))
 				bb = true
@@ -89,7 +91,7 @@ util.menu = {
 	 * @description Follows a link. If the link is a menuhandler it redraws the tab bar and icons
 	 * @param {String} url http url or javascript:name-of-registered-menuhandler:param
 	 */
-	util.menu.follow = function(url, cpath)
+	util.follow = function(url, cpath)
 	{
 		// Is link to current page? (Let states be refreshable however)
 		if(util.getDocumentNameFromUrl().equals(url))
@@ -103,23 +105,29 @@ util.menu = {
 				
 			// Split url and join first two elements
 			// and store as lastUrl
-			util.menu.lastUrl = url.split(":").slice(0,2).join(':')
+			util.lastUrl = url.split(":").slice(0,2).join(':')
 			
 			// Need to find menu handler or is it an http url?
 			if(String(url).match(/^javascript:/))
 			{
 				// follow registered menuhandler if any
 				var urlar = url.split(':')
-				var b = util.menu.menuHandlers.find(urlar[1], 'name')
+				var b = util.menuHandlers.find(urlar[1], 'name')
 				if(b)
 				{
 					// Run and adjust state
-					b[0].cb(urlar.slice(2).join(":"))
-					if(util.hud)
-						util.hud.initTabBar(url)
-					if(util.icons)
-						util.icons.display(url)
+					util.forEach(b, function(bb)
+					{
+						bb.cb(url)						
+					})
 				}
+				util.forEach(util.menuHandlers, function(h)
+				{
+					if(util.isBool(h.fireAlways) && h.fireAlways)
+					{
+						h.cb(url)
+					}
+				})
 			}
 			else
 				// follow not javascript http uris
@@ -127,12 +135,12 @@ util.menu = {
 		})
 	}
 	
-	util.menu.notify = function(str)
+	util.menu.prototype.notify = function(str)
 	{
 		alert("Notification " + str)
 	}
 	
-	util.menu.showMap = function(place)
+	util.menu.prototype.showMap = function(place)
 	{
 		util.gmaps.showMap(place)
 	}
@@ -140,7 +148,6 @@ util.menu = {
 
 util.ready(function()
 {
-	util.menu.registerMenuHandler({name:'util.menu.notify', cb:util.menu.notify})
-	util.menu.registerMenuHandler({name:'util.menu.showMap', cb:util.menu.showMap})
+//	util.menu.registerMenuHandler({name:'util.menu.notify', cb:util.menu.notify})
 
 })

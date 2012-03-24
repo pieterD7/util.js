@@ -2,20 +2,20 @@
  * 
  */
 
-util.icons = {
-	sel:null,
-	data:null
-};
-
 (function () {
     "use strict";
- 
-	util.icons.setIcons = function(ar)
+
+    util.icons = function(sel){
+    		this.sel = sel
+    		this.data = null
+    	};
+    
+	util.icons.prototype.setIcons = function(ar)
 	{
 		this.data = ar
 	}
 	
-	util.icons.setSel = function(sel)
+	util.icons.prototype.setSel = function(sel)
 	{
 		this.sel = sel
 	}
@@ -23,10 +23,11 @@ util.icons = {
 	/**
 	 * @description Displays icons and applies css class .activeicon
 	 */
-	util.icons.display = function(lastUrl)
+	util.icons.prototype.display = function()
 	{
-		var _lastUrl = lastUrl || util.menu.lastUrl
-		_s(util.icons.sel).setHtml('')
+		var my = this
+
+		_s(this.sel).setHtml('')
 		var icns = this.data
 		if(icns)
 			icns = icns.sort(function(a, b){ return a.ord - b.ord})
@@ -40,17 +41,17 @@ util.icons = {
 	
 			dd.setHtml(i.name)
 			
-			if(util.menu.isActiveLink(i.url, _lastUrl))
+			if(util.isActiveLink(i.url))
 				d.addClassName('activeicon')
 		
-			var url = util.hud.makeUrlStr(i.url, i.cpath)
+			var url = util.makeUrlStr(i.url, i.cpath)
 	
 			a.setAttribute('href', url)
 	
 			img.setAttribute('src', 'icons/' + i.img)
 			img.style('border:none;')
 	
-			var incontext = util.menu.documentNameIsInContext(i.context) || util.menu.lastUrlIsInContext(i.context)
+			var incontext = util.documentNameIsInContext(i.context) || util.lastUrlIsInContext(i.context)
 			if(util.isUndef(i.context) || incontext)
 			{
 				a.appendChild(img)
@@ -58,7 +59,7 @@ util.icons = {
 				d.appendChild(dd)
 			}
 			
-			_s(util.icons.sel).appendChild(d)
+			_s(my.sel).appendChild(d)
 		})
 	}
 })()
