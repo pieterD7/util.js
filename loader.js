@@ -46,6 +46,8 @@ var util = util || {
 	/* regional formats */
 	_locale: [],
 	
+	selectedLocale:null,
+	
 	/* modules */
 	_mods: [
 	        
@@ -134,6 +136,7 @@ var util = util || {
            	'dnd', 'hud', 'menu',
            	'icons', 'placeholder',
            	'cpath', 'fractal',
+           	'country',
            	
            	/* the js part of the 960 grid layout 
            	 * from http://adapt.960.gs */
