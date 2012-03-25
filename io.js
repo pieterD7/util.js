@@ -220,18 +220,22 @@ function HTMLElement(o)
 	}
 	
 	/**
-	 * @description Adds classname to this element. Keeps classnames and 
+	 * @description Adds classname(s) to this element. Keeps classnames and 
 	 * checks if the classname is already applied
 	 * @param {String} className Name of class 
 	 */
 	HTMLElement.prototype.addClassName = function(className)
 	{
-	
-		if(!this.hasClassName(className))
+		var my = this
+		var clsNames = String(className).split(' ')
+		util.forEach(clsNames, function(className)
 		{
-			var class_ = util.trim(this.node.getAttribute('class'))
-			this.node.setAttribute('class', util.trim(class_ + ' ' + className))
-		}
+			if(!my.hasClassName(className)) 
+			{
+				var class_ = util.trim(my.node.getAttribute('class'))
+				my.node.setAttribute('class', util.trim(class_ + ' ' + className))
+			}
+		})
 	}
 	/**
 	 * @description Gets class name
