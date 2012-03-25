@@ -23,7 +23,7 @@ _s('.info').appendChild(domEl)
 (function () {
     "use strict";
     
-	util.combobox = function(domEl, jsjQuery, combProj, dropDir)
+	util.combobox = function(domEl, jsjQuery, combProj, dropDir, name)
 	{
 		this.domEl = domEl
 		this.dropdir = null
@@ -41,6 +41,7 @@ _s('.info').appendChild(domEl)
 			this.jsondata = util.toJson(jsjQuery());	
 		}
 		this.combProj = combProj
+		this.name = name || ''
 	}
 	
 	util.combobox.prototype.refresh = function(value, list)
@@ -155,6 +156,8 @@ _s('.info').appendChild(domEl)
 		
 		var inp = util.createElement('input')
 		inp.setAttribute('type', 'text')
+		if(this.name)
+			inp.setAttribute('name', this.name)
 		inp.setAttribute('class', 'combobox_input')
 		inp.addClassName('valueishint')
 		inp.setAttribute('value', hint)
