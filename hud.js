@@ -137,7 +137,13 @@
 			var retreg = []
 			var names = String(n).split(' ')
 			var data = this.data
-	
+
+			// Store cpath if any
+			var cpath = this.alldata.cpath;
+			if(!util.trim(cpath).isEmpty())
+			{
+				util.cpath.pushCPath(sprintf(cpath, [n]))
+			}	
 			// Hide sitemap if any
 			util.toggle(this.sitemapSel, false)
 			

@@ -33,15 +33,47 @@ util.cpath = {
 	 */
 	util.cpath.storePath = function()
 	{
+		var uset = new util.userSettings("cpath")
+		var oldpathstr = uset.get("cpath")
+		var cpathstr = util.cpath.getPath()
+		if(util.cpath.isSaved == false)
+			uset.store([{key:'cpath', value:oldpathstr + cpathstr}])
+		util.cpath.isSaved = true
+	}
 	
+	
+	util.cpath.getPath = function()
+	{
+		var cpathstr = ''
+		util.forEach(util.cpath.cpathar, function(cp)
+		{
+			cpathstr += cp.time + " " + cp.cpath + '\n'
+		})
+		return cpathstr
+	}
+	
+	util.cpath.resetPath = function()
+	{
+		util.cpath.cpathar = []
+		util.cpath.isSaved = false	
+		var uset = new util.userSettings("cpath")
+		uset.store([{key:'cpath', value:''}])
+	}
+	
+	util.cpath.getStoredPaths = function()
+	{
+		var uset = new util.userSettings("cpath")		
+		return uset.get("cpath")
 	}
 	
 	util.cpath.isExternalReferrer = function()
 	{
 		if(document.referrer)
 		{
-			var ref = document.referrer.substring(0, util.getBaseUrl().length).equals(util.getBaseUrl())
-			return !ref
+			var ref = String(document.referrer).split("/")[2]
+			var loc = String(document.location).split("/")[2]
+			var b = loc.equals(ref)
+			return !b
 		}
 	}
 	
@@ -52,8 +84,7 @@ util.cpath = {
 			util.cpath.pushCPath(document.referrer)
 			util.cpath.pushCPath(document.location)
 		}
-		if(!String(document.location).match(document.referrer))
-			util.cpath.pushCPath(document.referrer)
+
 		if(window.attachEvent)
 			window.attachEvent("onbeforeunload", util.cpath.storePath)
 		else if(window.addEventListener)
