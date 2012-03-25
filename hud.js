@@ -2,7 +2,7 @@
  * @class
  * @description hud
  * @example
- {	"cpath":"kWs %",
+ {	"cpath":"kWs %s",
  	"icons":[{
   		"name":"Cardgame", 
   		"img":"medium/cardgame.png", 
@@ -50,6 +50,7 @@
 		this.onGetDictionary = []
 		this.icons = icons;
 		this.menu = menu
+		this.node = null
 	};   
     
     util.hud.prototype.setOnGetDictionary = function(cb)
@@ -109,6 +110,7 @@
 					'down'
 				)
 				var domEl = comb.display(util.lang.hud_intro)
+				my.node = domEl
 				if(sel)
 					_s(sel).appendChild(domEl)
 			}
@@ -176,7 +178,8 @@
 					{
 						if(String(en.name).match(RegExp(String(name).escapeRegExpSpecialChars(), "i")))
 						{
-							ret.push(en)
+							var a = util.extend(en, {param:en.name})
+							ret.push(a)
 						}
 						else 
 						{
@@ -184,8 +187,7 @@
 							{
 								if(String(syn).match(RegExp(String(name).escapeRegExpSpecialChars(), "i")))
 								{									
-									var a = {}
-									a = util.extend(a, en)
+									var a = util.extend(en, {param:en.name})
 									a = util.extend(a, {name:en.name +  " (" + syn + ")"})
 									ret.push(a)								
 								}
