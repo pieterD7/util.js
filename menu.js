@@ -111,11 +111,7 @@
 			// Push cpath
 			if(cpath)
 				util.cpath.pushCPath(cpath)
-				
-			// Split url and join first two elements
-			// and store as lastUrl
-			util.lastUrl = url
-			
+							
 			// Need to find menu handler or is it an http url?
 			if(String(url).match(/^javascript:/))
 			{
@@ -127,7 +123,8 @@
 					// Run and adjust state
 					util.forEach(b, function(bb)
 					{
-						bb.cb(url)						
+						bb.cb(url)
+						util.lastUrl = url	
 					})
 				}
 				util.forEach(util.menuHandlers, function(h)
