@@ -117,13 +117,14 @@
 			{
 				// follow registered menuhandler if any
 				var urlar = url.split(':')
+				var param = urlar[2] || null
 				var b = util.menuHandlers.find(urlar[1], 'name')
 				if(b)
 				{
 					// Run and adjust state
 					util.forEach(b, function(bb)
 					{
-						bb.cb(url)
+						bb.cb(param)
 						util.lastUrl = url	
 					})
 				}
