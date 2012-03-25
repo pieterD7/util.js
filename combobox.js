@@ -84,12 +84,8 @@ util.combobox = {
 	{
 		var _l = list.parentNode
 		_l.removeChild(list)
-		var lastEl = _l.childNodes.lastChild
-	
-	//	if(!String(value).isEmpty())
-			this.jsondata = util.toJson(this.dataFunc(value))
-	//	else
-	//		this.jsondata = {}
+
+		this.jsondata = util.toJson(this.dataFunc(value))
 		
 		var _list = this._updateList(true)
 		if(this.dropDir == 'up')
@@ -97,8 +93,8 @@ util.combobox = {
 		else
 		{
 			_l.appendChild(_list.getNode())	
-			_list.style('display:block;width:' + util.getStyle(_l.childNodes[0], 'width'))
 		}
+		_list.style('display:block;width:' + util.getStyle(_l.childNodes[0], 'width'))
 	}
 	
 	util._combobox.prototype._createListItemIcon = function(c)
