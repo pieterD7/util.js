@@ -3,6 +3,7 @@
  * @description hud
  * @example
  {	"cpath":"kWs %s",
+	"showMax":8,
  	"icons":[{
   		"name":"Cardgame", 
   		"img":"medium/cardgame.png", 
@@ -21,14 +22,14 @@
 		"matchEntry":"References"},
 		{"regExp":"([A-Z]\\w*)",
 		"matchEntry":"Capitals"}],
-	"showMax":8,
 	"dict":[{
 		"infoUrl":"documentation\/symbols\/Array.html",
 		"name":"Array",
 		"synos":["utiljs"],
 		"sitemapEntry":true,
 		"hudEntry":true,
-		"cpath":"Da"},
+		"cpath":"Da"
+		},
 		{
 		"infoUrl":"javascript:app.registeredMenuHandler2",
 		"name":"Capitals",
@@ -91,8 +92,9 @@
 						cb()
 				})
 				
-				var comb = new util.combobox(
-					util.createElement('div'),
+				var opts = util.struct([util.options], {value:0})				
+				var comb = new util._combobox(
+					opts,
 					function(constraint)
 					{
 						return my.getDictItemsByName(constraint)

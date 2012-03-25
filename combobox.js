@@ -1,8 +1,8 @@
 /**
  * @class
  * @example
-var comb = new util.combobox(
-	util.createElement('div'),
+var comb = new util._combobox(
+	options,
 	function(constraint)
 	{
 		return navigator.util.getContactsWithLocation(constraint)
@@ -15,17 +15,51 @@ var comb = new util.combobox(
 		itemUrl:"javascript:chooseTrip('%', '%')",
 		itemUrlParams:['name', 'location']
 	},
-	'down'
+	'down',
+	'name'
 )
 var domEl = comb.display(util.lang.combohintlocations)
 _s('.info').appendChild(domEl)
  */
+
+util.combobox = {
+	flags:[],
+	options:null,
+	cBoxes:[]
+};
+
 (function () {
     "use strict";
     
-	util.combobox = function(domEl, jsjQuery, combProj, dropDir, name)
+    util.combobox.hide = function()
+    {
+		util.forEach(_sa('.combobox_container ol'), function(box)
+		{
+			var b = new HTMLElement(box)
+			b.style("display:none;")
+		})
+    }
+    
+    util.combobox.select = function(i, val)
+    {
+    	var box = util.combobox.cBoxes[i]
+    	box.node.value = val
+    }
+    
+    util.combobox._init = function()
 	{
-		this.domEl = domEl
+		this.flags = [ 
+		  'selectOnClick'
+		  ].unum()   
+		this.options = new util.struct([util.options], {value:0})		  
+    }
+    
+	util._combobox = function(options, jsjQuery, combProj, dropDir, name)
+	{
+		this.id = util.combobox.cBoxes.length
+		this.node = null
+		this.domEl = util.createElement('div')
+		this.options = options
 		this.dropdir = null
 		if(util.isUndef(dropDir))
 		{
@@ -42,9 +76,11 @@ _s('.info').appendChild(domEl)
 		}
 		this.combProj = combProj
 		this.name = name || ''
+		this.options = options
+		util.combobox.cBoxes.push(this)
 	}
 	
-	util.combobox.prototype.refresh = function(value, list)
+	util._combobox.prototype.refresh = function(value, list)
 	{
 		var _l = list.parentNode
 		_l.removeChild(list)
@@ -65,7 +101,7 @@ _s('.info').appendChild(domEl)
 		}
 	}
 	
-	util.combobox.prototype._createListItemIcon = function(c)
+	util._combobox.prototype._createListItemIcon = function(c)
 	{
 		if(this.combProj.itemUrlIconParams && this.combProj.itemUrlIcon)
 		{
@@ -87,7 +123,7 @@ _s('.info').appendChild(domEl)
 			return sp		
 		}
 	}
-	util.combobox.prototype._createListItemText = function(c)
+	util._combobox.prototype._createListItemText = function(c)
 	{
 		var item = document.createElement('a')
 		for(var i = 0; i < this.combProj.displayText.length; i++)
@@ -105,11 +141,15 @@ _s('.info').appendChild(domEl)
 				url = url.replace(/%/, this.jsondata.json[c][this.combProj.itemUrlParams[ii]])
 			}
 		}
-		item.setAttribute('href', url)
+		if(this.options.get(util.combobox.flags.slelectOnClick))
+			item.setAttribute('href', 'javascript:util.combobox.select('+ this.id + ', "' + 
+					this.jsondata.json[c][this.combProj.displayText[0]]  + '")')
+		else
+			item.setAttribute('href', url)
 	
 		return item
 	}
-	util.combobox.prototype._updateList = function(b)
+	util._combobox.prototype._updateList = function(b)
 	{
 		var list = util.createElement('ol')
 				
@@ -129,7 +169,7 @@ _s('.info').appendChild(domEl)
 					var item = this._createListItemText(c)
 					litem.appendChild(item)
 					list.setAttribute('style', "display:block;")
-					if(!util.isUndef(this.jsondata.json[c]['infoUrl']) && item2)
+					if(item2)
 						litem.appendChild(item2)
 					list.appendChild(litem)			
 				}
@@ -148,7 +188,7 @@ _s('.info').appendChild(domEl)
 		return list
 	}
 	
-	util.combobox.prototype.display = function(hint)
+	util._combobox.prototype.display = function(hint)
 	{
 		var my = this
 		var combCont = this.domEl
@@ -156,6 +196,14 @@ _s('.info').appendChild(domEl)
 		
 		var inp = util.createElement('input')
 		inp.setAttribute('type', 'text')
+		if(util.isObject(this.parentNode))
+		{
+			this.node = inp
+		}
+		else
+		{
+			this.node = inp.node
+		}
 		if(this.name)
 			inp.setAttribute('name', this.name)
 		inp.setAttribute('class', 'combobox_input')
@@ -185,7 +233,7 @@ _s('.info').appendChild(domEl)
 		})
 		_s('body').addListener('click', function(e)
 		{
-			_s('.combobox_container ol').style("display:none;")
+			util.combobox.hide()
 		})
 
 		if(this.dropDir == 'up')
