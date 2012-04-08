@@ -519,7 +519,6 @@ util.datePicker = {
 			el.setAttribute('type', 'hidden')
 			var name = obj2.getNode().getAttribute('name')
 			el.setAttribute('name', name)
-			el.val(obj.value)
 			
 			// and append it to the form
 			obj2.getNode().parentNode.appendChild(el.node)
@@ -542,6 +541,7 @@ util.datePicker = {
 					formatshort:util.locale.datePickerDateFormatShort})
 			
 			dp.tnode = obj2
+			el.val(dp.data.date.format(util.datePicker.dataFormat))
 			
 			if(	!String(obj2.value).isEmpty() && 
 				dp.data.options.get(util.datePicker.flags.expand) && 
