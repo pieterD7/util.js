@@ -9,7 +9,8 @@ util._defaultStrings.en =
 			"You can <a href='javascript:void(0)'>send</a> this error message: ",		
 
 	error:{
-		error_create_database_instance: "Error opening database"},	
+		error_create_database_instance: "Error opening database",
+		error_invalidnodevalue: "Inavlid date"},	
 		
 	year: 		{s:'year',p:'+s'},
 	month:		{s:'month',p:'+s'},
@@ -42,13 +43,13 @@ util._defaultStrings.en =
 
   	holidays:{
 		cities:{leiden:{_3oct:"leiden's ontzet"}},
-		easter:'pasen',
-		christmas: 'kerst',
-		ascension: 'hemelvaart',
-		pentecost: 'pinksteren',
-		liberationday:'bevrijdingsdag',
-		queensday:'koninginnedag',
-		jan1:'nieuwjaarsdag'},	              
+		easter:'easter',
+		christmas: 'christmas',
+		ascension: 'ascension',
+		pentecost: 'pentecost',
+		liberationday:'liberationday',
+		queensday:'queensday',
+		jan1:'newyearsday'},	              
 	              
 	daysshort:['mo','tu','we','th','fr','sa', 'su'],
 	

@@ -52,6 +52,14 @@ util.cpath = {
 		return cpathstr
 	}
 	
+	util.cpath.display = function(sel)
+	{
+		var s = _s(sel)
+		if(!util.isUndef(s))
+			s.setHtml(	util.cpath.getStoredPaths() + 
+						util.cpath.cpathar.joinAll(function(p){return p.time + " " + p.cpath + "\n"}))
+	}
+	
 	util.cpath.resetPath = function()
 	{
 		util.cpath.cpathar = []

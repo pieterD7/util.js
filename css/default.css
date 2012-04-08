@@ -12,26 +12,51 @@ a, a:active, a:hover, a:visited
 						color:#BADB00;
 						font-weight:bold;
 						}
-input					{
-						padding:4px;
+input
+						{
+						width:95%;
 						}
-.col					{
-						width:300px;
-						float:left;
-						margin-left:8px;
-						margin-top: 4px;
+input[type=currency], input[type=text]
+						{
+						padding:4px;
+						}						
+input[type=codate]		{
+						width:inherit;
+						}
+input[type=country]		{
+						width:25%;
+						}
+input[type=currency]	{
+						width:25%;
+						}
+input[type=submit]		{
+						width:inherit;
+						float:right;
+						margin-right:20px;
+						padding: 4px 10px 4px 10px;
 						}
 .sitemapCol				{
 						float:left;
 						}
 #hud .combobox_input	{
-						width:300px;
 						}
 #hud .combobox_container
 						{
-						height:5em;
+						width:100%;
+						float:left;
 						}
+#tabs a, 
+#tabs a:link,
+#tabs a:active, 
+#tabs a:hover, 
+#tabs a:visited
+#footer a,
+#footer a:link, 
+#footer a:active, 
+#footer a:hover, 
+#footer a:visited, 						
 #hud .combobox_container a, 
+#hud .combobox_container a:link, 
 #hud .combobox_container a:active, 
 #hud .combobox_container a:hover, 
 #hud .combobox_container a:visited, 
@@ -41,21 +66,31 @@ input					{
 						}	
 .valueishint			{
 						color:#b0b0b0;
-						}											
+						}
+select					{
+						padding:4px 8px 4px 2px;
+						margin:0;
+						width:25%;
+						}
+ul						{
+						padding:15px;
+						margin:0;
+						}
+#hud					{}																	
 #hud ol					{
+						border: 1px dotted black;		
+						display:none;
+						min-width:300px;
 						list-style:none;
 						padding-left:8px;
 						margin:0;
-						width:300px;
 						z-index:9999;
 						position:absolute;
-						background:#D3D6B2;
 						padding-bottom:0.5em;
+						background:white;
 						}
 #icons					{
-						bottom:8px;
-						left:12px;
-						position:absolute;
+						margin:8px 0 18px 0;
 						}
 #icons div.activeicon	{
 						position:relative;
@@ -74,34 +109,42 @@ input					{
 						white-space: nowrap;
 						}						
 #tabs					{
-						padding:8px;
+						padding:8px 0 8px 0;
 						}
 #tabs span				{
-						margin-right:8px;
+						margin:0 8px 0 8px;
 						}
 #tabs span.activeTab		
 						{
 						display:none;
 						}						
 #gmap					{
-						float:left;
-						width:500px;
-						height:300px;
-						margin:4px;
+						;
+						height:280px;
+						margin-bottom:10px;
 						}
 #sitemap				{
-						display:none;
-						position:absolute;
-						bottom:0px;
-						width:100%;
-						height:150px;
+						display:none;					
+						}
+#sitemap ul				{
+						list-style-type:none;
+						padding-left:20px;
+						}
+#footer p				{
+						margin:0;
 						}
 #langbar				{
 						padding:4px;
+						width:100%;
+						
 						}
 .diap					{
 						color: #D3D6B2;
 						background:#515240;
+						}
+.pos					{
+						color:#515240;
+						background:#D3D6B2;
 						}
 div#tests				{
 						float:left;
@@ -120,8 +163,52 @@ div#tests				{
 						{
 						padding:4px;
 						}
+.holiday				{
+						color:#515240;
+						background:#BADB00;
+						}
+input					{margin-top:3px;}							
+.datePickerPlus, .datePickerMin
+						{
+						text-decoration:none;
+						width:2em;
+						height:2em;
+						display:inline-block;
+						background:white;
+						vertical-align:top;
+						text-align:center;
+						margin-top:4px;
+						}	
+.white					{
+						background:white;
+						display:inline-block;
+						}																								
+.datePickerPlus img, .datePickerMin	img
+						{
+						vertical-align:bottom;
+						border:none;
+						}					
+.datePickerSelectedMonth
+						{
+						font-weight:bold;
+						}
+.datePickerSelectedMonth span
+						{
+						margin: 0 4px 0 4px;
+						}			
+.datePickerSelectedMonth span a,
+.datePickerSelectedMonth span a:active,
+.datePickerSelectedMonth span a:visited
+						{
+						color:#515240;
+						}						
+.datePickerRow			{
+						width:220px;
+						margin:0 auto;
+						}			
 .datePickerContainer	{
 						padding-right:4px;
+						text-align:center;
 						}						
 .datePickerBackground	{
 						background:white;
@@ -152,11 +239,6 @@ div.datePickerSelector:nth-child(7)
 						float:left;
 						text-align:center;
 						border: 1px solid white;
-						}
-.datePickerDay:hover:not(.datePickerHeaderDay)
-						{
-						border: 1px solid red;
-						cursor:pointer;
 						}							
 .datePickerDayBreak		{
 						clear:left;

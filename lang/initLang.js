@@ -58,6 +58,7 @@ util.initLang = function()
 	var locales = ['en']
 	if( typeof utilConfig === 'object')
 		typeof utilConfig.locales === 'object' ? locales = utilConfig.locales : null
+				
 	util.forEach(locales, function(iso_code)
 	{
 		var s = url + 'lang/' + iso_code + '/' + 'lang_' + iso_code 
@@ -96,7 +97,9 @@ util.initLang = function()
 					}
 			}	
 			util.lang = util._lang[ulang]
+			util.selectedLocale = ulang
 			util.bankholidays = util._bankholidays[ulang]
+			util.defaultStrings = util._defaultStrings[ulang]
 		}
 		catch(e)
 		{

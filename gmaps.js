@@ -35,6 +35,7 @@ util.gmaps = {
 					util.extend(util.gmaps.goptions, {center:new google.maps.LatLng(lat, lng)})
 					var map = new google.maps.Map(_s(util.gmaps.sel).getNode(), util.gmaps.goptions);					
 				})
+				  
 			}
 		}
 	}

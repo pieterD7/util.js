@@ -74,6 +74,7 @@ util.langbar =
 							util.storeString(strings[i], iso_code)
 				}	
 				util.lang = util._lang[iso_code]
+				util._selectedLocale = iso_code	
 				util.curLang = iso_code
 				util.langbar.update()
 				util.forEach(this.onUpdate, function(cb)

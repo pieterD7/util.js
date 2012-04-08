@@ -1,12 +1,14 @@
 // TESTS
 
 util.test = {
-	notify: true
+	notify: 0,
+	totalTests:0,
+	totalTestsPassed:0
 }
 util.test.strOut = function(msg, n)
 {
 	if(util.test.notify == 1 && _s('#tests'))	
-		_s('#tests').appendHtml(msg + " <a>passed&nbsp;(" + n + "/" + n + ")</a><br/>")	
+		_s('#tests').appendHtml(msg + " <a>" + util.lang.tests_passed + "&nbsp;(" + n + "/" + n + ")</a><br/>")	
 }
 util.test.errOut = function(str1, msg)
 {
@@ -26,7 +28,11 @@ util.test.runTests = function(ts)
 		}
 	})
 	if(pass)
+	{
+		util.test.totalTestsPassed += ts.tsts.length
 		util.test.strOut(ts.msg, ts.tsts.length)
+	}
+	util.test.totalTests += ts.tsts.length
 }
 util.test.assertStr = function(str1, str2)
 {		
@@ -60,8 +66,10 @@ util.test.assertNotNill = function(a)
 		return false
 }
 
-util.ready(function()
+util.test.run = function(noti)
 {
+	util.test.notify = noti
+	_s('#tests').setHtml('')
 	// Sanity check
 	util.test.runTests({
 		tsts:[{test:util.test.assertNotNill, params:[document.querySelector]}],
@@ -69,8 +77,8 @@ util.ready(function()
 	})	
 	
 	var d = util.createElement('div')
-	d.addClassName('test1')
-	d.addClassName('test2')
+	d.addClassName('test1 test2')
+	//d.addClassName('test2')
 	d.addClassName('test1')
 
 	var dd = util.createElement('div')
@@ -121,7 +129,7 @@ util.ready(function()
 		tsts:[{test:util.test.assertStr, params:[new Date('2009', '11', '31').getWeek(), "53"]},
 		      {test:util.test.assertStr, params:[new Date('2014', '11', '29').getWeek(), "1"]},
 		      {test:util.test.assertStr, params:[new Date('2012', '0', '1').getWeek(), "52"]}],
-		msg: 'Test6: weeknumber'		
+		msg: 'Test6: iso weeknumber'		
 	})	
 
 	util.test.runTests({
@@ -133,7 +141,7 @@ util.ready(function()
 	util.test.runTests({
 		tsts:[{test:util.test.assertStr, params:[util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
 		                             			.toLimitedFormattedText(23), "Fits in. As many words ..."]},
-		      {test:util.test.assertStr, params:[Number(10000).format('integer'), "10.000"]}],
+		      {test:util.test.assertStr, params:[Number(10000).format('integer'), "10,000"]}],
 		msg: 'Test8: string formatting'		
 	})	
 	
@@ -144,4 +152,19 @@ util.ready(function()
 		      {test:util.test.assertNumber, params:[a.optionBaz, 4]}],
 		  msg:"Test9: enum"
 	})	
+	if(util.test.notify == 0)
+	{
+		var div = util.createElement('div')
+		div.setHtml("Tests passed: " + util.test.totalTestsPassed + "/" + util.test.totalTests + " ")
+		var a = util.createElement('a')
+		a.setHtml('show report')
+		a.setAttribute('href', 'javascript:util.test.run(1)')
+		div.appendChild(a)
+		_s('#tests').appendChild(div)		
+	}	
+}
+
+util.ready(function()
+{
+	util.test.run(0)
 })

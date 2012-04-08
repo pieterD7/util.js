@@ -1,4 +1,5 @@
-##http://download.geonames.org/export/dump/countryInfo.txt, OpenOffice en 
+##http://download.geonames.org/export/dump/countryInfo.txt, OpenOffice en
+##22-Mar-2012 
 ##Google Translate (de, pl, es, en, nl, it)
 ##SAVE AS UTF-8
 #iso

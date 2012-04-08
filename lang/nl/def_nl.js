@@ -9,7 +9,8 @@ util._defaultStrings.nl =
 		"Je kunt deze foutmelding <a href='javascript:void(0)'>opsturen</a>: ",		
 
 	error:{
-		error_create_database_instance: "Fout bij het openen van de database"},
+		error_create_database_instance: "Fout bij het openen van de database",
+		error_invalidnodevalue: "Foutieve datum"},
 		
 	year: 		{s:'jaar',p:'-ar+ren'},
 	month:		{s:'maand',p:'+en'},

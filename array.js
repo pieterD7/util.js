@@ -49,6 +49,15 @@ Array.prototype.joinEach = function(id, sep)
 	return ret
 }
 
+Array.prototype.joinAll = function(cb)
+{
+	var ret = ''
+	util.forEach(this, function(t)
+	{
+		ret += cb(t)
+	})
+	return ret
+}
 
 /**
  * @param {Number} form From, can be omitted
@@ -66,7 +75,7 @@ Array.prototype.unum = function(from, to, opt)
 		var opt = opt || {}
 		opt.optunumFlags = true
 		from = 1
-		to = Math.pow(this.length+1, 2)
+		to = Math.pow(2, this.length+1)
 	}
 	else if(!util.isUndef(from) && util.isUndef(to) && from == 0)
 	{

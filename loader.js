@@ -136,7 +136,8 @@ var util = util || {
            	'dnd', 'hud', 'menu',
            	'icons', 'placeholder',
            	'cpath', 'fractal',
-           	'country', 
+           	'country', 'setman',
+           	'maersk',
            	
            	/* the js part of the 960 grid layout 
            	 * from http://adapt.960.gs */
@@ -309,7 +310,11 @@ var util = util || {
  */
 util.ready = function(cb)
 {
-	util._onloads.push(cb)
+	if(document.readyState === 'complete' &&
+		util.isFunction(cb))
+			cb()
+	else
+		util._onloads.push(cb)
 }
 
 /**
@@ -318,7 +323,7 @@ util.ready = function(cb)
  */
 util.prepare = function(cb)
 {
-		util._onprepare.push(cb)
+	util._onprepare.push(cb)
 }
 util.initUtil()
 

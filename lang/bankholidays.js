@@ -36,40 +36,43 @@ util.holidays.init = function()
 	util.holidays.options = new util.struct([util.options], {value:0})	
 }
 
-util.holidays.getHolidays = function(year)
+util.holidays.getHolidays = function(year, lang)
 {
 	var ret = false
 
-	if(util.isObject(util._bankholidays[util.curLang]))
+	util.forEach(lang, function(_lang)
 	{
-		var tHolis = []
-		var rHolis = util.bankholidays.regionalHolidays
-		var cHolis = util.bankholidays.christianHolidays
-		var nHolis = util.bankholidays.nationalHolidays
-		ret = []
-		if(util.holidays.options.value == 0)
-			tHolis = cHolis.concat(nHolis).concat(rHolis).concat(cHolis)
-		if(util.holidays.options.get(util.holidays.flags.regional))
-			tHolis = tHolis.concat(rHolis)
-		if(util.holidays.options.get(util.holidays.flags.national))
-			tHolis = tHolis.concat(nHolis)
-		if(util.holidays.options.get(util.holidays.flags.christian))
-			tHolis = tHolis.concat(cHolis)
-			
-		util.forEach(tHolis, function(holi)
+		if(util.isObject(util._bankholidays[_lang]))
 		{
-			var day = null
-			if(util.isObject(holi) && util.isFunction(util.holidays[holi.calc]))
+			var tHolis = []
+			var rHolis = util.bankholidays.regionalHolidays
+			var cHolis = util.bankholidays.christianHolidays
+			var nHolis = util.bankholidays.nationalHolidays
+			ret = []
+			if(util.holidays.options.value == 0)
+				tHolis = cHolis.concat(nHolis).concat(rHolis).concat(cHolis)
+			if(util.holidays.options.get(util.holidays.flags.regional))
+				tHolis = tHolis.concat(rHolis)
+			if(util.holidays.options.get(util.holidays.flags.national))
+				tHolis = tHolis.concat(nHolis)
+			if(util.holidays.options.get(util.holidays.flags.christian))
+				tHolis = tHolis.concat(cHolis)
+				
+			util.forEach(tHolis, function(holi)
 			{
-				day = util.holidays[holi.calc](year)
-			}
-			if(day)
-				ret.push({
-					name:holi.name,
-					date:day 
-				})
-		})
-	}
+				var day = null
+				if(util.isObject(holi) && util.isFunction(util.holidays[holi.calc]))
+				{
+					day = util.holidays[holi.calc](year)
+				}
+				if(day)
+					ret.push({
+						name:holi.name,
+						date:day 
+					})
+			})
+		}		
+	})
 	return ret
 }
 
@@ -144,13 +147,5 @@ util.ready(function()
 		 util.holidays.flags.national,
 		 util.holidays.flags.christian])
 			 
-	util.holidays.list = util.holidays.getHolidays(new Date().getFullYear())
-/*		.forEach(function(holi)
-		{
-			alert( 	holi.name + ' ' + 
-					holi.date.from.day + ' ' + 
-					holi.date.from.month)
-		
-		})
-*/	
+	util.holidays.list = util.holidays.getHolidays(new Date().getFullYear(), ['nl'])
 })

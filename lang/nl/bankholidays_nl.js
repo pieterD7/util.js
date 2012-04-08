@@ -2,30 +2,30 @@
  * 
  */
 
-util.prepare(function()
+util.ready(function()
 {
 	util._bankholidays.nl = 
 	{
 		christianHolidays:[
-		{	name:util._defaultStrings.nl.holidays.easter, 
+		{	name:util.defaultStrings.holidays.easter, 
 			calc:'EasterWestern'},
-		{	name:util._defaultStrings.nl.holidays.pentecost, 
+		{	name:util.defaultStrings.holidays.pentecost, 
 			calc:'Pentecost'},
-		{	name:util._defaultStrings.nl.holidays.christmas, 
+		{	name:util.defaultStrings.holidays.christmas, 
 			calc:'Christmas'},
-		{	name:util._defaultStrings.nl.holidays.ascension, 
+		{	name:util.defaultStrings.holidays.ascension, 
 			calc:'Ascension'},			
 		],
 		nationalHolidays:[
-		{ 	name:util._defaultStrings.nl.holidays.liberationday, 
+		{ 	name:util.defaultStrings.holidays.liberationday, 
 			calc:'_5MayNL'},
-		{ 	name:util._defaultStrings.nl.holidays.queensday, 
+		{ 	name:util.defaultStrings.holidays.queensday, 
 			calc:'_30AprNL'},			
-		{	name:util._defaultStrings.nl.holidays.jan1,
+		{	name:util.defaultStrings.holidays.jan1,
 			calc:'_1Jan'}
 		],
 		regionalHolidays:[
-		{ 	name:util._defaultStrings.nl.holidays.cities.leiden._3oct,
+		{ 	name:util.defaultStrings.holidays.cities.leiden._3oct,
 			calc:'_3OctNL',
 			data:{region:'u173-u175'}}
 		]

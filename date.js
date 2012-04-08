@@ -37,6 +37,35 @@ Date.prototype.getWeek = function() {
  * @param {String} format PHP-like date format
  * 
  */
+String.prototype.toDate = function(format)
+{
+	// Convert to year, month, day
+	var my = this
+	var y = ''
+	var m = ''
+	var d = ''
+	util.forEach(format.split(""), function(char, i)
+	{
+		switch(char)
+		{
+			case "Y":
+				y += my.toString().split("")[i]
+				break
+			case "M":
+				m += my.toString().split("")[i]
+				break
+			case "D":
+				d += my.toString().split("")[i]
+				break
+		}
+	})
+	return new Date(y, m - 1, d)
+}
+
+/**
+ * @param {String} format PHP-like date format
+ * 
+ */
 Date.prototype.format = function(format)
 {
 	var s = []

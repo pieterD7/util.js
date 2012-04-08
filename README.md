@@ -194,7 +194,7 @@ util.ready(function() // If using the loader
 	       		{'name':'lo  \\\\  pi'},
 	       		{'name':'Kilo zei:\\\"Hoera!\\\"'}]")[2].name)       
 
-	    // with a struct:   
+	    // with a struct (but not "use strict" compatible):   
 	        var msg = new util.struct([String], {msg1:'total %', msg2:'Bye '})
 	        var d = msg.format.apply(msg.data.msg1, [[1.5], 'float:2'])
 	        var m = msg.toLimitedFormattedText.apply(d, [15])
