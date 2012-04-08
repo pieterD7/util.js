@@ -292,6 +292,7 @@ util.datePicker = {
 					dd > new Date())
 				{
 					my.data.date = dd
+					_s("input[name=" + my.data.name + "]").val(dd.format(util.datePicker.dataFormat))
 					_s('body').node.removeChild(_s('body').node.lastChild)									
 					my.display(id)
 				}
@@ -611,7 +612,7 @@ util.datePicker = {
 util.prepare(function()
 {	
 	util.datePicker.options.set(
-		[!util.datePicker.flags.expand, 
+		[util.datePicker.flags.expand, 
 		 util.datePicker.flags.incrementworkday,
 		 util.datePicker.flags.expandenabledrag,
 		 util.datePicker.flags.expandshowweeknumber,
