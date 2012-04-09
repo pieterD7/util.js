@@ -355,6 +355,18 @@ util.datePicker = {
 			this.data.node.setAttribute('style', 'display:inline;')
 		}
 	}
+	
+	util.datePicker.isHoliday = function(day)
+	{
+		var r = util.forEach(util.holidays.list, function(holi)
+		{
+			if(holi.date.from.year == day.getFullYear() &&
+				holi.date.from.month == day.getMonth() + 1 &&
+				holi.date.from.day == day.getDate())
+				return true
+		})
+		return r
+	}
 
 	util.datePicker.prevNextDay = function(dp, offset)
 	{
@@ -372,14 +384,21 @@ util.datePicker = {
 		}
 		if(offset > 0 && this.options.get(this.flags.showholidays))
 		{
-			util.forEach(util.holidays.list, function(holi)
-			{
-				if(	holi.date.from.year == dp.data.date.getFullYear() &&
-					holi.date.from.month == dp.data.date.getMonth() + 1  &&
-					holi.date.from.day == dp.data.date.getDate() + offset)
+			var dp2 = new Date(
+				dp.data.date.getFullYear(),
+				dp.data.date.getMonth(),
+				dp.data.date.getDate() + offset)
+			var c = 1
+			while(util.datePicker.isHoliday(dp2))
+			{	
+				dp2 = new Date(
+					dp.data.date.getFullYear(),
+					dp.data.date.getMonth(),
+					dp.data.date.getDate() + offset + c++)
 				offset++
-			})
+			}
 		}
+
 		var now = new Date()
 		if(	(now < new Date(
 			dp.data.date.getFullYear(),
@@ -612,7 +631,7 @@ util.datePicker = {
 util.prepare(function()
 {	
 	util.datePicker.options.set(
-		[util.datePicker.flags.expand, 
+		[!util.datePicker.flags.expand, 
 		 util.datePicker.flags.incrementworkday,
 		 util.datePicker.flags.expandenabledrag,
 		 util.datePicker.flags.expandshowweeknumber,
