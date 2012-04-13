@@ -16,6 +16,12 @@ input
 						{
 						width:95%;
 						}
+#setman input			{
+						width:20px;
+						}
+#setman input[type=text]{
+						width:200px;
+						}
 input[type=currency], input[type=text]
 						{
 						padding:4px;
@@ -35,6 +41,9 @@ input[type=submit]		{
 						margin-right:20px;
 						padding: 4px 10px 4px 10px;
 						}
+input[type=checkbox]	{
+						margin:8px;
+						}
 .sitemapCol				{
 						float:left;
 						}
@@ -45,6 +54,13 @@ input[type=submit]		{
 						width:100%;
 						float:left;
 						}
+#tablayout				{
+						display:none;
+						}
+.tabLink				{
+						margin:4px;
+						display:block;
+						}						
 #tabs a, 
 #tabs a:link,
 #tabs a:active, 
@@ -135,8 +151,10 @@ ul						{
 						}
 #langbar				{
 						padding:4px;
-						width:100%;
-						
+						width:100%;				
+						}
+#langbar a				{
+						margin: 0 4px 0 4px;			
 						}
 .diap					{
 						color: #D3D6B2;
@@ -177,7 +195,7 @@ input					{margin-top:3px;}
 						background:white;
 						vertical-align:top;
 						text-align:center;
-						margin-top:4px;
+						margin:4px 0 0 0;
 						}	
 .white					{
 						background:white;

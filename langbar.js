@@ -58,6 +58,7 @@ util.langbar =
 			if( util.isString(iso_code) && 
 				util.langbar.hasLanguage(iso_code))
 			{
+				iso_code = String(iso_code).replace(/[-]/, '')
 				strings =  _initLang(util._lang[iso_code])
 				util.locale = util._locale[iso_code]
 				util.defaultStrings = util._defaultStrings[iso_code]
@@ -74,7 +75,7 @@ util.langbar =
 							util.storeString(strings[i], iso_code)
 				}	
 				util.lang = util._lang[iso_code]
-				util._selectedLocale = iso_code	
+				util.selectedLocale = iso_code	
 				util.curLang = iso_code
 				util.langbar.update()
 				util.forEach(this.onUpdate, function(cb)
@@ -114,8 +115,8 @@ util.langbar =
 			this.sel = sel
 			util.forEach(this.langs, function(lang)
 			{
-				if(!String(lang.iso_code)
-					.match(new RegExp("^" + util.curLang + "$")))
+				if(!String(lang.iso_code.replace(/[-]/, ''))
+					.match(new RegExp("^" + util.curLang.replace(/[-]/, '') + "$")))
 				{
 					var sep = document.createElement('span')
 					sep.setAttribute('class', 'space')

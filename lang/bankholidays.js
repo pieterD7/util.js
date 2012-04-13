@@ -133,7 +133,10 @@ util.holidays._1Jan = function(year)
 {
 	return {from:{day:1, month:1, year:year}}
 }
-
+util.holidays._1MayNL = function(year)
+{
+	return {from:{day:1, month:5, year:year}}
+}
 util.prepare(function()
 {
 	util.holidays.init()	
@@ -148,4 +151,6 @@ util.ready(function()
 		 util.holidays.flags.christian])
 			 
 	util.holidays.list = util.holidays.getHolidays(new Date().getFullYear(), ['nl'])
+		.concat(util.holidays.getHolidays(new Date().getFullYear() + 1, ['nl']))
+//	util.forEach(util.holidays.list, function(holi){alert(holi.name)})
 })

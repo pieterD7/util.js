@@ -31,7 +31,8 @@ util._defaultStrings.nl =
 		pentecost: 'pinksteren',
 		liberationday:'bevrijdingsdag',
 		queensday:'koninginnedag',
-		jan1:'nieuwjaarsdag'},
+		jan1:'nieuwjaarsdag',
+		labourday:'dag van de arbeid'},
 		
 	month1: 'januari',
 	month2: 'februari',

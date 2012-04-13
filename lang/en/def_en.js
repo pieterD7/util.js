@@ -10,7 +10,7 @@ util._defaultStrings.en =
 
 	error:{
 		error_create_database_instance: "Error opening database",
-		error_invalidnodevalue: "Inavlid date"},	
+		error_invalidnodevalue: "Invalid date"},	
 		
 	year: 		{s:'year',p:'+s'},
 	month:		{s:'month',p:'+s'},
@@ -49,7 +49,8 @@ util._defaultStrings.en =
 		pentecost: 'pentecost',
 		liberationday:'liberationday',
 		queensday:'queensday',
-		jan1:'newyearsday'},	              
+		jan1:'newyearsday',
+		labourday:'labourday'},	              
 	              
 	daysshort:['mo','tu','we','th','fr','sa', 'su'],
 	

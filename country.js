@@ -9,11 +9,14 @@ util.country = {};
 	
 	util.country.init = function(locale)
 	{
+		var url = 'utiljs/countriesEurope.txt'
 		if(util.isUndef(locale))
 			var locale = 'en'
+		if(locale.match(/^enus/))
+			url = 'utiljs/countriesUSA.txt'
 		util.ajax(
 		{
-			url:'utiljs/countriesEurope.txt',
+			url:url,
 			onSuccess: function(data)
 			{
 				util.eventHandler(function()

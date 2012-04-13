@@ -13,7 +13,7 @@ util.options.prototype.set = function(flags)
 {
 	for(var c = 0; c < flags.length; c++)
 	{
-		this.data.value |= flags[c]
+		this.data.value ^= flags[c]
 	}
 }
 /**

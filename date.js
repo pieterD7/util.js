@@ -66,7 +66,7 @@ String.prototype.toDate = function(format)
  * @param {String} format PHP-like date format
  * 
  */
-Date.prototype.format = function(format)
+Date.prototype.format = function(format, padd)
 {
 	var s = []
 	var discard = 0
@@ -84,7 +84,10 @@ Date.prototype.format = function(format)
 		else if(format[c] == 'D'  && format[c+1] == 'D')
 		{
 			discard++
-			s.push(this.getDate())		
+			var d = this.getDate()
+			if(padd && String(d).length == 1)
+				d = '0' + d
+			s.push(d)		
 		}
 		else if(format[c] == 'D' && (c > 0 && format[c-1] != 'D' || c == 0))
 		{
@@ -97,7 +100,10 @@ Date.prototype.format = function(format)
 		else if(format[c] == 'M' && format[c+1] == 'M')
 		{
 			discard++
-			s.push(this.getMonth() + 1)			
+			var m = this.getMonth() + 1
+			if(padd && String(m).length == 1)
+				m = '0' + m
+			s.push(m)			
 		}
 		else  if (format[c] == 'M' && (c > 0 && format[c-1] != 'M' || c ==0))
 		{

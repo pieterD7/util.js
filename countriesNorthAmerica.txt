@@ -1,0 +1,136 @@
+##http://download.geonames.org/export/dump/countryInfo.txt, OpenOffice en
+##13-Apr-2012
+##Google Translate (nl)
+##SAVE AS UTF-8
+#iso
+AG
+AI
+AW
+BB
+BL
+BM
+BQ
+BS
+BZ
+CA
+CR
+CU
+CW
+DM
+DO
+GD
+GL
+GP
+GT
+HN
+HT
+JM
+KN
+KY
+LC
+MF
+MQ
+MS
+MX
+NI
+PA
+PM
+PR
+SV
+SX
+TC
+TT
+US
+VC
+VG
+VI
+AN
+#
+#en
+Antigua and Barbuda
+Anguilla
+Aruba
+Barbados
+Saint Barthélemy
+Bermuda
+Bonaire, Saint Eustatius and Saba 
+Bahamas
+Belize
+Canada
+Costa Rica
+Cuba
+Curaçao
+Dominica
+Dominican Republic
+Grenada
+Greenland
+Guadeloupe
+Guatemala
+Honduras
+Haiti
+Jamaica
+Saint Kitts and Nevis
+Cayman Islands
+Saint Lucia
+Saint Martin
+Martinique
+Montserrat
+Mexico
+Nicaragua
+Panama
+Saint Pierre and Miquelon
+Puerto Rico
+El Salvador
+Sint Maarten
+Turks and Caicos Islands
+Trinidad and Tobago
+United States
+Saint Vincent and the Grenadines
+British Virgin Islands
+U.S. Virgin Islands
+Netherlands Antilles
+#
+#nl
+Antigua en Barbuda
+Anguilla
+Aruba
+Barbados
+Saint Barthelemy
+Bermuda
+Bonaire, Sint Eustatius en Saba
+Bahamas
+Belize
+Canada
+Costa Rica
+Cuba
+Curaçao
+Dominica
+Dominicaanse Republiek
+Grenada
+Groenland
+Guadeloupe
+Guatemala
+Honduras
+Haïti
+Jamaica
+Saint Kitts en Nevis
+Cayman Islands
+Saint Lucia
+Saint Martin
+Martinique
+Montserrat
+Mexico
+Nicaragua
+Panama
+Saint Pierre en Miquelon
+Puerto Rico
+El Salvador
+Sint Maarten
+Turks-en Caicoseilanden
+Trinidad en Tobago
+Verenigde Staten
+Saint Vincent en de Grenadines
+Britse Maagdeneilanden
+Amerikaanse Maagdeneilanden
+Nederlandse Antillen
+#

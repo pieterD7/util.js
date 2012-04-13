@@ -145,7 +145,8 @@
 
 			// Store cpath if any
 			var cpath = this.alldata.cpath;
-			if(!util.trim(cpath).isEmpty())
+			if(	!util.trim(cpath).isEmpty() &&
+				!util.isUndef(n))
 			{
 				util.cpath.pushCPath(sprintf(cpath, [n]))
 			}	

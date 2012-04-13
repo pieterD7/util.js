@@ -48,6 +48,8 @@ var util = util || {
 	
 	selectedLocale:null,
 	
+	dataDecimalSeparator: '.',
+	
 	/* modules */
 	_mods: [
 	        
@@ -131,12 +133,13 @@ var util = util || {
            	'lang/com_lang', 
            	
            	/* module for browsers */
-           	'css', 'datePicker', 
+           	'css', 'datepicker', 
            	'crumbs', 'chatbox', 
            	'dnd', 'hud', 'menu',
            	'icons', 'placeholder',
            	'cpath', 'fractal',
            	'country', 'setman',
+           	'tablayout', 'currency',
            	'maersk',
            	
            	/* the js part of the 960 grid layout 
@@ -169,6 +172,11 @@ var util = util || {
 	{
 		this._lang[lang][string.store] = string.html
 
+	},
+	
+	setDataDecimalSeparator: function(sep)
+	{
+		util.dataDecimalSeparator = sep
 	},
 	
 	/**

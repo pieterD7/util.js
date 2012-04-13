@@ -1,0 +1,232 @@
+##
+#iso
+AB
+BC
+MB
+NB
+NL
+NS
+NU
+ON
+PE
+QC
+SK
+NT
+YT
+AA
+AE
+AK
+AL
+AP
+AR
+AS
+AZ
+CA
+CO
+CT
+DC
+DE
+FL
+FM
+GA
+GU
+HI
+IA
+ID
+IL
+IN
+KS
+KY
+LA
+MA
+MD
+ME
+MH
+MI
+MN
+MO
+MP
+MS
+MT
+NC
+ND
+NE
+NH
+NJ
+NM
+NV
+NY
+OH
+OK
+OR
+PA
+PR
+PW
+RI
+SC
+SD
+TN
+TX
+UT
+VA
+VI
+VT
+WA
+WV
+WI
+WY
+#
+#en
+Alberta
+British Columbia
+Manitoba
+New Brunswick
+Newfoundland
+Nova Scotia
+Nunavut
+Ontario
+Prince Edward Island
+Quebec
+Saskatchewan
+Northwest Territories
+Yukon Territory
+Armed Forces Americas
+Armed Forces Europe, Middle East, & Canada
+Alaska
+Alabama
+Armed Forces Pacific
+Arkansas
+American Samoa
+Arizona
+California
+Colorado
+Connecticut
+District of Columbia
+Delaware
+Florida
+Federated States of Micronesia
+Georgia
+Guam
+Hawaii
+Iowa
+Idaho
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Massachusetts
+Maryland
+Maine
+Marshall Islands
+Michigan
+Minnesota
+Missouri
+Northern Mariana Islands
+Mississippi
+Montana
+North Carolina
+North Dakota
+Nebraska
+New Hampshire
+New Jersey
+New Mexico
+Nevada
+New York
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Puerto Rico
+Palau
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Virginia
+Virgin Islands
+Vermont
+Washington
+West Virginia
+Wisconsin
+Wyoming
+#
+#nl
+Alberta
+British Columbia
+Manitoba
+New Brunswick
+Newfoundland
+Nova Scotia
+Nunavut
+Ontario
+Prince Edward Island
+Quebec
+Saskatchewan
+Northwest Territories
+Yukon Territory
+Armed Forces Americas
+Strijdkrachten Europa, het Midden-Oosten, en Canada
+Alaska
+Alabama
+Armed Forces Pacific
+Arkansas
+Amerikaans-Samoa
+Arizona
+Californië
+Colorado
+Connecticut
+District of Columbia
+Delaware
+Florida
+Federale Staten van Micronesia
+Georgië
+guam
+Hawaii
+Iowa
+Idaho
+Illinois
+Indiana
+Kansas
+Kentucky
+Louisiana
+Massachusetts
+Maryland
+Maine
+Marshall Eilanden
+Michigan
+Minnesota
+Missouri
+Noordelijke Marianen
+Mississippi
+Montana
+North Carolina
+North Dakota
+Nebraska
+New Hampshire
+New Jersey
+New Mexico
+Nevada
+New York
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Puerto Rico
+Palau
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Virginia
+Maagdeneilanden
+Vermont
+Washington
+West Virginia
+Wisconsin
+Wyoming
+#

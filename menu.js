@@ -124,7 +124,10 @@
 					// Run and adjust state
 					util.forEach(b, function(bb)
 					{
-						bb.cb(param)
+						if(!util.isUndef(urlar[3]))
+							bb.cb(param, urlar[3])
+						else
+							bb.cb(param)
 						util.lastUrl = url	
 					})
 				}

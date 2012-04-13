@@ -19,6 +19,8 @@ util.ready(function()
 		nationalHolidays:[
 		{ 	name:util.defaultStrings.holidays.liberationday, 
 			calc:'_5MayNL'},
+		{ 	name:util.defaultStrings.holidays.labourday, 
+			calc:'_1MayNL'},	
 		{ 	name:util.defaultStrings.holidays.queensday, 
 			calc:'_30AprNL'},			
 		{	name:util.defaultStrings.holidays.jan1,

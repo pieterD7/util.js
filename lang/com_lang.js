@@ -41,6 +41,10 @@ function _initLang(lang)
 	{
 		sel:'#chatbox input[type=button]',
 		value:lang.chatSubmit.toFirstCharUppercase()
+	},
+	{
+		sel:'#tab1',
+		html:'DERRDE'
 	}]
 	return strings
 }
