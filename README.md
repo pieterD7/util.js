@@ -35,8 +35,8 @@
 
 	Util.js was tested on :
 
-	- Android 2.2, 2.3.4 native browser
-	- Chrome 15
+	- Android 2.2, 2.3.4, 4.0 native browser
+	- Chrome 15-18
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
@@ -51,16 +51,11 @@
 	in an object oriented way, specially made for apps, multiple 
 	languages & formats, string formatting, number & currency formatting 
 		
-=====
-	<script type='text/javascript' src='pathToUtil/validations.js'></script>
-	<script type='text/javascript' src='pathToUtil/util.js'></script>
-=====
-	
-	You can also use the full version by using the loader:
-	
+	Implementation:
 =====
 	<script type="text/javascript">
 	var utilConfig = {
+		debug:true,
 		defLocale: 'en',
 		locales: ['it', 'nl']
 	}
@@ -71,7 +66,7 @@
 	<script type='text/javascript' src='pathToUtil/loader.js'></script>
 ======
 
-	String formatting (util proper):
+	String formatting:
 	
 	1) Capitalizes first non-tag string character of string or dot terminated phrases
 	2) Adds space after dot in a phrase
@@ -215,13 +210,17 @@ util.ready(function() // If using the loader
 	    // example options:
 	    option = ['optionFoo', 'optionBar', 'optionBaz'].unum()
 	                    
-	    config = new util.struct([util.options], {value:0})
+	    config = new util.struct([util.options], {value:option.optionBar})
 
-	    config.set([option.optionFoo, !option.optionBar])
+	    config.set([option.optionFoo])
 
 	    config.get() & option.optionFoo // True, or:
-	    config.get(option.optionBar) // False
+	    config.get(option.optionBar) // True
 	    config.get(option.optionBaz) // False
+	    
+	    // toggle optionBar
+	    config.set([option.optionBar])
+	    config.get(option.optionBar) // False
 
 })	
 			
