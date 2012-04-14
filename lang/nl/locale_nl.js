@@ -10,5 +10,5 @@ util._locale.nl =
 	datePickerSelectFormat: 'd DD m YYYY',
 	datePickerDateFormat: 'd, DD-MM-YYYY',		
 	currencySymbol: 'EURO',
-	currencyAfterNumber: true
+	currencyAfterNumber: false
 }

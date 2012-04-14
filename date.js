@@ -122,7 +122,35 @@ Date.prototype.format = function(format, padd)
 		{
 			discard++
 			s.push(this.getYear() - 100)			
-		}		
+		}
+		else if(format[c] == 'H')
+		{
+			var m = this.getHours()
+			if(padd && String(m).length == 1)
+				s.push('0' + m)
+			else
+				s.push(m)
+		}
+		else if(format[c] == 'n')
+		{
+			var m = this.getMinutes()
+			if(padd && String(m).length == 1)
+				s.push('0' + m)
+			else
+				s.push(m)
+		}
+		else if(format[c] == 's')
+		{
+			var m = this.getSeconds()
+			if(padd && String(m).length == 1)
+				s.push('0' + m)
+			else
+				s.push(m)
+		}
+		else if(format[c] == 'T')
+		{
+			s.push("GMT" + this.getTimezoneOffset())
+		}
 		else
 			s.push(format[c])
 	}

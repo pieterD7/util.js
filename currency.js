@@ -20,6 +20,28 @@ util.currency.initInputTypeCurrency = function()
 		var c = new HTMLElement(cur)
 		var name = c.getNode().getAttribute('name')
 		
+		// Add onfocus handler
+		c.addListener('focus', function()
+		{
+			var val = _s('input[name=' + name + ']').val()
+			var i = new HTMLElement(this)
+			i.val(val)
+		})
+		
+		// Add onblur handler
+		c.addListener('blur', function()
+		{
+			var i = new HTMLElement(this)
+			_s('input[name=' + name + ']').val(
+				util.trim(
+					String(i.val())
+						.replace(RegExp(String(util.locale.decimalSeparator).escapeRegExpSpecialChars()), '.')
+						.replace(RegExp(util.currency.currency), '')))
+			i.val(util.trim(
+				util.currency.format(
+					String(i.val()).replace(util.currency.currency, ''))))
+		})		
+		
 		// Insert hidden fields
 		var hid = util.createElement('input')
 		hid.setAttribute('type', 'hidden')
@@ -50,10 +72,19 @@ util.currency.onUpdateLocale = function()
 	})
 }
 
-util.currency.format = function(num)
+util.currency.format = function(num, b)
 {
-	return String(num).replace(
-			RegExp(util.dataDecimalSeparator),
+	var cur = util.currency.currency + " "
+	if(!util.isUndef(b) && b)
+		cur = ''
+	if(util.locale.currencyAfterNumber)
+		return String(num).replace(
+			RegExp(String(util.dataDecimalSeparator).escapeRegExpSpecialChars()),
+			util.locale.decimalSeparator)
+			+ " " + cur
+	else
+		return cur + String(num).replace(
+			RegExp(String(util.dataDecimalSeparator).escapeRegExpSpecialChars()),
 			util.locale.decimalSeparator)
 }
 

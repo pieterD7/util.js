@@ -112,6 +112,7 @@
 					'down',
 					'txt1'
 				)
+				util.huds.push(this)
 				var domEl = comb.display(util.lang.hud_intro)
 				my.node = domEl
 				if(sel)

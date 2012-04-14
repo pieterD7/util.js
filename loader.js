@@ -165,6 +165,17 @@ var util = util || {
 	/* array with functions to be called after load */
 	_onloads:[],
 	
+	huds:[],
+	
+	getLocaleString: function()
+	{
+		var ret = util.selectedLocale
+		if(util.selectedLocale.length == 4) 
+			ret = util.selectedLocale.substring(0,2) + 
+			'-' + util.selectedLocale.substring(2,4)
+		return ret
+	},
+	
 	/**
 	 * @memberOf util 
 	 */

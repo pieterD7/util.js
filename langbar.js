@@ -113,20 +113,25 @@ util.langbar =
 		if(util.isString(sel) && _s(sel))
 		{
 			this.sel = sel
+			_s(sel).setHtml('')
 			util.forEach(this.langs, function(lang)
 			{
-				if(!String(lang.iso_code.replace(/[-]/, ''))
-					.match(new RegExp("^" + util.curLang.replace(/[-]/, '') + "$")))
-				{
-					var sep = document.createElement('span')
-					sep.setAttribute('class', 'space')
-					var item = util.createElement('a')
-					item.setAttribute('class', 'langLink')
-					item.setAttribute('href', "javascript:util.langbar.selectLang('" + lang.iso_code + "')")
-					item.setHtml(String(lang.label).toFirstCharUppercase())
-					sep.appendChild(item.node)
-					_s(sel).appendChild(sep)
-				}
+				if(!util.isUndef(util._lang[String(lang.iso_code).replace(/[-]/, '')]))
+					if(!String(lang.iso_code).replace(/[-]/, '')
+						.match(new RegExp("^" + String(util.curLang).replace(/[-]/, '') + "$")))
+					{
+						var sep = document.createElement('span')
+						sep.setAttribute('class', 'space')
+						var item = util.createElement('a')
+						item.setAttribute('class', 'langLink')
+						item.setAttribute('href', 
+							"javascript:util.follow(" +
+							"'javascript:util.langbar.selectLang:" + lang.iso_code + "'," + 
+							(util.huds.length ? (util.huds[0].alldata ? util.huds[0].alldata.localecpath : null) : null)  + ")")
+						item.setHtml(String(lang.label).toFirstCharUppercase())
+						sep.appendChild(item.node)
+						_s(sel).appendChild(sep)
+					}
 			})
 		}
 	}

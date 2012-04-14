@@ -227,6 +227,25 @@ util.combobox = {
 				my.refresh(inp.node.value, list)			
 			}
 		})
+		inp.addListener('paste', function(o)
+		{
+			_s('body').setHtml(o.innerHTML)
+			if(util.isObject(this.parentNode))
+			{
+				var n = this.parentNode.childNodes.length
+				my.dropDir == 'up' ? n -= 2 : n -= 1
+				var list = this.parentNode.childNodes[n]
+				my.refresh(e.clipboardData.getData('text/html'), list)
+			}
+			else
+			{
+				var n = inp.node.parentNode.childNodes.length
+				my.dropDir == 'up' ? n -= 2 : n -= 1
+				var list = inp.node.parentNode.childNodes[n]
+				my.refresh(e.clipboardData.getData('text/html'), list)			
+			}
+
+		})		
 		_s('body').addListener('click', function(e)
 		{
 			util.combobox.hide()

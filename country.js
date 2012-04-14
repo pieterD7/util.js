@@ -12,7 +12,7 @@ util.country = {};
 		var url = 'utiljs/countriesEurope.txt'
 		if(util.isUndef(locale))
 			var locale = 'en'
-		if(locale.match(/^enus/))
+		if(String(locale).match(/^enus/))
 			url = 'utiljs/countriesUSA.txt'
 		util.ajax(
 		{
@@ -98,7 +98,7 @@ util.country = {};
 	}
 })()
 
-util.ready(function()
+util.prepare(function()
 {
 	util.country.init(util.selectedLocale)
 })

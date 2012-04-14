@@ -70,7 +70,7 @@ util.datepicker = {
 
 		 // Display as util.locale.datepickerHolidayFormat 
 		 // if applicable 
-		 'enableholidayformat',	
+		// 'enableholidayformat',	
 		 
 		 // Enables dropdown list to be scrolled by dragging 
 		 'expandenabledrag',	 
@@ -318,7 +318,7 @@ util.datepicker = {
 				{
 					my.data.date = dd
 					_s("input[name=" + my.data.name + "]").val(dd.format(
-								util.datepicker.getDatePickerDateFormat(),
+								util.datepicker.datePickerDataFormat,
 								this.options.get(util.datepicker.flags.storepaddeddates)))
 					_s('body').node.removeChild(_s('body').node.lastChild)									
 					my.display(id)
@@ -554,8 +554,8 @@ util.datepicker = {
 		for(var c = 0; c < offset; c++)
 		{
 			var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + c + 1)
-			if((options.get(util.datepicker.flags.incrementworkday) && (d.getDay() == 0 || d.getDay() == 6)) || 
-					(options.get(util.datepicker.flags.showholidays) && util.datepicker.isHoliday(d)))
+			if((options.get(util.datepicker.flags.incrementworkday) && 
+				(d.getDay() == 0 || d.getDay() == 6)) || util.datepicker.isHoliday(d))
 			{
 				realOffset++
 			}
@@ -687,6 +687,9 @@ util.datepicker = {
 			dp.data.node.value = dp.data.date.format(
 				dp.data.format,
 				dp.data.options.get(util.datepicker.flags.padddates))
+			_s("input[name=" + dp.data.name + "]").val(dp.data.date.format(
+				util.datepicker.datPickerDataFormat,
+				dp.data.options.get(util.datepicker.flags.storepaddeddates)))		
 		})
 	}
 })()
@@ -694,12 +697,10 @@ util.datepicker = {
 util.prepare(function()
 {	
 	util.datepicker.options.set(
-		[!util.datepicker.flags.expand, 
-		 util.datepicker.flags.incrementworkday,
+		[util.datepicker.flags.incrementworkday,
 		 util.datepicker.flags.expandenabledrag,
 		 util.datepicker.flags.expandshowweeknumber,
 		 util.datepicker.flags.showholidays,
-		 !util.datepicker.flags.allowdatesbeforenow,
 		 util.datepicker.flags.padddates]
 	)	
 })

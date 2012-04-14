@@ -16,6 +16,7 @@ util.setman.updateSettings = function(o)
 	{
 		case 'datepicker':
 			util.setman.updateDatePickerSet(o.value)
+			util.datepicker.onUpdateLocale()	
 			break
 		case 'combobox':
 			break
@@ -35,7 +36,6 @@ util.setman.updateDatePickerSet = function(val)
 util.setman.updateDatePickerFormat = function(o)
 {
 	util.setman.userSettings.store([{key:'datePickerDateFormat', value:o.value}])
-	util.datepicker.onUpdateLocale()
 }
 
 util.setman.settings = function(sel, n)
@@ -46,27 +46,39 @@ util.setman.settings = function(sel, n)
 		if(typeof util[m] == 'object')
 			if(typeof util[m].flags == 'object')
 			{
-				html += "<div id='setman'>" + String(m).toFirstCharUppercase() + ':'
-				for(var i in util[m].flags)
+				switch(m)
 				{
-					var isSet = util[m].options.get(util[m].flags[i])
-					isSet ? checked = 'checked' : checked = ''
-					var name = m 
-					html += '<br/>' + 
-							"<input name='" + m + "'" +
-							" 	onchange='util.setman.updateSettings(this)' " +
-							" 	type='checkbox' " + checked + 
-							" 	value='" + util[m].flags[i] + "'/>" +  i 				
+					case 'datepicker':
+					{
+						html += "<div id='setman'>" + String(m).toFirstCharUppercase() + ':'
+						for(var i in util[m].flags)
+						{
+							var isSet = util[m].options.get(util[m].flags[i])
+							isSet ? checked = 'checked' : checked = ''
+							var name = m 
+							html += '<br/>' + 
+								"<input name='" + m + "'" +
+								" 	onchange='util.setman.updateSettings(this)' " +
+								" 	type='checkbox' " + checked + 
+								" 	value='" + util[m].flags[i] + "'/>" +  i 				
+						}
+						html += "<br/>Date format : " +
+							"<select " +
+							"	onchange='util.setman.updateDatePickerFormat(this)'" + 
+							"	name='dateFormat' >" +
+							"<option>Select date format</option>" +
+							"<option value='d DD M YYYY'>" + 
+							new Date().format('d DD M YYYY') + "</option>" +
+							"<option value='(W) d DD M YYYY'>" + 
+							new Date().format('(W) d DD M YYYY') + "</option>" +							
+							"<option" +  
+							"	value='wkW D DD M' >" + 
+							new Date().format("wkW D DD M", false) + "</option>"
+							"</select>"
+						html += '</div>'
+						break
+					}
 				}
-				if(m == 'datepicker')
-				{
-					html += "<br/>Date format : " +
-							"<input type='text' " +
-							"	name='dateFormat' " +
-							"	value='" + util.datepicker.getDatePickerDateFormat() + "'" + 
-							"	onchange='util.setman.updateDatePickerFormat(this)'/>"
-				}
-				html += '<br/><br/></div>'
 			}
 	})
 	_s(sel).setHtml("<br/>SETTINGS<br/>" + html)

@@ -1,6 +1,14 @@
 /**
  * 
  */
+
+util.regions = 
+{
+	EMEA: ['en','nl'],
+	NCSA: ['en-us'],
+	APAC: ['en-us']
+}
+
 util.lang = null
 util.curLang = ''
 
@@ -50,13 +58,20 @@ util.getBestUserLang = function()
 
 util.initLang = function()
 {
-	
+	var region = 'EMEA'
 	var ulang = this.getBestUserLang()	
-	ulang = typeof utilConfig === 'object' && 
-			typeof utilConfig.defLocale === 'object' ? utilConfig.defLocale : 'en'
+	ulang = typeof utilConfig != 'undefined' && 
+			typeof utilConfig.defLocale != 'undefined' ? utilConfig.defLocale : 'en'
 	var url = util.getBaseUrl()
 	var locales = ['en']
-	if( typeof utilConfig === 'object')
+
+	if(	typeof utilConfig != 'undefined' &&
+		typeof utilConfig.region != 'undefined')
+	{
+		region = utilConfig.region
+		locales = util.regions[region]	
+	}
+	else if( typeof utilConfig === 'object')
 		typeof utilConfig.locales === 'object' ? locales = utilConfig.locales : null
 				
 	util.forEach(locales, function(iso_code)
@@ -71,6 +86,7 @@ util.initLang = function()
 		util.loadScript(s)
 	})
 
+	ulang = String(ulang).replace(/[-]/, '')
 	if(util.isObject(util._lang[ulang]))
 	{
 		/* this is only true if ulang eq utilConfig.defLocale 

@@ -17,12 +17,7 @@ util.cpath = {
 	{
 		var now = new Date()
 		var o = {
-			time:	now.getFullYear()	+	'-' +
-					(now.getMonth()+1) 	+ 	'-' + 
-					now.getDate() 		+ 	' ' + 
-					now.getHours() 		+ 	':' + 
-					now.getMinutes() 	+ 	':' +
-					now.getSeconds(), 
+			time:	now.format('DD-MM-YYYY H:n:s (T)', true), 
 			cpath:str
 		}
 		this.cpathar.push(o)

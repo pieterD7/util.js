@@ -34,7 +34,7 @@ util.tablayout =
 					a.addClassName('tabLink')
 					a.setHtml(el.innerHTML);
 					a.setAttribute('href', 
-						'javascript:util.tablayout.showTab(' + ++t + ')')
+						"javascript:util.follow('javascript:util.tablayout.showTab:" + ++t + "')")
 					l.setHtml('')
 					l.appendChild(a)
 					l.style('float:left;display:block')
