@@ -4,7 +4,6 @@
  * @description Data for datepicker 
  */
 util.datepicker = {
-	offsetWorkdays:0,
 	dPickers:[],
 	tnode:null,
 	dataFormat:'YYYY-MM-DD',
@@ -54,7 +53,8 @@ util.datepicker = {
 		 * dates before now 
 		 * 9 allowtyping Allow user to type a 
 		 * date value
-		 * 10 padd date values
+		 * 10 padddates Padd date values
+		 * 11 storepaddeddates Store padded values
 		 */
 		this.flags =
 		[ 
@@ -107,17 +107,36 @@ util.datepicker = {
 
 	}
 	
+	/**
+	 * @function util.datepicker.getDatePickerDateFormat
+	 * @description Get datePickerDateFormat from settings or default 
+	 * to locale setting
+	 */
 	util.datepicker.getDatePickerDateFormat = function()
 	{
 		return  util.datepicker.userSettings.get('datePickerDateFormat') || 
 				util.locale.datePickerDateFormat
 	}
 	
+	/**
+	 * @function util.datepicker.setDataFormat
+	 * @param {String} format Format
+	 * @description Sets datePickerDateFormat to format.
+	 * @example
+	 * 	"(W) d DD M YYYY" => (16) tu 17 april 2012
+	 */
 	util.datepicker.setDataFormat = function(format)
 	{
 		util.datepicker.dataFormat = format
 	}
 	
+	/**
+	 *  @function util.datepicker.valueToDate
+	 *  @param node value
+	 *  @returns {Date} 
+	 *  @description return date object based on node value 
+	 *  and util.datepicker.dataFormat
+	 */
 	util.datepicker.valueToDate = function(val)
 	{
 		var d = new Date(String(val).toDate(util.datepicker.dataFormat))
@@ -126,6 +145,11 @@ util.datepicker = {
 		return d
 	}
 	
+	/**
+	 * @function util._datepicker.prototype.valueToDate
+	 * @description datepicker internal function to set 
+	 * date by node value
+	 */
 	util._datepicker.prototype.valueToDate = function()
 	{
 		var val = this.data.date
@@ -133,10 +157,19 @@ util.datepicker = {
 			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
 		this.data.node.value = 	this.data.date.format(
 									util.datepicker.getDatePickerDateFormat(), 
-									this.options.get(util.datepicker.flags.padddates))
+									this.data.options.get(util.datepicker.flags.padddates))
 		this.data.format = util.datepicker.getDatePickerDateFormat()
 	}
 	
+	/**
+	 * @function util._datepicker.prototype.createMonthRow
+	 * @param {Number} id
+	 * @returns
+	 * @description datepicker internal function. Creates a set 
+	 * of interface related divs.
+	 * A monthrow is when the datepicker expands and the month
+	 * is written with adjacing plus/minus signs on non-touchdevices
+	 */
 	util._datepicker.prototype.createMonthRow = function(id)
 	{
 		var mdiv = util.createElement('div')
@@ -165,6 +198,14 @@ util.datepicker = {
 		return mdiv
 	}
 	
+	/**
+	 * @function util._datepicker.prototype.displayWeeks
+	 * @param {Number} id
+	 * @returns
+	 * @description datepicker internal function Displays the 
+	 * rows representing the weeks on expand. The function uses
+	 * the Date extention getWeek.
+	 */
 	util._datepicker.prototype.displayWeeks = function(id)
 	{
 		var ret = util.createElement('div')
@@ -180,7 +221,7 @@ util.datepicker = {
 			selectVal.hide()
 		})	
 		div.setHtml(this.data.date.format(	util.datepicker.getDatePickerDateFormat(), 
-											this.options.get(util.datepicker.flags.padddates))
+											this.data.options.get(util.datepicker.flags.padddates))
 												.toUpperCase())
 		var delAnc = util.createElement('span')
 		delAnc.setHtml(" [X]")
@@ -231,7 +272,8 @@ util.datepicker = {
 					var dday = new Date(this.data.date.getFullYear(), this.data.date.getMonth(), this.data.date.getDate()+offset)
 					dd.setAttribute('rel', dday.getMonth() + 1)
 					dd.setHtml(
-						dday.getDate())
+						dday.getDate()
+					)
 						
 					// is holiday?
 					if(this.data.options.get(util.datepicker.flags.showholidays))
@@ -266,6 +308,12 @@ util.datepicker = {
 		return ret.node
 	}
 	
+	/**
+	 * @function util._datepicker.prototype.displayClickable 
+	 * @param {Number} id
+	 * @description datepicker internal function Used when expand 
+	 * is not set. Creates interface related elements.
+	 */
 	util._datepicker.prototype.displayClickable = function(id)
 	{
 		var el = util.createElement('a')
@@ -288,6 +336,12 @@ util.datepicker = {
 				 el.node, util.datepicker.dPickers[id].tnode.node.nextSibling)
 	}
 	
+	/**
+	 * @function util._datepicker.prototype.display
+	 * @param {Number} id
+	 * @description datepicker internal function Creates the expanded
+	 * version of the interface
+	 */
 	util._datepicker.prototype.display = function(id)
 	{
 		var div = util.createElement('div')
@@ -319,7 +373,7 @@ util.datepicker = {
 					my.data.date = dd
 					_s("input[name=" + my.data.name + "]").val(dd.format(
 								util.datepicker.datePickerDataFormat,
-								this.options.get(util.datepicker.flags.storepaddeddates)))
+								my.data.options.get(util.datepicker.flags.storepaddeddates)))
 					_s('body').node.removeChild(_s('body').node.lastChild)									
 					my.display(id)
 				}
@@ -372,6 +426,11 @@ util.datepicker = {
 		}	
 	}
 	
+	/**
+	 * @function util._datepicker.prototype.hide
+	 * @description datepicker internal function Hides expanded state
+	 * when opend and calls valueToDate
+	 */
 	util._datepicker.prototype.hide = function()
 	{
 		if(this.data.state == 'open')
@@ -383,6 +442,12 @@ util.datepicker = {
 		}
 	}
 	
+	/**
+	 * @function util.datepicker.isHoliday
+	 * @param {Date} day
+	 * @description Iterates util.holidays.list and returns true if 
+	 * day is a holiday 
+	 */
 	util.datepicker.isHoliday = function(day)
 	{
 		var r = util.forEach(util.holidays.list, function(holi)
@@ -395,37 +460,16 @@ util.datepicker = {
 		return r
 	}
 
+	/**
+	 * @function util.datepicker.prevNextDay
+	 * @param {util.datepicker} dp 
+	 * @param {Number} offset
+	 * @description Used when not expanded. Sets dp's date to +/- offset
+	 */
 	util.datepicker.prevNextDay = function(dp, offset)
 	{
-		if(this.options.get(this.flags.incrementworkday))
-		{
-			if(	offset == 1 && 
-				dp.data.date.getDay() == 0)
-				offset += 0
-			else if(offset == 1 &&
-					dp.data.date.getDay() == 5)
-				offset += 2
-			else if (offset == 1 &&
-					dp.data.date.getDay() == 6)
-				offset += 1
-		}
-		if(offset > 0 && this.options.get(this.flags.showholidays))
-		{
-			var dp2 = new Date(
-				dp.data.date.getFullYear(),
-				dp.data.date.getMonth(),
-				dp.data.date.getDate() + offset)
-			var c = 1
-			while(util.datepicker.isHoliday(dp2))
-			{	
-				dp2 = new Date(
-					dp.data.date.getFullYear(),
-					dp.data.date.getMonth(),
-					dp.data.date.getDate() + offset + c++)
-				offset++
-			}
-		}
-
+		var offset = util.datepicker.calcPlusWorkdays(dp.data.date, offset, this.options)
+		
 		var now = new Date()
 		if(	(now < new Date(
 			dp.data.date.getFullYear(),
@@ -451,6 +495,11 @@ util.datepicker = {
 		}
 	}
 	
+	/**
+	 * @function util.datepicker.nextDay
+	 * @param {Number} i datepicker id
+	 * @description Wrapper around util.datepicker.prevNextDay
+	 */
 	util.datepicker.nextDay = function(i)
 	{
 		util.eventHandler(function()
@@ -459,7 +508,11 @@ util.datepicker = {
 			util.datepicker.prevNextDay(dp, 1)
 		})
 	}
-
+	/**
+	 * @function util.datepicker.prevDay
+	 * @param {Number} i datepicker id
+	 * @description Wrapper around util.datepicker.prevNextDay
+	 */
 	util.datepicker.prevDay = function(i)
 	{
 		util.eventHandler(function()
@@ -469,6 +522,11 @@ util.datepicker = {
 		})
 	}	
 	
+	/**
+	 * @function util.datepicker.nextWeek
+	 * @param {Number} i datepicker id
+	 * @description Used with expand
+	 */	
 	util.datepicker.nextWeek = function(i)
 	{
 		util.eventHandler(function()
@@ -484,6 +542,11 @@ util.datepicker = {
 		})
 	}
 
+	/**
+	 * @function util.datepicker.prevWeek
+	 * @param {Number} i datepicker id
+	 * @description Used with expand
+	 */
 	util.datepicker.prevWeek = function(i)
 	{
 		util.eventHandler(function()
@@ -499,6 +562,11 @@ util.datepicker = {
 		})
 	}
 	
+	/**
+	 * @function util.datepicker.nextMonth
+	 * @param {Number} i Datepicker id
+	 * @description Used with expand
+	 */	
 	util.datepicker.nextMonth = function(i)
 	{
 		util.eventHandler(function()
@@ -513,7 +581,12 @@ util.datepicker = {
 			dp.display(i)				
 		})	
 	}
-	
+
+	/**
+	 * @function util.datepicker.prevMonth
+	 * @param {Number} i datepicker id
+	 * @description Used with expand
+	 */	
 	util.datepicker.prevMonth = function(i)
 	{
 		util.eventHandler(function()
@@ -527,13 +600,23 @@ util.datepicker = {
 			_s('body').node.removeChild(_s('body').node.lastChild)					
 			dp.display(i)
 		})
-	} 
+	}
+	
+	/**
+	 * @function util.datepicker.refresh
+	 * @param {Number} datepicker id
+	 * @description Redraws a datepicker 
+	 */
 	util.datepicker.refresh = function(i)
 	{
 		var dp = util.datepicker.dPickers[i]
 		dp.display(i)
 	}
 	
+	/**
+	 * @function util.datepicker.onResize
+	 * @description On resize event handler
+	 */
 	util.datepicker.onResize = function()
 	{
 		util.forEach(util.datepicker.dPickers, function(dp, id)
@@ -547,31 +630,58 @@ util.datepicker = {
 		})
 	}
 	
-	util.datepicker.nowPlusWorkdays = function(offset, options)
+	/**
+	 * @function util.datepicker.calcPlusWorkdays
+	 * @param {Date} date
+	 * @param {Number} offset
+	 * @param {util.options} options
+	 * @description Calculate next day considering the options
+	 * util.datepicker.flags.incrementworkday 
+	 * and util.datepicker.flags.showholidays
+	 */
+	util.datepicker.calcPlusWorkdays = function(date, offset, options)
 	{
-		var now = new Date()
+		var now = date
 		var realOffset = offset
-		for(var c = 0; c < offset; c++)
+		for(var c = 0; c < realOffset; c++)
 		{
 			var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + c + 1)
 			if((options.get(util.datepicker.flags.incrementworkday) && 
-				(d.getDay() == 0 || d.getDay() == 6)) || util.datepicker.isHoliday(d))
+				(d.getDay() == 0 || d.getDay() == 6)) || 
+				(options.get(util.datepicker.flags.showholidays) && 
+				util.datepicker.isHoliday(d)))
 			{
 				realOffset++
 			}
 		}
-		return  new Date(now.getFullYear(), now.getMonth(), now.getDate() + realOffset)
+		return realOffset
+	}
+	
+	/**
+	 * @function util.datepicker.nowPlusWorkdays
+	 * @param {Number} offset
+	 * @param {util.options} options
+	 * @description Calculates now plus one day considering the options
+	 * util.datepicker.flags.incrementworkday 
+	 * and util.datepicker.flags.showholidays
+	 */
+	util.datepicker.nowPlusWorkdays = function(offset, options)
+	{
+		var now = new Date()
+		var realOffset = util.datepicker.calcPlusWorkdays(now, offset, options)		
+		return new Date(now.getFullYear(), now.getMonth(), Number(now.getDate()) + Number(realOffset))
 	}
 
 	/**
 	 * @name util.datepicker.initInputTypeDate
 	 * @function
+	 * @param {String} sel Selection
 	 * @description Function to be called in ready-function initializing datepickers
 	 * @example
 	 * 	util.datepicker.options.set(
 			[util.datepicker.flags.expand]
 		)
-		util.datepicker.initInputTypeDate()
+		util.datepicker.initInputTypeDate('input[type=date]')
 	 */
 	util.datepicker.initInputTypeDate = function(sel)
 	{
@@ -610,7 +720,6 @@ util.datepicker = {
 							util.datepicker.nowPlusWorkdays(offset, options) : 
 							new Date(util.datepicker.valueToDate(obj.value)), 
 					options:options,
-					offsetWorkdays:offset,
 					format:util.datepicker.getDatePickerDateFormat(),
 					formatshort:util.locale.datePickerDateFormatShort})
 			
@@ -679,6 +788,11 @@ util.datepicker = {
 		})
 	}
 	
+	/**
+	 * @function util.datepicker.onUpdateLocale
+	 * @description Iterates through datepickers and applies locale or 
+	 * user settings
+	 */
 	util.datepicker.onUpdateLocale = function()
 	{
 		util.forEach(util.datepicker.dPickers, function(dp)
