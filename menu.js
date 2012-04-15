@@ -102,6 +102,10 @@
 	 */
 	util.follow = function(url, cpath)
 	{
+		// clear debug if any
+		if(utilConfig.debug)
+			_s(util.debug.msgContainerSel).setHtml('')
+			
 		// Is link to current page? (Let states be refreshable however)
 		if(util.getDocumentNameFromUrl().equals(url))
 			return
