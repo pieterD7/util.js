@@ -3,8 +3,8 @@
  * @namespace
  * @description Modular framework for app interfaces
  * Tested and developed on:
- * 	- Android 2.2, 2.3.4 native browser
-	- Chrome 15
+ * 	- Android 2.2, 2.3.4, 4.0 native browser
+	- Chrome 15-18
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
@@ -135,7 +135,8 @@ var util = util || {
            	/* module for browsers */
            	'css', 'datepicker', 
            	'crumbs', 'chatbox', 
-           	'dnd', 'hud', 'menu',
+           	'dnd', 'hud', 
+           	'menu', 'column',
            	'icons', 'placeholder',
            	'cpath', 'fractal',
            	'country', 'setman',
