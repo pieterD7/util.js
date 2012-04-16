@@ -143,6 +143,7 @@
 	3. execute function _init of all modules
 	4. execute prepare callbacks
 	5. execute ready callbacks 
+	6. execute steady callbacks
 </pre>	
 
 	iii. util.js dev
