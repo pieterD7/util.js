@@ -68,7 +68,7 @@ util.tilt = {
 		if(!util.isUndef(i.node.getAttribute('ontilt')) && 
 			i.node.getAttribute('ontilt') != 'no-restore')
 			
-			// If no data
+			// If data
     		if(!util.trim(data).isEmpty())
     			
         		// Set value
@@ -98,7 +98,7 @@ util.tilt = {
 
 })()
 
-util.prepare(function()
+util.steady(function()
 {
 	util.tilt.onAfterLoad()
 	if(window.attachEvent)

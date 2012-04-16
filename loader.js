@@ -141,6 +141,7 @@ var util = util || {
            	'cpath', 'fractal',
            	'country', 'setman',
            	'tablayout', 'currency',
+           	'tilt',
            	'maersk',
            	
            	/* the js part of the 960 grid layout 
@@ -165,6 +166,9 @@ var util = util || {
 	
 	/* array with functions to be called after load */
 	_onloads:[],
+	
+	/*  array with callbacks to be called when steady */
+	_steady:[],
 	
 	huds:[],
 	
@@ -303,6 +307,8 @@ var util = util || {
 			
 			while(cb = util._onloads.pop())
 				this.onLoadCompleted(cb)
+			while(cb = util._steady.pop())
+				this.onLoadCompleted(cb)
 		}
 	},
 
@@ -322,6 +328,15 @@ var util = util || {
 			}
 		}
 	}
+}
+
+util.steady = function(cb)
+{
+	if(document.readyState === 'complete' &&
+		util.isFunction(cb))
+			cb()
+	else
+		util._steady.push(cb)	
 }
 
 /**
