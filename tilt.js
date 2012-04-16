@@ -2,8 +2,9 @@
  * @class util.tilt
  * @description Restores form data on loading the same page as 
  * last page. Forms need to have an attribute 'name' set to 
- * something. Form fields can have an attribute 'ontilt' set 
- * to 'no-restore' to prevent values to be restored from saved 
+ * something. Form fields need to have an attribute 'name' set 
+ * to something and can have an attribute 'ontilt' set to 
+ * 'no-restore' to prevent values to be restored from saved 
  * data. If a field has a value nothing is restored.
  */
 
