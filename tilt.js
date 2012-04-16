@@ -1,7 +1,10 @@
 /**
  * @class util.tilt
- * @description Restores form data of its input fields of forms with an 
- * attribute name on page reload
+ * @description Restores form data on loading the same page as 
+ * last page. Forms need to have an attribute 'name' set to 
+ * something. Form fields can have an attribute 'ontilt' set 
+ * to 'no-restore' to prevent values to be restored from saved 
+ * data. If a field has a value nothing is restored.
  */
 
 util.tilt = {
@@ -19,12 +22,15 @@ util.tilt = {
     util.tilt.onBeforeUnLoad = function()
     {
     	// Clear old data
- //   	util.tilt.userSer.store()
+    	util.tilt.userSet.clear()
+    	
     	// Set last url
     	util.tilt.userSet.store([{key:'lastUrl', value:document.location.href}])
     	
     	// Get all form data
       	var fd = util.tilt.getAllFormsData()
+      	
+      	// Store set
       	util.tilt.userSet.store(fd) 
     }
     
@@ -41,13 +47,32 @@ util.tilt = {
         		util.forEach(inps, function(inp)
         		{
             		var data = util.tilt.userSet.get(f.name + '_' + inp.name )
-            		// for date fields padd format
-            		var i = new HTMLElement(inp)
-            		if(i.node.getAttribute('type') != 'codate')
-            			i.val(data)
+            		util.tilt.setValue(inp, data)
+
         		})
+        		inps = _sa('form[name=' + f.name + '] select')
+        		util.forEach(inps, function(inp)
+        		{
+            		var data = util.tilt.userSet.get(f.name + '_' + inp.name )
+            		util.tilt.setValue(inp, data)
+        		})       		
 	    	})
     	}
+    }
+    
+    util.tilt.setValue = function(inp, data)
+    {
+		var i = new HTMLElement(inp)      		   	
+    	// Check ontilt attribute
+		if(!util.isUndef(i.node.getAttribute('ontilt')) && 
+			i.node.getAttribute('ontilt') != 'no-restore')
+			
+			// If no data
+    		if(!util.trim(data).isEmpty())
+    			
+        		// Set value
+    			if(String(i.val()).isEmpty())
+        			i.val(data)   	
     }
     
     util.tilt.getAllFormsData = function()
@@ -61,13 +86,18 @@ util.tilt = {
     		{
     			ar.push({key:f.getAttribute('name') + '_' + inp.name, value:inp.value})
     		})
+    		dataInp = _sa('form[name=' + f.getAttribute('name') + '] select')
+    		util.forEach(dataInp, function(inp)
+    		{
+    			ar.push({key:f.getAttribute('name') + '_' + inp.name, value:inp.value})
+    		})  		
     	})
     	return ar
     }
 
 })()
 
-util.ready(function()
+util.prepare(function()
 {
 	util.tilt.onAfterLoad()
 	if(window.attachEvent)
