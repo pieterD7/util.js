@@ -4,7 +4,17 @@
 
 util.currency = {
 	currency: 'EUR',
-	cPickers: null
+	cPickers: null,
+	flags:[],
+	options:null
+}
+
+util.currency._init = function()
+{
+	this.flags =
+		[ 'marknegativevalues'].unum()
+	this.options = new util.struct([util.options], {value:0})
+
 }
 
 util.currency.setCurrency = function(currency)
@@ -23,26 +33,34 @@ util.currency.initInputTypeCurrency = function()
 		// Add onfocus handler
 		c.addListener('focus', function()
 		{
-			var val = _s('input[name=' + name + ']').val()
-			var i = new HTMLElement(this)
-			i.val(val)
+			util.eventHandler(function()
+			{
+				var val = _s('input[name=' + name + ']').val()
+				if(!String(val).isEmpty())
+				{
+					var nval = String(val).replace(RegExp(util.dataDecimalSeparator.escapeRegExpSpecialChars()), util.locale.decimalSeparator)
+						c.val(nval)
+				}
+			})
 		})
 		
 		// Add onblur handler
 		c.addListener('blur', function()
 		{
-			var i = new HTMLElement(this)
-			_s('input[name=' + name + ']').val(
-				util.trim(
-					String(i.val())
-						.replace(RegExp(String(util.locale.decimalSeparator).escapeRegExpSpecialChars()), '.')
-						.replace(RegExp(util.currency.currency), '')))
-			i.val(util.trim(
-				util.currency.format(
-					String(i.val()).replace(util.currency.currency, ''))))
+			util.eventHandler(function()
+			{			
+				_s('input[name=' + name + ']').val(
+					util.trim(
+						String(c.val())
+							.replace(RegExp(String(util.locale.decimalSeparator).escapeRegExpSpecialChars()), util.dataDecimalSeparator)
+							.replace(RegExp(util.currency.currency), '')))
+				c.val(util.trim(
+					util.currency.format(
+						String(_s('input[name=' + name + ']').val()))))
+			})
 		})		
 		
-		// Insert hidden fields
+		// Insert hidden field
 		var hid = util.createElement('input')
 		hid.setAttribute('type', 'hidden')
 		hid.setAttribute('name', name)
@@ -50,12 +68,6 @@ util.currency.initInputTypeCurrency = function()
 		c.val(util.currency.format(c.val()))
 		c.setAttribute('name', '')
 		c.setAttribute('rel', name)
-		c.getNode().parentNode.appendChild(hid.getNode())
-		
-		var hid = util.createElement('input')
-		hid.setAttribute('type', 'hidden')
-		hid.setAttribute('name', name + '_iso_code')
-		hid.val(util.currency.currency)
 		c.getNode().parentNode.appendChild(hid.getNode())
 	})
 }

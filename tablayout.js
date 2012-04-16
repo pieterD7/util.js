@@ -61,7 +61,7 @@ util.tablayout =
 		util.forEach(_s(util.tablayout.sel).getNode().childNodes, function(el, i)
 		{
 			var l = new HTMLElement(el)
-			if(i <= n / 2)
+			if(i <= n / 2 - 1)
 			{
 				if(el.nodeName == '#text')
 				{
@@ -83,6 +83,20 @@ util.tablayout =
 		util.tablayout.numberOfTabs = t	
 	}
 	
+	util.tablayout.tabToHeaderChildElement = function(tab)
+	{
+		var i = 0
+		var t = null
+		util.forEach(_s(util.tablayout.sel).getNode().childNodes, function(cnode)
+		{
+			if(cnode.nodeName == '#text')
+				;
+			else if(i++ == tab - 1)
+				t = cnode
+		})
+		return t || {}
+	}
+	
 	/**
 	 * @function util.tablayout.showTab
 	 * @param {Number} which Tab to be shown
@@ -98,8 +112,7 @@ util.tablayout =
 		{
 			if(util.tablayout.activeTab > 0)
 			{
-				var t = _s(util.tablayout.sel).getNode()
-					.childNodes[(util.tablayout.activeTab - 1) * 2 + 1]
+				var t = util.tablayout.tabToHeaderChildElement(util.tablayout.activeTab)
 				var ch = new HTMLElement(t)
 				ch.style('display:none')
 			}
@@ -122,7 +135,7 @@ util.tablayout =
 						child.addClassName("activeTab")
 						child.style("display:block;float:left;")
 					}
-					else
+					else 
 						child.removeClassName("activeTab")
 				}
 			}
