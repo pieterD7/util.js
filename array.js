@@ -127,7 +127,7 @@ Array.prototype.find = function(name, id)
 			if(String(el).match(RegExp(name)))
 				ret.push(el)
 		}
-		else if(el[id] && el[id].match(RegExp(name)))
+		else if(el[id] && String(el[id]).match(RegExp(name)))
 		{
 			ret.push(el)
 		}
