@@ -1,5 +1,5 @@
 /**
- * 
+ * @description Fixed splitter splits screen on screen width > splitwidth
  */
 
 util.fixedsplitter = {
@@ -8,7 +8,8 @@ util.fixedsplitter = {
 	splitwidth: 400,
 	o:null,
 	mode:null,
-	currentItem:1
+	currentItem:1,
+	onDisplayItem:[]
 };
 
 (function () {
@@ -22,6 +23,9 @@ util.fixedsplitter = {
     	this.html = html
     }
     
+    /**
+     * @description Example function for assigning data to the fixed splitter
+     */
     util.fixedsplitter.initData = function()
     {
     	util.fixedsplitter.items.push(
@@ -29,6 +33,11 @@ util.fixedsplitter = {
     		new util.fixedsplitter.Item(2, 'r', 'teslistitem2', 'testitem2'))
     }
     
+    /**
+     * @param {String} sel Selection
+     * @description Inits fixed splitter onresize function and calls 
+     * the display function
+     */
     util.fixedsplitter.init = function(sel)
     {
     	util.fixedsplitter.sel = sel
@@ -47,6 +56,10 @@ util.fixedsplitter = {
 			util.fixedsplitter.splitwidth		
     }
     
+    /**
+     * @param {Number} nn Id of util.fixedsplitter.Item to be displayed
+     * @description Sets display mode and displays the fixed splitter.
+     */
     util.fixedsplitter.display = function(nn)
     {
     	var n = nn || util.fixedsplitter.currentItem
@@ -143,6 +156,18 @@ util.fixedsplitter = {
     	if(i)
     		oo.setHtml(i[0].html)
     	o.appendChild(oo.getNode())
+    	
+    	util.forEach(util.fixedsplitter.onDisplayItem, function(cb)
+    	{
+    		if(i)
+    		{
+    			var html = cb(i[0])
+    			if(html)
+    				o.setHtml(html)
+    		}
+    		else
+    			cb()
+    	})
     }
     
     util.fixedsplitter.onresize = function(e)
@@ -159,10 +184,28 @@ util.fixedsplitter = {
     		window.addEventListener('resize', 
     		util.fixedsplitter.onresize)	
     }
+    
+	/**
+	 * @param {function} cb
+	 * @description Sets callback to be called on display item
+	 * with an util.fixedsplitter.Item object. The callback can return
+	 * an html string to be displayed instead of the deafault.
+	 */    
+    util.fixedsplitter.setOnDisplayItem = function(cb)
+    {
+    	if(util.isFunction(cb))
+    		util.fixedsplitter.onDisplayItem.push(cb)
+    }
 })()
 
 util.ready(function()
 {
+
+	util.fixedsplitter.setOnDisplayItem(function(i)
+	{
+		// Display this instead
+		//return i.html
+	})
 	util.fixedsplitter.initData()
 	util.fixedsplitter.init('#fixedSplitter')
 })
