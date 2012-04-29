@@ -5,7 +5,7 @@
 util.fixedsplitter = {
 	items:[],
 	sel:null,
-	splitwidth: 400,
+	splitwidth: 800,
 	o:null,
 	mode:null,
 	currentItem:1,
@@ -14,6 +14,11 @@ util.fixedsplitter = {
 
 (function () {
     "use strict";
+    
+    util.fixedsplitter.OnDisplayItem = function(cb)
+    {
+    	this.cb = cb
+    }
     
     util.fixedsplitter.Item = function(id, icon, header, html)
     {
@@ -28,9 +33,11 @@ util.fixedsplitter = {
      */
     util.fixedsplitter.initData = function()
     {
-    	util.fixedsplitter.items.push(
-    		new util.fixedsplitter.Item(1, 'r', 'teslistitem', 'testitem'),
-    		new util.fixedsplitter.Item(2, 'r', 'teslistitem2', 'testitem2'))
+    	var myO = util.extend(new util.fixedsplitter.Item(1, '', 'Amsterdam', 'Mooi weertje'), {wheaterUrl:'test.com'})
+    	var myO2 = util.extend(new util.fixedsplitter.Item(2, '', 'Londen', 'Raining'), {wheaterUrl:'yahoo.com'})
+
+    	util.fixedsplitter.items.push(myO)
+    	util.fixedsplitter.items.push(myO2)
     }
     
     /**
@@ -79,9 +86,13 @@ util.fixedsplitter = {
 			// List + item
 			var o = util.fixedsplitter.displayList()   		
     		var oi = util.fixedsplitter.displayItem(n)
+    		oi.addClassName('fixedSplitterAnimation')
     		util.fixedsplitter.o.setHtml('')
     		util.fixedsplitter.o.appendChild(o.getNode())
     		util.fixedsplitter.o.appendChild(oi.getNode())
+    		setTimeout(function() {
+    			oi.style('opacity:1');
+    		}, 10);
 		}  
 		else if(!util.isUndef(nn))
 		{
@@ -124,6 +135,7 @@ util.fixedsplitter = {
     	util.forEach(util.fixedsplitter.items, function(item)
     	{
     		var div = util.createElement('div')
+    		div.addClassName('fixedSplitterListItem')
     		var a = util.createElement('a')
     		var ic = null
     		if(!util.trim(item.icon).isEmpty())
@@ -139,14 +151,14 @@ util.fixedsplitter = {
     		div.appendChild(a.getNode())
     		o.appendChild(div)
     	})
-    }
+   }
     
     util.fixedsplitter.displayItem = function(n)
     {
     	var o = util.createElement('div')
 		o.addClassName('fixedSplitterItemContainer')
 		util.fixedsplitter.displayItemContent(o, n)		
-		return o
+		return o 
     }
     
     util.fixedsplitter.displayItemContent = function(o, n)
@@ -167,6 +179,8 @@ util.fixedsplitter = {
     		}
     		else
     			cb()
+    		var br = util.createElement('br')
+    		o.appendChild(br.getNode())
     	})
     }
     
@@ -197,15 +211,3 @@ util.fixedsplitter = {
     		util.fixedsplitter.onDisplayItem.push(cb)
     }
 })()
-
-util.ready(function()
-{
-
-	util.fixedsplitter.setOnDisplayItem(function(i)
-	{
-		// Display this instead
-		//return i.html
-	})
-	util.fixedsplitter.initData()
-	util.fixedsplitter.init('#fixedSplitter')
-})
