@@ -73,18 +73,18 @@ util.fixedsplitter = {
     	if(!util.isUndef(nn))
     		util.fixedsplitter.currentItem = n
     	util.fixedsplitter.setMode()
-			   	
+		    	
     	if(util.fixedsplitter.mode && util.isUndef(nn))
 		{
     		// List only 
-    		var o = util.fixedsplitter.displayList()
+    		var o = util.fixedsplitter.displayList(1, true)
     		util.fixedsplitter.o.setHtml('')
     		util.fixedsplitter.o.appendChild(o.getNode())
 		}
 		else if(!util.fixedsplitter.mode)
 		{
 			// List + item
-			var o = util.fixedsplitter.displayList()   		
+			var o = util.fixedsplitter.displayList(n)   		
     		var oi = util.fixedsplitter.displayItem(n)
     		oi.addClassName('fixedSplitterAnimation')
     		util.fixedsplitter.o.setHtml('')
@@ -97,7 +97,7 @@ util.fixedsplitter = {
 		else if(!util.isUndef(nn))
 		{
 			// Item only		
-    		var oi = util.fixedsplitter.displayItem(n)
+    		var oi = util.fixedsplitter.displayItem(n, true)
     		util.fixedsplitter.o.setHtml('')
     		util.fixedsplitter.o.appendChild(
     				util.fixedsplitter.showBackButton())
@@ -107,9 +107,12 @@ util.fixedsplitter = {
     
     util.fixedsplitter.onListItemClick = function(n)
     {
-    	var o = util.fixedsplitter.items.find(n, 'id')
-    	if(o[0])
-    		util.fixedsplitter.display(o[0].id)
+    	util.eventHandler(function()
+    	{
+    	   	var o = util.fixedsplitter.items.find(n, 'id')
+        	if(o[0])
+        		util.fixedsplitter.display(o[0].id)   		
+    	})
     }
     
     util.fixedsplitter.showBackButton = function()
@@ -122,20 +125,33 @@ util.fixedsplitter = {
     	return div.getNode()
     }
     
-    util.fixedsplitter.displayList = function()
+    util.fixedsplitter.displayList = function(n, b)
     {
     	var o = util.createElement('div')
-		o.addClassName('fixedSplitterListContainer')
-		util.fixedsplitter.displayListItems(o)
+		if(b)
+			// Show inly list
+			o.addClassName('fixedSplitterListContainerOnly')
+		else
+			o.addClassName('fixedSplitterListContainer')			
+		util.fixedsplitter.displayListItems(o, n)
 		return o
     }
     
-    util.fixedsplitter.displayListItems = function(o)
+    util.fixedsplitter.displayListItems = function(o, n)
     {
     	util.forEach(util.fixedsplitter.items, function(item)
-    	{
+    	{    			
     		var div = util.createElement('div')
-    		div.addClassName('fixedSplitterListItem')
+      		if(item.id == n)
+      		{
+      			div.addClassName('fixedSplitterListAnimation')
+      			div.addClassName('fixedSplitterActiveListItem')
+      			setTimeout(function() {
+        			div.style('opacity:1');
+        		}, 10);
+      		}
+      		else
+      			div.addClassName('fixedSplitterListItem')
     		var a = util.createElement('a')
     		var ic = null
     		if(!util.trim(item.icon).isEmpty())
@@ -145,7 +161,9 @@ util.fixedsplitter = {
     			ic.addClassName('fixedSplitterListIcon')
     		}	
     		a.setHtml(item.header)
-    		a.setAttribute('href', 'javascript:util.fixedsplitter.onListItemClick(' + item.id + ')')
+    		div.addListener('click', function(){
+    			util.fixedsplitter.onListItemClick(item.id)
+    		})
     		if(ic)
     			div.appendChild(ic.getNode())
     		div.appendChild(a.getNode())
@@ -153,10 +171,13 @@ util.fixedsplitter = {
     	})
    }
     
-    util.fixedsplitter.displayItem = function(n)
+    util.fixedsplitter.displayItem = function(n, b)
     {
     	var o = util.createElement('div')
-		o.addClassName('fixedSplitterItemContainer')
+    	if(b)
+    		o.addClassName('fixedSplitterItemContainerOnly')
+    	else
+    		o.addClassName('fixedSplitterItemContainer')
 		util.fixedsplitter.displayItemContent(o, n)		
 		return o 
     }
