@@ -60,7 +60,8 @@
 		{
 			url += '?' + vars
 		}
-		http.open(method, url, true)
+		var as =  obj.async ? obj.async : false
+		http.open(method, url, as)
 		http.onreadystatechange = function()
 		{
 			if(http.readyState == 4 &&  http.status == 200)
