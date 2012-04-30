@@ -89,7 +89,7 @@ util.css = {};
 	
 	util.getScreenX = function()
 	{
-		return document.body.clientWidth || document.documentElement.clientWidth	
+		return document.documentElement.clientWidth || document.body.clientWidth 	
 	}
 	
 	/**
@@ -99,7 +99,7 @@ util.css = {};
 	
 	util.getScreenY = function()
 	{
-		return document.body.clientHeight || document.documentElement.clientHeight	
+		return document.documentElement.clientHeight || document.body.clientHeight	
 	}
 })();
 
