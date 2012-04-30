@@ -91,7 +91,7 @@ util.fixedsplitter = {
     		util.fixedsplitter.o.appendChild(o.getNode())
     		util.fixedsplitter.o.appendChild(oi.getNode())
     		setTimeout(function() {
-    			oi.style('opacity:1');
+    			oi.replaceStyle('opacity:1;');
     		}, 10);
 		}  
 		else if(!util.isUndef(nn))
@@ -133,21 +133,21 @@ util.fixedsplitter = {
 			o.addClassName('fixedSplitterListContainerOnly')
 		else
 			o.addClassName('fixedSplitterListContainer')			
-		util.fixedsplitter.displayListItems(o, n)
+		util.fixedsplitter.displayListItems(o, n, b)
 		return o
     }
     
-    util.fixedsplitter.displayListItems = function(o, n)
+    util.fixedsplitter.displayListItems = function(o, n, b)
     {
     	util.forEach(util.fixedsplitter.items, function(item)
     	{    			
     		var div = util.createElement('div')
-      		if(item.id == n)
+      		if(item.id == n && !b)
       		{
       			div.addClassName('fixedSplitterListAnimation')
       			div.addClassName('fixedSplitterActiveListItem')
       			setTimeout(function() {
-        			div.style('opacity:1');
+        			div.replaceStyle('opacity:1;');
         		}, 10);
       		}
       		else
@@ -175,9 +175,14 @@ util.fixedsplitter = {
     {
     	var o = util.createElement('div')
     	if(b)
+    	{
     		o.addClassName('fixedSplitterItemContainerOnly')
+    	}
     	else
+    	{
     		o.addClassName('fixedSplitterItemContainer')
+    		o.style('height:' + util.getScreenY() + 'px;')  
+    	}
 		util.fixedsplitter.displayItemContent(o, n)		
 		return o 
     }
