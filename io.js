@@ -46,7 +46,7 @@ function HTMLElement(o)
 	{
 	   var p = null
 	   var xml = ''
-	   if(util.isFunction(window.DOMParser))
+	   if(!util.isUndef(window.DOMParser))
 	   {
 		   p = new DOMParser()
 		   xml = p.parseFromString(str, "text/xml");	   
@@ -165,11 +165,36 @@ function HTMLElement(o)
 	 */
 	HTMLElement.prototype.style = function(style)
 	{
-		if(util.isString(style) && this.node)
+		// For IE7 we need to do this
+		if( String(navigator.userAgent).match(/MSIE 7/) && 
+			util.isString(style) && this.node)
+			this.node.style.setAttribute('cssText', style);
+		// Decent browsers
+		else if(util.isString(style) && this.node)
 			this.node.setAttribute('style', style)
 		if(this.node)	
-			return this.node.style
+			return this.node.getAttribute('style')
 	}
+	
+	HTMLElement.prototype.replaceStyle = function(style)
+	{
+		var st = util.trim(this.style())
+		var stEl = util.trim(style).split(":")
+		var stElName = util.trim(stEl[0])
+		var stR = false
+		if(stR = st.match(RegExp(stElName.escapeRegExpSpecialChars() + '\s*:\w*;')))
+		{
+			st = st.replace(RegExp(String(stR).escapeRegExpSpecialChars()), style)
+		}
+		else
+		{
+			st += style
+		}
+		console.log("NEW STYLE ATTR=" + st)
+		return this.style(st)
+		
+	}
+	
 	
 	/**
 	 * @description Sets attribute of element
