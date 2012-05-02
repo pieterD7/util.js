@@ -9,11 +9,11 @@ util.country = {};
 	
 	util.country.init = function(locale)
 	{
-		var url = 'utiljs/countriesEurope.txt'
+		var url = util.getBaseUrl() + '/countriesEurope.txt'
 		if(util.isUndef(locale))
 			var locale = 'en'
 		if(String(locale).match(/^enus/))
-			url = 'utiljs/countriesUSA.txt'
+			url = util.getBaseUrl() + '/countriesUSA.txt'
 		util.ajax(
 		{
 			url:url,
@@ -63,8 +63,10 @@ util.country = {};
 					var inps = _sa("select.country")
 					util.forEach(inps, function(_inp)
 					{
+						// Save value
+						var val = _inp.value
 						var set = []
-						var inp = new HTMLElement(_inp)
+						var inp = new HTMLElement(_inp)						
 						inp.setHtml('')
 						var opt = util.createElement('option')
 						opt.setHtml(_inp.getAttribute('placeholder'))
@@ -90,7 +92,9 @@ util.country = {};
 							opt.val(cntr.iso)
 							inp.appendChild(opt)
 						})
-						
+						// Restore value
+						var i = new HTMLElement(_inp)
+						i.val(val)
 					})
 				})
 			}
@@ -100,5 +104,5 @@ util.country = {};
 
 util.prepare(function()
 {
-	util.country.init(util.selectedLocale)
+	util.country.init()
 })
