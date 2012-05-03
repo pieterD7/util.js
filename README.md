@@ -37,12 +37,12 @@
 
 	- Android 2.2, 2.3.4, 4.0 native browser
 	- Chrome 15-18
+	- Safari 5
+	- IE8-IE9	
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
 	- Firefox 8 
-	- Safari 5
-	- IE9
 
 
 	Goals of util.js:
@@ -83,21 +83,13 @@
 	If you add the datepicker module to the loader, it will add datePicker behaviour
 	to any html input tag with the attribute 'type' set to 'date'. The module is dependent
 	on the date module and, to a lesser extend, on the current util.locale.
-	
 
-	A note on IE9 compatible CSS selectors:
-	
-	A static meta-tag is required for util:
+	A static meta-tag is required for util when not using sizzlejs:
 	<pre>
 	&lt;meta http-equiv="X-UA-Compatible" content="IE=8">
-	</pre>
+	</pre>	
 	
-	Because IE9 WILL support all CSS selectors a way  to overcome this problem is to 
-	write compatible selectors like:
 	
-	ul > li:nth-child(2)  (IE will fail)
-	ul > li:first-child + li (the same intention, but success with IE)
-
 	Examples:
 
 	i. builtin elements
@@ -117,7 +109,7 @@
 	// Assign selector
 	util.langbar.display('#langSelector')
 	
-	// Get locale on Android	
+	// Get locale on Android with the jsjbridge module	
 	util.curLang = navigator.util.getLocale();
 	util.langbar.selectLang(util.curLang)
 	
