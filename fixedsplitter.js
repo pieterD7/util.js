@@ -9,7 +9,10 @@ util.fixedsplitter = {
 	o:null,
 	mode:null,
 	currentItem:1,
-	onDisplayItem:[]
+	onDisplayItem:[],
+	offsetTop:100,
+	orient:null,
+	haveList:false
 };
 
 (function () {
@@ -83,12 +86,17 @@ util.fixedsplitter = {
 		}
 		else if(!util.fixedsplitter.mode)
 		{
-			// List + item
-			var o = util.fixedsplitter.displayList(n)   		
+			// List + item if no list yet
     		var oi = util.fixedsplitter.displayItem(n)
     		oi.addClassName('fixedSplitterAnimation')
-    		util.fixedsplitter.o.setHtml('')
-    		util.fixedsplitter.o.appendChild(o.getNode())
+    		if(util.fixedsplitter.haveList)
+    			util.fixedsplitter.o.removeChild(
+    					util.fixedsplitter.o.getNode().childNodes[1])
+    		if(!util.fixedsplitter.haveList)
+    		{
+    			var o = util.fixedsplitter.displayList(n)   		
+    			util.fixedsplitter.o.appendChild(o.getNode())
+    		}
     		util.fixedsplitter.o.appendChild(oi.getNode())
     		setTimeout(function() {
     			oi.replaceStyle('opacity:1;');
@@ -105,11 +113,21 @@ util.fixedsplitter = {
 		}
     }
     
-    util.fixedsplitter.onListItemClick = function(n)
+    util.fixedsplitter.onListItemClick = function(oo, n)
     {
     	util.eventHandler(function()
     	{
-    	   	var o = util.fixedsplitter.items.find(n, 'id')
+    		// Assign active class
+    		util.forEach(_sa(util.fixedsplitter.sel + " a div"), function(o)
+    		{
+    			var el = new HTMLElement(o)
+    			el.removeClassName('fixedSplitterActiveListItem')
+    			el.addClassName('fixedSplitterListItem')
+    		})
+    		var el = new HTMLElement(oo)
+    		el.addClassName('fixedSplitterActiveListItem')
+    		el.removeClassName('fixedSplitterListItem')
+    		var o = util.fixedsplitter.items.find(n, 'id')
         	if(o[0])
         		util.fixedsplitter.display(o[0].id)   		
     	})
@@ -120,6 +138,7 @@ util.fixedsplitter = {
     	var div = util.createElement('div')
     	var o = util.createElement('a')
     	o.setAttribute('href', 'javascript:util.fixedsplitter.display()')
+    	o.addClassName('btnBack')
     	o.setHtml(util.lang.btnBack.toFirstCharUppercase())
     	div.appendChild(o)
     	return div.getNode()
@@ -134,6 +153,7 @@ util.fixedsplitter = {
 		else
 			o.addClassName('fixedSplitterListContainer')			
 		util.fixedsplitter.displayListItems(o, n, b)
+		util.fixedsplitter.haveList = true
 		return o
     }
     
@@ -153,6 +173,7 @@ util.fixedsplitter = {
       		else
       			div.addClassName('fixedSplitterListItem')
     		var a = util.createElement('a')
+    		var sp = util.createElement('span')
     		var ic = null
     		if(!util.trim(item.icon).isEmpty())
     		{
@@ -160,14 +181,18 @@ util.fixedsplitter = {
     			ic.setAttribute('src', 'uicons/medium/' + item.icon)
     			ic.addClassName('fixedSplitterListIcon')
     		}	
-    		a.setHtml(item.header)
+    		sp.setHtml(item.header)
     		div.addListener('click', function(){
-    			util.fixedsplitter.onListItemClick(item.id)
+    			util.fixedsplitter.onListItemClick(this, item.id)
     		})
     		if(ic)
     			div.appendChild(ic.getNode())
-    		div.appendChild(a.getNode())
-    		o.appendChild(div)
+    		div.appendChild(sp.getNode())
+    		a.appendChild(div.getNode())
+    		var rdiv = util.createElement('div')
+    		rdiv.addClassName('fixedSplitterListItemRight')
+    		div.appendChild(rdiv.getNode())
+    		o.appendChild(a)
     	})
    }
     
@@ -177,11 +202,12 @@ util.fixedsplitter = {
     	if(b)
     	{
     		o.addClassName('fixedSplitterItemContainerOnly')
+    		util.fixedsplitter.haveList = false
     	}
     	else
     	{
     		o.addClassName('fixedSplitterItemContainer')
-    		o.style('height:' + util.getScreenY() + 'px;')  
+    		//o.style('height:' + (util.getScreenY()-util.fixedsplitter.offsetTop) + 'px;')  
     	}
 		util.fixedsplitter.displayItemContent(o, n)		
 		return o 
@@ -212,7 +238,18 @@ util.fixedsplitter = {
     
     util.fixedsplitter.onresize = function(e)
     {
-    	util.fixedsplitter.display()
+    	// onresizeToTilt()
+    	var orient = false
+    	if(util.getScreenY() > util.getScreenX())
+    	{
+    		orient = true
+    	}
+    	if(util.fixedsplitter.orient != orient)
+    	{
+    		//util.fixedsplitter.haveList = false
+    		util.fixedsplitter.orient = orient
+    		util.fixedsplitter.display()
+    	}
     }
     
     util.fixedsplitter.initOnResize = function()
