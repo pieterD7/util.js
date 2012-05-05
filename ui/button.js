@@ -9,6 +9,7 @@ util.button = {};
 	
 	util.button.Button = function(name, icon, onclick, css, cssActive)
 	{
+		this.o = null
 		this.id = name
 		this.draggable = false
 		this.icon = icon
@@ -21,6 +22,15 @@ util.button = {};
 	{
 		this.draggable = true
 	}
-
+	util.button.Button.prototype.setActive = function()
+	{
+		if(this.o)
+			this.o.addClassName(this.cssActive)
+	}
+	util.button.Button.prototype.resetActive = function()
+	{
+		if(this.o)
+			this.o.removeClassName(this.cssActive)
+	}
 })()
 

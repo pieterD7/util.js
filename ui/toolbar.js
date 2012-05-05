@@ -20,7 +20,8 @@ util.toolbar = {
 		var my = this
 		util.forEach(btns, function(btn)
 		{
-			if(btn instanceof util.button.Button)
+			if(	btn instanceof util.button.Button &&
+				! my.btns.find(btn.id, 'id'))
 				my.btns.push(btn)
 		})		
 	}
@@ -36,7 +37,7 @@ util.toolbar = {
 	}
 	util.toolbar.Toolbar.prototype.sort = function(name, before)
 	{
-		if(name && before)
+		if(name && before && !name.equals(before))
 		{
 			var leftToRight = 0
 			var newBtns = this.btns
@@ -58,6 +59,7 @@ util.toolbar = {
 		util.forEach(this.btns, function(btn)
 		{
 			var div = util.createElement('div')
+			btn.o = div
 			div.addClassName(btn.css)
 			var img = util.createElement('img')
 			img.setAttribute('src', util.iconDir + btn.icon.getSrcActive())
@@ -76,13 +78,26 @@ util.toolbar = {
 			img.addListener('click', function()
 			{
 				if(util.isFunction(btn.onclick))
-					return btn.onclick()
+				{
+					util.eventHandler(function()
+					{
+						my.resetButtons()
+						btn.onclick()	
+						btn.setActive()
+					})
+				}
 			})
 			div.appendChild(img)
 			_s(sel).appendChild(div)
 		})
 	}
-	
+	util.toolbar.Toolbar.prototype.resetButtons = function()
+	{
+		util.forEach(this.btns, function(btn)
+		{
+			btn.resetActive()
+		})
+	}
 	util.toolbar.Toolbar.prototype.enableDragPositions = function()
 	{
 		this.draggable = true
