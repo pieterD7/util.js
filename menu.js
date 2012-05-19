@@ -101,11 +101,7 @@
 	 * @param {String} url http url or javascript:name-of-registered-menuhandler:param
 	 */
 	util.follow = function(url, cpath)
-	{
-		// clear debug if any
-		if(utilConfig.debug)
-			_s(util.debug.msgContainerSel).setHtml('')
-			
+	{		
 		// Is link to current page? (Let states be refreshable however)
 		if(util.getDocumentNameFromUrl().equals(url))
 			return
@@ -135,6 +131,12 @@
 						util.lastUrl = url	
 					})
 				}
+				else if(util.isDebug)
+					throw new util.error(
+							"Unknown menu handler requested. " + 
+							"You can register one with a util.menu instance.")
+
+				// Run fireAlways
 				util.forEach(util.menuHandlers, function(h)
 				{
 					if(util.isBool(h.fireAlways) && h.fireAlways)
@@ -158,6 +160,5 @@
 
 util.ready(function()
 {
-//	util.menu.registerMenuHandler({name:'util.menu.notify', cb:util.menu.notify})
 
 })

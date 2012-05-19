@@ -8,7 +8,6 @@
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
-	- Firefox 8 
 	- Safari 5
 	- IE9
  * 
@@ -17,7 +16,7 @@ var util = util || {
 
 	/**
 	 * @constructor
-	 * @description Util.js error object
+	 * @description utiljs error object
 	 * @memberOf util
 	 * @param {String} err
 	 */
@@ -26,8 +25,25 @@ var util = util || {
 		var e = Error(err)
 		this.message = err
 		this.stack = (e.stack && !e.stacktrace?e.stack:(e.stacktrace?e.stacktrace:err))
+		this.toString = function(){return "[util.error]"}
 		return this
 	},
+	
+	/**
+	 * @constructor 
+	 * @description utiljs warning object for interfaces on desktop computers
+	 * @memberOf util
+	 * @param {String} str Text
+	 */
+	warning:function(str)
+	{
+		this.message = str
+		this.toString = function(){return "[util.warning]"}
+		return this
+		
+	},
+	isDebug:(typeof utilConfig !== 'undefined' ? 
+			(utilConfig.debug ? utilConfig.debug : false) : false),
 	
 	/* kind of user agent */
 	isTouchDevice: false,
@@ -46,23 +62,33 @@ var util = util || {
 	/* regional formats */
 	_locale: [],
 	
+	userSet:null,
+	
 	selectedLocale:null,
 	
 	dataDecimalSeparator: '.',
+	
+	iconDir: 'uicons/',
 	
 	/* modules */
 	_mods: [
 	        
 	        /* modules */
-	        'debug', 'langbar', 
 	        'array', 'validations', 
 	        'io', 'number', 
 	        'struct', 'options',
 	        'http', 'selector', 
 	        'date', 'time', 
-	        'unum', 'combobox',
+	        'unum',  'debug',  
 	        'event', 'sprintf',
-	        'json', 'string', 
+	        'json', 'string',
+	        
+	        // from http://sizzlejs.com/
+	        'external/sizzle',
+	        
+           	/* the js part of the 960 grid layout 
+           	 * from http://adapt.960.gs */
+           	'external/adapt',
 	        
 	        /* default language based on utilConfig or 'en' */
 	        'lang/' + 
@@ -129,24 +155,41 @@ var util = util || {
              /* init language */   			
            	'lang/initLang', 'lang/bankholidays',
            	
+           	//'jsjbridge', 'emulator', 
+           	
            	/* App language blueprint */
            	'lang/com_lang', 
            	
-           	/* module for browsers */
-           	'css', 'datepicker', 
-           	'crumbs', 'chatbox', 
-           	'dnd', 'hud', 
-           	'menu', 'column',
-           	'icons', 'placeholder',
-           	'cpath', 'fractal',
-           	'country', 'setman',
-           	'tablayout', 'currency',
-           	'tilt',
-           	'maersk',
+           	/* modules for browsers */
+           	'contentfromhtml',
+           	'css', 'theme', 
+          	'dnd', 'chatbox',   
+           	'cpath', 'menu',
+           	'setman', 'icons', 
            	
-           	/* the js part of the 960 grid layout 
-           	 * from http://adapt.960.gs */
-           	'adapt',
+           	'form/datepicker', 
+           	'form/currency',
+           	'form/upload',
+           	'form/combobox',
+           	'form/country',
+           	'form/placeholder',
+           	         
+           	'layout/layout',
+           	'layout/columnlayout',
+           	'layout/tablayout',
+           	'layout/fixedsplitter',
+           	
+           	'crumbs', 'tilt', 
+           	'ui/langbar',
+           	'ui/hud',
+           	'ui/toolbar',
+           	'ui/button', 
+           	'ui/icon',
+           	
+           //	'datagrid', 
+           	//'apps/maersk',
+           	//'apps/fractal',
+  
            	
            	/* html5 local storage */
            	'sql', 'localstorage',
@@ -155,7 +198,8 @@ var util = util || {
            	'map', 'geohash',
            	'gmaps', 
            	
-           	'tests/general', 'finishloading'
+           	//'tests/general', 
+           	'finishloading'
            ]
 	,
 
@@ -237,13 +281,13 @@ var util = util || {
 	 */
 	sanityCheck: function()
 	{
-		if(! (	typeof document.querySelector === 'function' || 
-				typeof document.querySelector === 'object'))
-		{
-			alert("Check for document.querySelector FAILED.\nPlease upgrade your browser " +
-					"or read http://msdn.microsoft.com/en-us/library/cc288326(v=vs.85).aspx")
-		}
-		else
+//		if((typeof document.querySelector === 'function' || 
+//				typeof document.querySelector === 'object'))
+//		{
+//			alert("Check for document.querySelector FAILED.\nPlease upgrade your browser " +
+//					"or read http://msdn.microsoft.com/en-us/library/cc288326(v=vs.85).aspx")
+//		}else
+		if(1)
 		{
 			util.isCompatibleUA = true
 			util.isTouchDevice = "onTouchStart" in document.documentElement
@@ -271,6 +315,15 @@ var util = util || {
 	},
 	
 	/**
+	 * @description Prepares mod name (strips pathname)
+	 * @returns {String} name
+	 */
+	prepareModName: function(name)
+	{
+		return name.replace(/(\w*[/])*/, '')
+	},
+	
+	/**
 	 * @memberOf util
 	 */
 	waitForLoadCompleted: function()	
@@ -284,9 +337,10 @@ var util = util || {
 
 			util.forEach(util._mods, function(m)
 			{
-				if(typeof util[m] == 'object')
-					if(typeof util[m]._init == 'function')
-						util[m]._init()
+				var mm = util.prepareModName(m)
+				if(typeof util[mm] == 'object')
+					if(typeof util[mm]._init == 'function')
+						util[mm]._init()
 			})
 
 			while(cb = util._onprepare.pop())
@@ -309,6 +363,16 @@ var util = util || {
 				this.onLoadCompleted(cb)
 			while(cb = util._steady.pop())
 				this.onLoadCompleted(cb)
+
+			util.userSet = new util.userSettings('util')	
+				
+			if(util.langbar)
+			{
+				var userLang = util.userSet.get('locale')
+				util.langbar.selectLang(userLang)
+			}
+
+				
 		}
 	},
 

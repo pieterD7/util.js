@@ -1,5 +1,6 @@
 /**
- * 
+ * @class util.toolbar
+ * @description Creates a drop enabled toolbar with draggable buttons and info
  */
 
 util.toolbar = {
@@ -13,7 +14,7 @@ util.toolbar = {
 		this.btns = []
 		this.draggable = false
 		this.startDragging = null
-		this.order = ""
+		this.order = ""	// Not used yet 
 	}
 	util.toolbar.Toolbar.prototype.setButtons = function(btns)
 	{
@@ -23,6 +24,8 @@ util.toolbar = {
 			if(	btn instanceof util.button.Button &&
 				! my.btns.find(btn.id, 'id'))
 				my.btns.push(btn)
+			else if(util.isDebug)
+				throw new util.error("Instance is not a button or button ID not unique for buttons.")
 		})		
 	}
 	util.toolbar.Toolbar.prototype.handleDrop = function(name)
@@ -31,7 +34,6 @@ util.toolbar = {
 		util.eventHandler(function()
 		{
 			my.sort(my.startDragging, name)
-			_s(my.sel).setHtml('')
 			my.display(my.sel)			
 		})
 	}
@@ -41,14 +43,18 @@ util.toolbar = {
 		{
 			var leftToRight = 0
 			var newBtns = this.btns
+			
 			var i = this.btns.indexOf(name, 'id')
 			var ii = this.btns.indexOf(before, 'id')
 			if(i > ii)
 				leftToRight = 1
+			
 			var b = this.btns[i]
 			newBtns[i] = b
 			newBtns.splice(ii, 0, b)
-			newBtns.splice(i+leftToRight, 1)			
+			newBtns.splice(i+leftToRight, 1)	
+			
+			delete this.btns
 			this.btns = newBtns
 		}
 	}
@@ -56,6 +62,9 @@ util.toolbar = {
 	{
 		this.sel = sel
 		var my = this
+		
+		_s(sel).setHtml('')
+		
 		util.forEach(this.btns, function(btn)
 		{
 			var div = util.createElement('div')
@@ -75,7 +84,7 @@ util.toolbar = {
 					my.handleDrop(btn.id)
 				})						
 			}
-			img.addListener('click', function()
+			div.addListener('click', function()
 			{
 				if(util.isFunction(btn.onclick))
 				{
@@ -87,7 +96,17 @@ util.toolbar = {
 					})
 				}
 			})
+			var sp = null
+			if(	util.isString(btn.overlayText) &&
+				! util.trim(btn.overlayText).isEmpty())
+			{
+				sp = util.createElement('span')
+				sp.setAttribute('id', btn.id)
+				sp.setHtml(btn.overlayText)
+			}			
 			div.appendChild(img)
+			if(sp)
+				div.appendChild(sp)
 			_s(sel).appendChild(div)
 		})
 	}

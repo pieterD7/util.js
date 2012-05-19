@@ -139,27 +139,25 @@ function HTMLElement(o)
 		this.node.addEventListener(evnt, l)
 	// Weird FF workaround:
 	else if(util.isFunction(this.addEventListener))
-		this.addEventListener(evnt, l, false)
+		;//this.addEventListener(evnt, l, false)
 	else
 		this.node.attachEvent("on"+evnt, l)
 	}
 	
 	/**
 	 * @description Sets value of object
-	 * @param {String} val New Value
+	 * @param {String} v New Value
 	 * @returns {String}
 	 */
 	HTMLElement.prototype.val = function(v)
 	{
 		if(!util.isUndef(v) && this.node)	
 			this.node.value = v
-		if(this.node)	
-			return this.node.value
+		return this.node.value
 	}
 	
 	/**
-	 * @description Sets css-style. Keeps existing definition, but
-	 * overwrites style
+	 * @description Sets style attribute. 
 	 * @param {String} style Css definitions for this element
 	 * @returns {String}
 	 */
@@ -176,21 +174,26 @@ function HTMLElement(o)
 			return this.node.getAttribute('style')
 	}
 	
+	/**
+	 * @description Applies style to style attribute and keeps other style items that are
+	 * already applied. Style items must be terminated by semicolon 
+	 * @param {String} new style item
+	 * @returns {String} style after this operation
+	 */	
 	HTMLElement.prototype.replaceStyle = function(style)
 	{
 		var st = util.trim(this.style())
 		var stEl = util.trim(style).split(":")
 		var stElName = util.trim(stEl[0])
 		var stR = false
-		if(stR = st.match(RegExp(stElName.escapeRegExpSpecialChars() + '\s*:\w*;')))
+		if(stR = st.match(RegExp(stElName.escapeRegExpSpecialChars() + '\s*:.*;')))
 		{
 			st = st.replace(RegExp(String(stR).escapeRegExpSpecialChars()), style)
 		}
-		else
+		else if(!st.equals(style))
 		{
 			st += style
 		}
-		console.log("NEW STYLE ATTR=" + st)
 		return this.style(st)
 		
 	}
@@ -299,8 +302,10 @@ function HTMLElement(o)
 	 * @param {String} type Type of element
 	 * @returns {HTMLElement}
 	 */
-	util.createElement = function(type)
+	util.createElement = function(type, asText)
 	{
+		if(String(asText).equals('text', 'i'))
+			return document.createTextNode(type)
 		return new HTMLElement(document.createElement(type))
 	}
 })();

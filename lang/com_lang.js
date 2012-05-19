@@ -15,7 +15,7 @@ function _initLang(lang)
 		html:lang.cardsTitle.toFirstCharUppercase()
 	},
 	{
-		sel:'input[name=date1]',
+		sel:'input[name=date111]',
 		placeholder:lang.pickupDate.toFirstCharUppercase()
 	},
 	{

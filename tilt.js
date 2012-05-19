@@ -22,26 +22,36 @@ util.tilt = {
     
     util.tilt.onBeforeUnLoad = function()
     {
-    	// Clear old data
-    	util.tilt.userSet.clear()
-    	
-    	// Set last url
-    	util.tilt.userSet.store([{key:'lastUrl', value:document.location.href}])
-    	
-    	// Get all form data
-      	var fd = util.tilt.getAllFormsData()
-      	
-      	// Store set
-      	util.tilt.userSet.store(fd) 
+    	util.eventHandler(function()
+    	{
+    	   	// Clear old data
+        	util.tilt.userSet.clear()
+        	
+        	// Set last url
+        	util.tilt.userSet.store([{key:'lastUrl', value:document.location.href}])
+        	
+        	// Set last state / tab for now
+        	util.tilt.userSet.store([{key:'lastState', value:util.tablayout.activeTab}])
+        	
+        	// Get all form data
+          	var fd = util.tilt.getAllFormsData()
+          	
+          	// Store set
+          	util.tilt.userSet.store(fd)    		
+          	
+          	// Get fixed splitter currentItem
+          	util.tilt.userSet.store([{	
+          			key:'fixedsplitter.currentItem', 
+          	    	value:util.fixedsplitter.currentItem}])
+    	})
     }
     
     util.tilt.onAfterLoad = function()
     {
-    	var test = util.tilt.getAllFormsData()
     	// Is reload?
     	if(util.tilt.userSet.get('lastUrl') == document.location.href)
     	{
-        	var fd = _sa('form') 		
+    		var fd = _sa('form') 		
         	util.forEach(fd, function(f, i)
 	    	{
         		var inps = _sa('form[name=' + f.name + '] input')
@@ -56,8 +66,20 @@ util.tilt = {
         		{
             		var data = util.tilt.userSet.get(f.name + '_' + inp.name )
             		util.tilt.setValue(inp, data)
-        		})       		
+        		}) 
 	    	})
+	    	if(util.tilt.userSet.get('lastState'))
+	    	{
+	    		
+	    	}
+    		if(util.tilt.userSet.get('fixedsplitter.currentItem'))
+    		{
+    			var it = util.tilt.userSet.get('fixedsplitter.currentItem')
+    			if(util.fixedsplitter.o && it && !util.fixedsplitter.mode)
+    				util.fixedsplitter.display(it)
+    			else
+    				util.fixedsplitter.display()
+    		}
     	}
     }
     

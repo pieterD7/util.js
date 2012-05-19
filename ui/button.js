@@ -17,6 +17,7 @@ util.button = {};
 		this.cssActive = cssActive || 'buttonActive'
 		if(util.isFunction(onclick))
 			this.onclick = onclick
+		this.overlayText = null
 	}	
 	util.button.Button.prototype.enableDrag = function()
 	{
@@ -31,6 +32,10 @@ util.button = {};
 	{
 		if(this.o)
 			this.o.removeClassName(this.cssActive)
+	}
+	util.button.Button.prototype.setOverlayText = function(text)
+	{
+		this.overlayText = text
 	}
 })()
 

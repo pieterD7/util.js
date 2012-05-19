@@ -18,7 +18,7 @@ util.isUndef = function(a)
  */
 util.isObject = function(a)
 {
-	return typeof a === 'object'
+	return typeof a == 'object' || typeof a == 'function'
 }
 /**
  * @returns {boolean}

@@ -1,7 +1,9 @@
 /**
- * 
+ * @description World regions. Defines a set of locales.
+ * Europe Middle East and Africa (EMEA),
+ * North, Central, and South America (NCSA),
+ * Asia Pacific, and Japan (APAC)	
  */
-
 util.regions = 
 {
 	EMEA: ['en','nl'],

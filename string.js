@@ -263,9 +263,11 @@
 	
 	/**
 	 * @description Tests if strings match
-	 * @param {String }str
-	 * @param {String} opt
+	 * @param {String }str String to test for
+	 * @param {String} opt (Optional) Options to regular expression
 	 * @returns {Boolean}
+	 * @example
+	 * "boo".equals("BOO", 'i')
 	 */
 	
 	String.prototype.equals = function(str, opt)

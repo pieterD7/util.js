@@ -37,8 +37,9 @@
 	    }
 	}
 	
-	util.eventObjectToPos = function(e)
+	util.eventObjectToPos = function(ee)
 	{
+		var e = ee || window.event
 		if(e.pageX && e.pageY)
 		{
 			return {x:e.pageX, y:e.pageY}

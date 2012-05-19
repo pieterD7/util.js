@@ -1,88 +1,152 @@
 /**
- * 
+ * @class util.setman
+ * @description Manager of user settings. Provides a method 
+ * for boolean settings. This is overruled by a method called "showSettings"
+ * in the module returning html markup as a string. Updates the settings in 
+ * the modules and in their local storage property called "userSet". Calls 
+ * "onUpdateLocale" if exists in the module. Provides also a method to 
+ * restore all default settings. 
  */
 
 util.setman = {
+	layout:null,		// Layout class
+	icon:'settings.png'
 };
 
-util.setman._init = function()
-{
-	util.setman.userSettings = new util.userSettings('localeSet')		
-}
-
-util.setman.updateSettings = function(o)
-{
-	switch(o.name)
+(function(){
+	"use strict"
+	
+	/**
+	 * @description Restore defaults
+	 */
+	util.setman.clearAllLocalStorage = function()
 	{
-		case 'datepicker':
-			util.setman.updateDatePickerSet(o.value)
-			util.datepicker.onUpdateLocale()	
-			break
-		case 'combobox':
-			break
-	}
-}
-
-util.setman.updateDatePickerSet = function(val)
-{
-	util.forEach(util.datepicker.dPickers, function(dp)
-	{	
-		var val2 = val
-		dp.data.options.set([val2])
-		util.datepicker.options.set([val2])
-	})
-}
-
-util.setman.updateDatePickerFormat = function(o)
-{
-	util.setman.userSettings.store([{key:'datePickerDateFormat', value:o.value}])
-}
-
-util.setman.settings = function(sel, n)
-{
-	var html = ''
-	util.forEach(util._mods, function(m)
-	{
-		if(typeof util[m] == 'object')
-			if(typeof util[m].flags == 'object')
+		util.eventHandler(function()
+		{
+			util.forEach(util._mods, function(m)
 			{
-				switch(m)
+				m = util.prepareModName(m)
+				if(util.isObject(util[m]))
 				{
-					case 'datepicker':
+					for(var i in util[m])
 					{
-						html += "<div id='setman'>" + String(m).toFirstCharUppercase() + ':'
-						for(var i in util[m].flags)
+						if(util[m][i] instanceof util.userSettings)
 						{
-							var isSet = util[m].options.get(util[m].flags[i])
-							isSet ? checked = 'checked' : checked = ''
-							var name = m 
-							html += '<br/>' + 
-								"<input name='" + m + "'" +
-								" 	onchange='util.setman.updateSettings(this)' " +
-								" 	type='checkbox' " + checked + 
-								" 	value='" + util[m].flags[i] + "'/>" +  i 				
+							util[m][i].clear()
+							
+							if(util.isDebug)
+								console.log("Clearing",m,i)
 						}
-						html += "<br/>Date format : " +
-							"<select " +
-							"	onchange='util.setman.updateDatePickerFormat(this)'" + 
-							"	name='dateFormat' >" +
-							"<option>Select date format</option>" +
-							"<option value='d DD M YYYY'>" + 
-							new Date().format('d DD M YYYY') + "</option>" +
-							"<option value='(W) d DD M YYYY'>" + 
-							new Date().format('(W) d DD M YYYY') + "</option>" +							
-							"<option" +  
-							"	value='wkW D DD M' >" + 
-							new Date().format("wkW D DD M", false) + "</option>"
-							"</select>"
-						html += '</div>'
-						break
 					}
 				}
-			}
-	})
-	_s(sel).setHtml("<br/>SETTINGS<br/>" + html)
-	if(!util.isUndef(n))
-		util.tablayout.showTab(n)
-}
+			})
+			document.location.reload()
+		})
+	}
 
+	/**
+	 * @description Sets the option to the module
+	 */
+	util.setman.updateSettings = function(o)
+	{
+		util.eventHandler(function()
+		{
+			switch(o.name)
+			{
+				default:
+					if(util.isObject(util[o.name].options))
+					{
+						util[o.name].options.set([o.value])
+					}
+					if(util.isObject(util[o.name].userSet))
+					{
+						util[o.name].userSet.store([{
+							key:'options', 
+							value:util[o.name].options.get()}
+						])
+					}
+					if(util.isFunction(util[o.name].onUpdateLocale))
+						util[o.name].onUpdateLocale()
+			}		
+		})
+	}
+
+	/**
+	 * @description Shows the boolean options to the module
+	 * @param {String} m Name of the module 
+	 * @returns {String} html markup
+	 */
+	util.setman.showSettings = function(m)
+	{
+		var html = ''
+		var checked = ''
+		var unpubs = util[m].unpublishedFlags || []
+
+		for(var i in util[m].flags)
+		{
+			if(unpubs.find(i))
+				continue
+			var isSet = util[m].options.get(util[m].flags[i])
+			isSet ? checked = 'checked' : checked = ''
+			var name = m 
+			var inp =
+				"<input name='" + m + "'" +
+				" 	onchange='util.setman.updateSettings(this)' " +
+				" 	type='checkbox' " + checked + 
+				" 	value='" + util[m].flags[i] + "'/>"
+			html +=  '<br/>'
+			if(util.theme.getTheme().labelBeforeCheckbox )
+			{
+				html += i + inp
+			}
+			else
+			{
+				html += inp + i
+			}
+		}	
+		return html
+	}
+
+	/**
+	 * @description Shows all user editable settings
+	 */
+	util.setman.settings = function(sel, n)
+	{
+		var items = []
+		var html = "" 
+		util.forEach(util._mods, function(m)
+		{
+			m = util.prepareModName(m)
+			if(typeof util[m] == 'object')
+				if(typeof util[m].flags == 'object')
+				{
+					switch(m)
+					{
+						default:
+							html = "<br/>" + m.toFirstCharUppercase() + ':'
+							if(util.isFunction(util[m].showSettings))
+								html += util[m].showSettings() + '<br/>'
+							else
+								html += util.setman.showSettings(m)
+						var item = new util.content.ContentItem()
+						item.name = m
+						item.header = m
+						item.icon = util.setman.icon
+						item.body = html
+						items.push(item)
+					}
+				}
+		})
+		var item = new util.content.ContentItem()
+		html = "<div id='setman'>"
+		html += "<br/><a href='javascript:util.setman.clearAllLocalStorage()'>restore defaults</a><br/>"
+		html += '</div>'
+		item.header = "Settings"
+		item.body = html
+		item.icon = util.setman.icon	
+		item.name = "settings"
+		items.push(item)
+		return items
+	}
+	
+})()

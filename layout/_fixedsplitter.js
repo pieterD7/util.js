@@ -207,6 +207,7 @@ util.fixedsplitter = {
     	else
     	{
     		o.addClassName('fixedSplitterItemContainer')
+    		// Missing scroll interface on Odys tablet so commented out
     		//o.style('height:' + (util.getScreenY()-util.fixedsplitter.offsetTop) + 'px;')  
     	}
 		util.fixedsplitter.displayItemContent(o, n)		

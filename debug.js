@@ -29,7 +29,8 @@ util.debug = {
 		var n = 0
 		util.forEach(util._mods, function(mod)
 		{
-			if(util.isObject(util[mod]) && util.isObject(util[mod].options))
+			if(	util.isObject(util[mod]) && 
+				util.isObject(util[mod].options))
 			{
 				if(!n++ == 0)
 					ret += ', ' 
@@ -92,14 +93,16 @@ util.debug.log = function(err)
 		state = util.debug.getAppState()
 	
 	var htmlstr = '<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
-	'<div class="debugMsgText">' + util.defaultStrings.debugMsg.toFormattedText() + '<br/>' + 
+	'<div class="debugMsgText">' + err + '<br/>' + 
 	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
 	state + '<br/>' + 
 	'<pre>' + (err.stack || err.message) + '</pre></div>'	
 
 	if(util.isObject(utilConfig) && utilConfig.debug)
 	{
-		if(util.isString(util.debug.msgContainerSel) &&
+		console.log(err + " " + (err.stack || err.message))
+		if(err instanceof util.error && 
+			util.isString(util.debug.msgContainerSel) &&
 			_s(util.debug.msgContainerSel))
 			_s(util.debug.msgContainerSel)
 				.setHtml(

@@ -42,7 +42,6 @@
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
-	- Firefox 8 
 
 
 	Goals of util.js:

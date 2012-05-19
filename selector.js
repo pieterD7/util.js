@@ -15,10 +15,18 @@ var selector = {};
 	{
 		if(typeof sel === 'string')
 		{
-			var e = document.querySelector(sel)
-			if(e)
+			if(document.querySelector)
 			{
-				return new HTMLElement(e)	
+				var e = document.querySelector(sel)
+				if(e)
+				{
+					return new HTMLElement(e)	
+				}
+			}
+			else
+			{
+				var el = Sizzle(sel)[0]
+				return new HTMLElement(el)
 			}
 		}
 	}
@@ -29,8 +37,16 @@ var selector = {};
 	 */
 	selector._sa = function(sel)
 	{
-		if(typeof sel === 'string')	
-			return document.querySelectorAll(sel)
+		if(document.querySelectorAll)
+		{
+			if(typeof sel === 'string')	
+				return document.querySelectorAll(sel)
+		}
+		else if(typeof sel === 'string')
+		{
+			var els = Sizzle(sel)
+			return els
+		}
 	}
 })();
 

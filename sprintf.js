@@ -3,7 +3,7 @@
 *  @description Javascript sprintf
 *  @copyright http://www.webtoolkit.info/
 *  @example
-*  sprintf("%d apples in a pie.", [2])
+*  sprintf("%d apples in a pie.", 2)
 *
 **/
 

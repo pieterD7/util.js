@@ -104,13 +104,13 @@ util.holidays.EasterWestern = function(year)
 util.holidays.Pentecost = function(year)
 {
 	var e = util.holidays.EasterWestern(year)
-	var ed = new Date(e.from.year,e.from.month, e.from.day + 49)
+	var ed = new Date(e.from.year,e.from.month-1, e.from.day + 49)
 	return {from:{day:ed.getDate(),month:ed.getMonth()+1,year:year}}	
 }
 util.holidays.Ascension = function(year)
 {
 	var e = util.holidays.EasterWestern(year)
-	var ed = new Date(e.from.year,e.from.month, e.from.day + 39)
+	var ed = new Date(e.from.year,e.from.month-1, e.from.day + 39)
 	return {from:{day:ed.getDate(),month:ed.getMonth()+1,year:year}}	
 }
 util.holidays.Christmas = function(year)
@@ -150,7 +150,6 @@ util.ready(function()
 		 util.holidays.flags.national,
 		 util.holidays.flags.christian])
 			 
-	util.holidays.list = util.holidays.getHolidays(new Date().getFullYear(), ['nl'])
-		.concat(util.holidays.getHolidays(new Date().getFullYear() + 1, ['nl']))
+	util.holidays.list = util.holidays.getHolidays(new Date().getFullYear(), ['nl', 'en']).concat(util.holidays.getHolidays(new Date().getFullYear() + 1, ['nl', 'en']))
 //	util.forEach(util.holidays.list, function(holi){alert(holi.name)})
 })

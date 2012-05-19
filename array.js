@@ -136,3 +136,21 @@ Array.prototype.find = function(name, id)
 		return ret
 	return null
 }
+
+Array.prototype.indexOf = function(name, id)
+{
+	var ret = false
+	util.forEach(this, function(el, i)
+	{
+		if(util.isUndef(id))
+		{
+			if(String(el).match(name))
+				ret = i
+		}
+		else if(el[id] && String(el[id]).match(RegExp(name)))
+		{
+			ret = i
+		}
+	})
+	return ret
+}

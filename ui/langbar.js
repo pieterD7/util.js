@@ -59,7 +59,7 @@ util.langbar =
 				util.langbar.hasLanguage(iso_code))
 			{
 				iso_code = String(iso_code).replace(/[-]/, '')
-				strings =  _initLang(util._lang[iso_code])
+				var strings =  _initLang(util._lang[iso_code])
 				util.locale = util._locale[iso_code]
 				util.defaultStrings = util._defaultStrings[iso_code]
 				for(var i in strings)
@@ -82,6 +82,7 @@ util.langbar =
 				{
 					cb(iso_code)
 				})
+				util.userSet.store([{key:'locale', value:iso_code}])				
 			}
 		}
 		catch(err)
@@ -92,7 +93,9 @@ util.langbar =
 	
 	util.langbar.update = function()
 	{
-		_s(this.sel).setHtml('')
+		var o = _s(this.sel)
+		if(o)
+			o.setHtml('')
 		util.langbar.display(this.sel)
 	}
 	
@@ -120,17 +123,19 @@ util.langbar =
 					if(!String(lang.iso_code).replace(/[-]/, '')
 						.match(new RegExp("^" + String(util.curLang).replace(/[-]/, '') + "$")))
 					{
-						var sep = document.createElement('span')
-						sep.setAttribute('class', 'space')
+						var sep = util.createElement('span')
+						sep.addClassName('space')
+						sep.addClassName('button')
 						var item = util.createElement('a')
-						item.setAttribute('class', 'langLink')
+						item.addClassName('langLink')
+						item.addClassName('button')
 						item.setAttribute('href', 
 							"javascript:util.follow(" +
 							"'javascript:util.langbar.selectLang:" + lang.iso_code + "'," + 
 							(util.huds.length ? (util.huds[0].alldata ? util.huds[0].alldata.localecpath : null) : null)  + ")")
 						item.setHtml(String(lang.label).toFirstCharUppercase())
 						sep.appendChild(item.node)
-						_s(sel).appendChild(sep)
+						_s(sel).appendChild(sep.getNode())
 					}
 			})
 		}

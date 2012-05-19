@@ -48,7 +48,7 @@
 	
 			a.setAttribute('href', url)
 	
-			img.setAttribute('src', 'icons/' + i.img)
+			img.setAttribute('src', util.iconDir + i.img)
 			img.style('border:none;')
 	
 			var incontext = util.documentNameIsInContext(i.context) || util.lastUrlIsInContext(i.context)

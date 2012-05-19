@@ -35,7 +35,7 @@ Date.prototype.getWeek = function() {
 
 /**
  * @param {String} format PHP-like date format
- * 
+ * @returns Date
  */
 String.prototype.toDate = function(format)
 {
@@ -44,18 +44,25 @@ String.prototype.toDate = function(format)
 	var y = ''
 	var m = ''
 	var d = ''
+	var offset = 0
 	util.forEach(format.split(""), function(char, i)
 	{
 		switch(char)
 		{
 			case "Y":
-				y += my.toString().split("")[i]
+				y += my.toString().split("")[i + offset]
 				break
 			case "M":
-				m += my.toString().split("")[i]
+				if(!isNaN(my.toString().split("")[i + offset]))
+					m += my.toString().split("")[i + offset]
+				else
+					offset--
 				break
 			case "D":
-				d += my.toString().split("")[i]
+				if(!isNaN(my.toString().split("")[i + offset]))
+					d += my.toString().split("")[i + offset]
+				else
+					offset--
 				break
 		}
 	})

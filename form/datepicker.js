@@ -2,13 +2,23 @@
  * @class
  * @name util.datepicker
  * @description Data for datepicker 
+ * @example 
+ * <input type='mydatepicker' rel='offsetDays:1'/>
+ * <script type='text/javascript'>
+ * util.ready(function()
+ * {
+ * 	util.datepicker.initInputTypeDate('input[type=mydatepicker]');
+ * })
+ * </script>
  */
 util.datepicker = {
 	dPickers:[],
 	tnode:null,
 	dataFormat:'YYYY-MM-DD',
 	flags:[],
-	options:null
+	options:null,
+	unpublishedFlags:['storepaddeddates'],
+	availableFormats: ['(d) DD M YYYY', '(W) d DD M YYYY', 'wkW D DD M']
 };
 
 (function () {
@@ -103,9 +113,14 @@ util.datepicker = {
 		  */ 
 		this.options = new util.struct([util.options], {value:0})
 		
-		util.datepicker.userSettings = new util.userSettings('localeSet')		
+		this.userSet = new util.userSettings('datepicker')		
 
 	}
+	util.datepicker.setDataFormat = function(format)
+	{
+		this.dataFormat = format
+	}
+	
 	
 	/**
 	 * @function util.datepicker.getDatePickerDateFormat
@@ -114,20 +129,22 @@ util.datepicker = {
 	 */
 	util.datepicker.getDatePickerDateFormat = function()
 	{
-		return  util.datepicker.userSettings.get('datePickerDateFormat') || 
+		var  f = util.datepicker.userSet.get('datePickerDateFormat') || 
 				util.locale.datePickerDateFormat
+		return f
 	}
 	
 	/**
-	 * @function util.datepicker.setDataFormat
+	 * @function util.datepicker.setDateFormat
 	 * @param {String} format Format
 	 * @description Sets datePickerDateFormat to format.
 	 * @example
 	 * 	"(W) d DD M YYYY" => (16) tu 17 april 2012
 	 */
-	util.datepicker.setDataFormat = function(format)
+	util._datepicker.prototype.setDateFormat = function(format)
 	{
-		util.datepicker.dataFormat = format
+		util.datepicker.userSet.store([{key:'datePickerDateFormat', value:format}])
+		util.datepicker.dateFormat = format
 	}
 	
 	/**
@@ -139,9 +156,10 @@ util.datepicker = {
 	 */
 	util.datepicker.valueToDate = function(val)
 	{
-		var d = new Date(String(val).toDate(util.datepicker.dataFormat))
+		var d = String(val).toDate(util.datepicker.dataFormat)
 		if(isNaN(d.getMonth()))
-			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
+		//	d = new Date().format(util.datepicker.dataFormat);
+		throw(util.error(util.defaultStrings.error.error_invalidnodevalue + ':' + val))
 		return d
 	}
 	
@@ -155,6 +173,7 @@ util.datepicker = {
 		var val = this.data.date
 		if( isNaN(this.data.date.getMonth()))
 			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
+			
 		this.data.node.value = 	this.data.date.format(
 									util.datepicker.getDatePickerDateFormat(), 
 									this.data.options.get(util.datepicker.flags.padddates))
@@ -274,20 +293,15 @@ util.datepicker = {
 					dd.setHtml(
 						dday.getDate()
 					)
-						
+
 					// is holiday?
 					if(this.data.options.get(util.datepicker.flags.showholidays))
 					{
-						util.forEach(util.holidays.list, function(holi)
-						{
-							if(	dday.getFullYear() == holi.date.from.year && 
-								dday.getMonth()+1 == holi.date.from.month &&
-								dday.getDate() == holi.date.from.day)
-							{	
-								dd.addClassName("holiday")
-								dd.setAttribute('title', holi.name.toFirstCharUppercase())
-							}
-						})	
+						if(	util.datepicker.isHoliday(dday))
+						{	
+							dd.addClassName("holiday")
+							dd.setAttribute('title',util.datepicker.getHoliday(dday).name.toFirstCharUppercase())
+						}
 					}
 					if(offset == 0)
 					{
@@ -318,7 +332,7 @@ util.datepicker = {
 	{
 		var el = util.createElement('a')
 		var im = util.createElement('img')
-		im.setAttribute('src', util.getBaseUrl() + '../icons/medium/min.png')
+		im.setAttribute('src', util.iconDir + '/medium/min.png')
 		el.appendChild(im)
 		el.setAttribute('href', 'javascript:util.datepicker.prevDay(' + id + ')')
 		el.addClassName("datePickerMin")
@@ -327,7 +341,7 @@ util.datepicker = {
 		)
 		el = util.createElement('a')
 		var im = util.createElement('img')
-		im.setAttribute('src', util.getBaseUrl() + '../icons/medium/plus.png')		
+		im.setAttribute('src', util.iconDir + '/medium/plus.png')		
 		el.appendChild(im)
 		el.setAttribute('href', 'javascript:util.datepicker.nextDay(' + id + ')')
 		el.addClassName("datePickerPlus")		
@@ -390,37 +404,28 @@ util.datepicker = {
 				div.addListener("dragstart", function(e)
 				{
 					var pos = util.eventObjectToPos(e)
-					xpos1 = pos.x
-					ypos1 = pos.y
+					util.dnd.posx = pos.x
+					util.dnd.posy = pos.y
 				})		
 				div.addListener("dragend", function(e)
-				{
-					var pos = util.eventObjectToPos(e)
-					xpos2 = pos.x
-					ypos2 = pos.y
-					if(	Math.max(xpos2 - xpos1, xpos1 - xpos2) > 
-						Math.max(ypos2 - ypos1, ypos1 - ypos2))
+				{					
+					util.dnd.isDrag(e, function(dir)
 					{
-						if(xpos2 > xpos1)
+						switch(dir)
 						{
-							util.datepicker.prevMonth(id)
+							case 'right':
+								util.datepicker.prevMonth(id)
+								break
+							case 'left':
+								util.datepicker.nextMonth(id)		
+								break
+							case 'up':
+								util.datepicker.prevWeek(id)
+								break
+							case 'down':
+								util.datepicker.nextWeek(id)
 						}
-						else if(xpos1 > xpos2)
-						{
-							util.datepicker.nextMonth(id)			
-						}						
-					}
-					else
-					{
-						if(ypos1 > ypos2)
-						{
-							util.datepicker.nextWeek(id)
-						}
-						else if(ypos2 > ypos1)
-						{
-							util.datepicker.prevWeek(id)				
-						}
-					}
+					})
 				})
 			})
 		}	
@@ -437,6 +442,7 @@ util.datepicker = {
 		{
 			this.data.state = 'closed'
 			this.valueToDate()
+			_s("input[name=" + this.data.name + "]").val(this.data.date.format(util.datepicker.dataFormat))
 			_s('body').node.removeChild(_s('body').node.lastChild)
 			this.data.node.setAttribute('style', 'display:inline;')
 		}
@@ -445,6 +451,7 @@ util.datepicker = {
 	/**
 	 * @function util.datepicker.isHoliday
 	 * @param {Date} day
+	 * @returns boolean
 	 * @description Iterates util.holidays.list and returns true if 
 	 * day is a holiday 
 	 */
@@ -460,6 +467,29 @@ util.datepicker = {
 		return r
 	}
 
+	/**
+	 * @function util.datepicker.isHoliday
+	 * @param {Date} day
+	 * @returns {Object}
+	 * @description Iterates util.holidays.list and returns true if 
+	 * day is a holiday 
+	 */
+	util.datepicker.getHoliday = function(day)
+	{
+		var gholi = null
+		util.forEach(util.holidays.list, function(holi)
+		{
+			if(holi.date.from.year == day.getFullYear() &&
+				holi.date.from.month == day.getMonth() + 1 &&
+				holi.date.from.day == day.getDate())
+			{
+				gholi = holi
+				return true
+			}
+		})
+		return gholi		
+	}
+	
 	/**
 	 * @function util.datepicker.prevNextDay
 	 * @param {util.datepicker} dp 
@@ -706,6 +736,8 @@ util.datepicker = {
 			var o = String(_offset).split(':')
 			if(o[0] == 'offsetDays' && !util.isUndef(o[1]))
 				var offset = o[1]
+			else
+				var offset = 1;
 			
 			var options = new util.struct([util.options], {value:util.datepicker.options.data.value})
 			var dp = new util.struct(
@@ -788,6 +820,36 @@ util.datepicker = {
 		})
 	}
 	
+	util.datepicker.showSettings = function()
+	{
+		var html = ''
+		html += "<br/>Date format : " +
+			"<select " +
+			"	onchange='util.datepicker.updateDatePickerFormat(this)'" + 
+			"	name='dateFormat' >" +
+			"<option>" + new Date().format(util.datepicker.getDatePickerDateFormat()) + 
+			"</option>"
+
+		util.forEach(util.datepicker.availableFormats, function(f)
+		{
+			if(!f.equals(util.datepicker.getDatePickerDateFormat()))
+				html += sprintf("<option value='%s'>%s</option>", f, new Date().format(f))
+		})
+		html += "</select>"
+		html += util.setman.showSettings("datepicker")
+		return html
+	}
+	
+	util.datepicker.updateDatePickerFormat = function(o)
+	{
+		util.eventHandler(function()
+		{
+			// Store key in local storage
+			util.datepicker.userSet.store([{key:'datePickerDateFormat', value:o.value}])
+
+		})		
+	}
+	
 	/**
 	 * @function util.datepicker.onUpdateLocale
 	 * @description Iterates through datepickers and applies locale or 
@@ -802,7 +864,7 @@ util.datepicker = {
 				dp.data.format,
 				dp.data.options.get(util.datepicker.flags.padddates))
 			_s("input[name=" + dp.data.name + "]").val(dp.data.date.format(
-				util.datepicker.datPickerDataFormat,
+				util.datepicker.datePickerDataFormat,
 				dp.data.options.get(util.datepicker.flags.storepaddeddates)))		
 		})
 	}
@@ -810,12 +872,18 @@ util.datepicker = {
 
 util.prepare(function()
 {	
-	util.datepicker.options.set(
-		[util.datepicker.flags.incrementworkday,
-		 util.datepicker.flags.expandenabledrag,
-		 util.datepicker.flags.expandshowweeknumber,
-		 util.datepicker.flags.showholidays,
-		 util.datepicker.flags.padddates]
+	var localOpt = util.datepicker.userSet.get('options')
+	if(localOpt)
+		util.datepicker.options.data.value = localOpt
+	else
+		util.datepicker.options.set(
+			[util.datepicker.flags.expand,
+			 util.datepicker.flags.incrementworkday,
+			 util.datepicker.flags.expandenabledrag,
+		//	 util.datepicker.flags.expandshowweeknumber,
+			 util.datepicker.flags.showholidays,
+			 util.datepicker.flags.padddates,
+			 util.datepicker.flags.storepaddeddates]
 	)	
 })
 
