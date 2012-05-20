@@ -86,6 +86,9 @@ var util = util || {
 	        // from http://sizzlejs.com/
 	        'external/sizzle',
 	        
+	        // from http://modernizr.com
+	        'external/modernizr',
+	        
            	/* the js part of the 960 grid layout 
            	 * from http://adapt.960.gs */
            	'external/adapt',
