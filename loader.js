@@ -4,12 +4,14 @@
  * @description Modular framework for app interfaces
  * Tested and developed on:
  * 	- Android 2.2, 2.3.4, 4.0 native browser
-	- Chrome 15-18
+	- Chrome 15-19
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
 	- Safari 5
 	- IE9
+ * 
+ * utiljs loader. If available, uses yepnope.js to load the modules.
  * 
  */
 var util = util || {
@@ -305,7 +307,20 @@ var util = util || {
 	initUtil: function()
 	{	
 		this.sanityCheck()
-		if(util.isCompatibleUA)
+		if(window.yepnope)
+		{
+			var mods = this._mods
+			var ms = []
+			for(var c = 0; c < mods.length; c++)
+			{
+				ms.push(util.getBaseUrl() + mods[c] + '.js')
+			}
+			
+			yepnope({
+				load:ms, 
+				complete:util.initWaitForLanguageLoaded})
+		}
+		else if(util.isCompatibleUA)
 		{
 			var base = ''
 				url = util.getBaseUrl()
@@ -316,6 +331,13 @@ var util = util || {
 			util._t = setInterval("util.waitForLoadCompleted();", 50)
 		}
 	},
+	
+	
+	initWaitForLanguageLoaded: function()
+	{
+		util._t = setInterval("util.waitForLoadCompleted();", 50)		
+	},
+	
 	
 	/**
 	 * @description Prepares mod name (strips pathname)
@@ -331,8 +353,7 @@ var util = util || {
 	 */
 	waitForLoadCompleted: function()	
 	{
-		if(document.readyState === 'complete' &&
-			util.finishloading)
+		if(document.readyState === 'complete')
 		{
 			clearInterval(util._t)
 			
@@ -399,7 +420,7 @@ var util = util || {
 
 util.steady = function(cb)
 {
-	if(document.readyState === 'complete' &&
+	if(document.documentElement.readyState === 'complete' &&
 		util.isFunction(cb))
 			cb()
 	else
@@ -412,7 +433,7 @@ util.steady = function(cb)
  */
 util.ready = function(cb)
 {
-	if(document.readyState === 'complete' &&
+	if(document.documentElement.readyState === 'complete' &&
 		util.isFunction(cb))
 			cb()
 	else
