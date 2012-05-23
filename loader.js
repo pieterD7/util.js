@@ -166,7 +166,7 @@ var util = util || {
            	'lang/com_lang', 
            	
            	/* modules for browsers */
-           	'contentfromhtml',
+           	'content',
            	'css', 'theme', 
           	'dnd', 'chatbox',   
            	'cpath', 'menu',
