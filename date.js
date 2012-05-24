@@ -15,7 +15,7 @@
  * e.g. 2014/12/29 is Monday in week  1 of 2015
  *      2012/1/1   is Sunday in week 52 of 2011
  *      // Week number 53 ok:
- *      see bottom
+ *      see test/general
  */
 Date.prototype.getWeek = function() {
    // Copy date so don't modify original
@@ -34,12 +34,12 @@ Date.prototype.getWeek = function() {
 }
 
 /**
- * @param {String} format PHP-like date format
+ * @param {String} format PHP-ish date format
  * @returns Date
  */
 String.prototype.toDate = function(format)
 {
-	// Convert to year, month, day
+	// Convert to PHP-like date format
 	var my = this
 	var y = ''
 	var m = ''
@@ -70,7 +70,8 @@ String.prototype.toDate = function(format)
 }
 
 /**
- * @param {String} format PHP-like date format
+ * @param {String} format PHP-ish date format
+ * @param {Boolean} padd Padd dates
  * 
  */
 Date.prototype.format = function(format, padd)
