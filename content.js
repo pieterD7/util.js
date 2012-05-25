@@ -15,7 +15,7 @@ util.contentfromhtml = {
 	
 	util.content.ContentItem = function(name, header, body, hidden, icon)
 	{
-		// Must be unique within set
+		// Must be unique within set starting with alpha-character
 		this.name = name
 		
 		// Hidden tab?

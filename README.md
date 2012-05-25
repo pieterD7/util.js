@@ -33,8 +33,11 @@
 	data structures, in short: for displaying text. 
 
 
-	Util.js was tested on :
+	Util.js was tested w/ on :
 
+	- jQuery
+	- Google Maps
+	
 	- Android 2.2, 2.3.4, 4.0 native browser
 	- Chrome 15-18
 	- Safari 5

@@ -1,5 +1,14 @@
 /**
- * 
+ * country.js
+ * @description Populates select elements with ISO country codes and label 
+ * @example
+ * <select class='country' placeholder='Please select a country'></select>
+ * <script type="text/javascript">
+ * util.ready(function()
+ * {
+ * 	util.country.initSelectClassCountry('select.country', 'enus', 'countriesUSA.txt') 
+ * })
+ * </script>
  */
 
 util.country = {};
@@ -7,13 +16,18 @@ util.country = {};
 (function(){
 	"use strict";
 	
-	util.country.init = function(locale)
+	/**
+	 * @description Populates select elements 
+	 * @param {String} sel Selector to elements
+	 * @param {String} locale ISO country code without separator 
+	 * @param {String} url Path to data file 
+	 */
+	util.country.initSelectClassCountry = function(sel, locale, url)
 	{
-		var url = util.getBaseUrl() + '/countriesEurope.txt'
+		var url = url || ('/' + url)
+		url = util.getBaseUrl() + url
 		if(util.isUndef(locale))
 			var locale = 'en'
-		if(String(locale).match(/^enus/))
-			url = util.getBaseUrl() + '/countriesUSA.txt'
 		util.ajax(
 		{
 			url:url,
@@ -47,10 +61,10 @@ util.country = {};
 					// Check ok?
 					if(!(c.length && iso.length && iso.length > c.length) ||
 						(iso.length % c.length != 0))
-							throw(new util.error(
+							throw new util.error(
 								"Error reading " + iso.length + 
 								" lines in  " + 
-								c.length + " equal sections"))
+								c.length + " equal sections")
 					
 					var isos = iso.splice(0, iso.length / c.length)
 					var ii = false
@@ -60,7 +74,7 @@ util.country = {};
 							ii = i - 1
 					})				
 					
-					var inps = _sa("select.country")
+					var inps = _sa(sel)
 					util.forEach(inps, function(_inp)
 					{
 						// Save value
@@ -102,7 +116,3 @@ util.country = {};
 	}
 })()
 
-util.prepare(function()
-{
-	util.country.init()
-})

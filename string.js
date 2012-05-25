@@ -6,6 +6,33 @@
 (function () {
     "use strict";
 
+    /**
+     * @description Formats string
+     * @param {array} ar Array of identifiers
+     * @param {string} as Type of replacements
+     * @param {string} char Replacement character
+     */
+    String.prototype.format = function(ar, as, char)
+    {
+    	var ret = this.toString()
+    	
+    	/* Set default character for translations to be replaced */
+    	if(!util.isString(char)) var char = '%'
+
+    	/* Set default number type:arg */	
+    	if(!util.isString(as)) var as = 'integer'
+    	
+    	if(util.isObject(ar))
+    	for(var c = 0; c < ar.length; c++)
+    	{
+    		if(util.isNumber(parseFloat(ar[c])))
+    			ret = ret.replace(RegExp(char), Number(ar[c]).format(as, util.locale))
+    		else if(util.isString(ar[c]))
+    			ret = ret.replace(RegExp(char), ar[c])
+    	}
+    	return ret
+    }    
+    
 	/**
 	 * @returns {string}
 	 * @param {string} String
@@ -32,7 +59,7 @@
 	
 	/**
 	 * @description Escapes chracters special to RegExp()
-	 * @returns {string}
+	 * @returns {String}
 	 */
 	String.prototype.escapeRegExpSpecialChars = function()
 	{
@@ -142,16 +169,16 @@
 		return html
 	}
 	
-	util.nodes = []
+	util._chnodes = []
 	
 	util.collectChildNodes = function(el)
 	{
-		this.nodes.push(el)
+		this._chnodes.push(el)
 		for(var c = 0; c < el.childNodes.length; c++)
 		{
-			this.nodes.push(this.collectChildNodes(el.childNodes[c]))
+			this._chnodes.push(this.collectChildNodes(el.childNodes[c]))
 		}
-		return this.nodes
+		return this._chnodes
 	}
 	
 	/**

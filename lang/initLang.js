@@ -14,33 +14,6 @@ util.regions =
 util.lang = null
 util.curLang = ''
 
-/**
- * @description Formats string
- * @param {array} ar Array of identifiers
- * @param {string} as Type of replacements
- * @param {string} char Replacement character
- */
-String.prototype.format = function(ar, as, char)
-{
-	var ret = this.toString()
-	
-	/* Set default character for translations to be replaced */
-	if(!util.isString(char)) var char = '%'
-
-	/* Set default number type:arg */	
-	if(!util.isString(as)) var as = 'integer'
-	
-	if(util.isObject(ar))
-	for(var c = 0; c < ar.length; c++)
-	{
-		if(util.isNumber(parseFloat(ar[c])))
-			ret = ret.replace(RegExp(char), Number(ar[c]).format(as, util.locale))
-		else if(util.isString(ar[c]))
-			ret = ret.replace(RegExp(char), ar[c])
-	}
-	return ret
-}
-	
 util.getBestUserLang = function()
 {
 	    if ( navigator.language ) {
