@@ -30,12 +30,17 @@ util.canvas = {
 	
 	util.canvas.Canvas.prototype.setPixel = function(pix, x, y)
 	{
-		this.data = pix.putPixelData(this.data, x, y)
+		this.data = pix.putPixelData(this.data, x | 0, y | 0)
 	}
 
 	util.canvas.Canvas.prototype.draw = function()
 	{
 		this.context.putImageData(this.data, 0, 0)		
+	}
+	
+	util.canvas.Canvas.prototype.save = function()
+	{
+		return this.o.toDataURL("image/png");
 	}
 	
 	util.canvas.Pixel = function(r,g,b,a)
@@ -68,4 +73,8 @@ util.canvas = {
 		return util.canvas.cvasses
 	}
 	
+	util.canvas.save = function(index)
+	{
+		return util.canvas.cvasses[index].save()
+	}
 })()
