@@ -184,7 +184,7 @@ var util = util || {
            	'layout/tablayout',
            	'layout/fixedsplitter',
            	
-           	'crumbs', 'tilt', 
+           	'crumbs', //'tilt', 
            	'ui/langbar',
            	'ui/hud',
            	'ui/toolbar',
