@@ -190,10 +190,11 @@ var util = util || {
            	'ui/toolbar',
            	'ui/button', 
            	'ui/icon',
+           	'ui/canvas',
            	
            //	'datagrid', 
            	//'apps/maersk',
-           	//'apps/fractal',
+           	'apps/fractal',
   
            	
            	/* html5 local storage */

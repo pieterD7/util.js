@@ -4,7 +4,19 @@
  */
 
 util.canvas = {
-	cvasses:[]	
+	cvasses:[],
+	blendModes: [
+		"source-over", // (default)
+		"source-atop",
+		"source-in",
+		"source-out",
+		"destination-over",
+		"destination-atop",
+		"destination-in",
+		"destination-out",
+		"lighter",
+		"copy",
+		"xor"]
 };
 
 (function()
@@ -33,6 +45,38 @@ util.canvas = {
 		this.data = pix.putPixelData(this.data, x | 0, y | 0)
 	}
 
+	util.canvas.Canvas.prototype.fillRect = function(st, x, y, width, height)
+	{
+		this.context.save()
+		this.context.fillStyle = st
+		this.context.fillRect(x, y, width, height)
+		this.context.restore()
+	}
+	
+	util.canvas.Canvas.prototype.loadImage = function(url, alpha, bmode)
+	{
+		var imageObj = new Image();
+		var me = this
+	 	imageObj.onload = function() 
+	 	{
+			me.context.scale(1.5,1.5)
+			me.context.globalAlpha = alpha
+			me.context.globalCompositeOperation = bmode
+         	me.context.drawImage(imageObj, 200, 180);
+        }
+        imageObj.src = url;	      
+	}
+	
+	util.canvas.Canvas.prototype.fillText = function(text, x, y)
+	{
+		//this.context.save()
+		this.context.font = "48px Times"
+		this.context.fillStyle = "#000";
+//		this.context.rotate(0.5)
+		this.context.fillText(text, x, y)
+		//this.context.restore()
+	}
+	
 	util.canvas.Canvas.prototype.draw = function()
 	{
 		this.context.putImageData(this.data, 0, 0)		
@@ -65,6 +109,7 @@ util.canvas = {
 	util.canvas.init = function(sel, width, height)
 	{
 		var cs = _sa(sel)
+		console.log(cs)
 		util.forEach(cs, function(cvas)
 		{
 			var c = new util.canvas.Canvas(cvas, width, height)
