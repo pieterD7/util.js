@@ -17,18 +17,6 @@ util.theme.Theme = function(name, o)
 	return this
 }
 
-util.theme.Theme.Android = new util.theme.Theme(
-"Android",
-{
-	labelBeforeCheckbox:false
-})
-
-util.theme.Theme.iOS = new util.theme.Theme(
-"iOS", 
-{
-	labelBeforeCheckbox:true
-})
-
 util.theme._init = function()
 {
 	util.theme.flags = [].unum()
@@ -37,6 +25,19 @@ util.theme._init = function()
 	util.theme.themes = [util.theme.Theme.Android, 
 	                     util.theme.Theme.iOS]
 	util.theme.actualTheme = util.theme.userSet.get('name') || 'Android'	
+
+	util.theme.Theme.Android = new util.theme.Theme(
+	"Android",
+	{
+		labelBeforeCheckbox:false
+	})
+
+	util.theme.Theme.iOS = new util.theme.Theme(
+	"iOS", 
+	{
+		labelBeforeCheckbox:true
+	})	
+	
 }
 
 util.theme.isValidTheme = function(str)
