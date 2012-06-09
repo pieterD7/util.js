@@ -1,15 +1,15 @@
 /**
  * @class
  * @name util.datepicker
- * @description Data for datepicker 
+ * @description Datepicker 
  * @example 
- * <input type='mydatepicker' rel='offsetDays:1'/>
- * <script type='text/javascript'>
+ * &lt;input type='mydatepicker' rel='offsetDays:1'/>
+ * &lt;script type='text/javascript'>
  * util.ready(function()
  * {
  * 	util.datepicker.initInputTypeDate('input[type=mydatepicker]');
  * })
- * </script>
+ * &lt;/script>
  */
 util.datepicker = {
 	dPickers:[],
@@ -43,6 +43,7 @@ util.datepicker = {
 		/**
 		 * @field
 		 * @description Avalaible flags:
+		 * <pre>
 		 * 1 expand Drop down list or click to 
 		 * increment/decrement
 		 * 2 incrementworkday Only valid without 
@@ -65,6 +66,7 @@ util.datepicker = {
 		 * date value
 		 * 10 padddates Padd date values
 		 * 11 storepaddeddates Store padded values
+		 * </pre>
 		 */
 		this.flags =
 		[ 
@@ -92,7 +94,7 @@ util.datepicker = {
 	     // 'expandselectmultiple', 	
 
 	     // Allow input of dates before now
-	     'allowdatesbeforenow', 	// Fix holiday optelsom	
+	     'allowdatesbeforenow', 	
 	     
 	     // Allow text input as with type=text
 	     'allowtyping',
@@ -158,8 +160,7 @@ util.datepicker = {
 	{
 		var d = String(val).toDate(util.datepicker.dataFormat)
 		if(isNaN(d.getMonth()))
-		//	d = new Date().format(util.datepicker.dataFormat);
-		throw(util.error(util.defaultStrings.error.error_invalidnodevalue + ':' + val))
+		throw util.error(util.defaultStrings.error.error_invalidnodevalue + ':' + val)
 		return d
 	}
 	
@@ -183,7 +184,7 @@ util.datepicker = {
 	/**
 	 * @function util._datepicker.prototype.createMonthRow
 	 * @param {Number} id
-	 * @returns
+	 * @returns HTMLElement
 	 * @description datepicker internal function. Creates a set 
 	 * of interface related divs.
 	 * A monthrow is when the datepicker expands and the month
@@ -702,17 +703,17 @@ util.datepicker = {
 		return new Date(now.getFullYear(), now.getMonth(), Number(now.getDate()) + Number(realOffset))
 	}
 
-	/**
-	 * @name util.datepicker.initInputTypeDate
-	 * @function
-	 * @param {String} sel Selection
-	 * @description Function to be called in ready-function initializing datepickers
-	 * @example
-	 * 	util.datepicker.options.set(
-			[util.datepicker.flags.expand]
-		)
-		util.datepicker.initInputTypeDate('input[type=date]')
-	 */
+/**
+ * @name util.datepicker.initInputTypeDate
+ * @function
+ * @param {String} sel Selector
+ * @description Function to be called in ready-function initializing datepickers
+ * @example
+ * 	util.datepicker.options.set(
+		[util.datepicker.flags.expand]
+	)
+	util.datepicker.initInputTypeDate('input[type=date]')
+ */
 	util.datepicker.initInputTypeDate = function(sel)
 	{
 		var inps = _sa(sel)

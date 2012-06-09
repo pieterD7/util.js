@@ -45,6 +45,15 @@ util.canvas = {
 		this.data = pix.putPixelData(this.data, x | 0, y | 0)
 	}
 
+	util.canvas.Canvas.prototype.line = function(x0, y0, x1, y1)
+	{
+		this.context.strokeStyle = 'black'
+		this.context.beginPath()
+		this.context.moveTo(x0, y0)
+		this.context.lineTo(x1, y1)
+		this.context.stroke()
+	}
+	
 	util.canvas.Canvas.prototype.fillRect = function(st, x, y, width, height)
 	{
 		this.context.save()

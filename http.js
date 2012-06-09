@@ -1,29 +1,12 @@
 (function () {
     "use strict";
- 
-
-	util.HttpStatus = function(uri, cb)
-	{
-		var opt = {
-			url: uri,
-			onError: function(err)
-			{
-				cb(err.status)
-			},
-			onSuccess: function()
-			{
-				cb(200)
-			}
-		}
-		this.ajax(opt)
-	}
-	
+ 	
 	/**
 	 * @constructor
 	 * @property {function} onSuccess 	Function called on http data
 	 * @property {function} onError 	Function called on no http connection
-	 * @property {String} 	method 		Type of http connection (GET/POST)
-	 * @property {Array} 	data 		Name/value-pairs of data to be sent
+	 * @property {String} 	method 		Type of http connection (GET/POST/PUT/DELETE/HEAD)
+	 * @property {Array} 	data 		Object with properties to be sent
 	 * @property {String} 	dataType 	Parse data as (xml, json, text)
 	 */
 	util.ajaxParams = function()
@@ -56,7 +39,7 @@
 				vars += i + '=' + obj.data[i] + '&'
 			}
 		}
-		if(method.match(/GET/i) && vars)
+		if(method.match(/GET|PUT|DELETE|HEAD/i) && vars)
 		{
 			url += '?' + vars
 		}
@@ -82,7 +65,7 @@
 			}
 	
 		}
-		if(method.match(/GET/i))
+		if(method.match(/GET|PUT|DELETE|HEAD/i))
 		{
 			http.send()
 		}

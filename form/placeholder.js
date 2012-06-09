@@ -1,5 +1,7 @@
 /**
- *  Adds placeholder behaviour to input fields
+ * @class util.placeholder
+ * @description Adds placeholder behaviour to input fields (basically w/ IE)
+ * @example util.placeholder.initInputPlaceholders();
  */
 
 util.placeholder = {};
@@ -71,8 +73,3 @@ util.placeholder = {};
 		}
 	}
 })();
-
-util.ready(function()
-{
-	util.placeholder.initInputPlaceholders();
-})

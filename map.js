@@ -22,7 +22,7 @@
 	}
 	
 	/**
-	 * @param {Number} orgLng From logitude
+	 * @param {Number} orgLng From longitude
 	 * @param {Number} orgLat From latitude
 	 * @param {Number} targetLng To logitude
 	 * @param {Number} targetLat To latitude

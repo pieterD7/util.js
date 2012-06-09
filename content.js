@@ -1,5 +1,5 @@
 /**
- * 
+ * @class util.content
  */
 
 util.content = {
@@ -13,9 +13,17 @@ util.contentfromhtml = {
 (function(){
 	"use strict"
 	
+	/**
+	 * @description Content item used by layout 
+	 * @param {String} name Name Must be unique within set and starts with alpha-character
+	 * @param {String} header Item header
+	 * @param {String} body Item body
+	 * @param {Boolean} hidden Hidden tab?
+	 * @param {String} icon Icon filename
+	 */
 	util.content.ContentItem = function(name, header, body, hidden, icon)
 	{
-		// Must be unique within set starting with alpha-character
+		// Must be unique within set and starting with alpha-character
 		this.name = name
 		
 		// Hidden tab?
@@ -40,6 +48,7 @@ util.contentfromhtml = {
 	}
 	
 	/**
+	 * @description Initialize array of util.content.ContentItems from markup
 	 * @returns {Array} Content items
 	 */
 	util.contentfromhtml = function(sel)

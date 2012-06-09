@@ -1,5 +1,6 @@
 /**
- * 
+ * @class util.icon
+ * @description Icon
  */
 
 util.icon = {};

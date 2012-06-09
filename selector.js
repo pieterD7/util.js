@@ -1,5 +1,9 @@
 /**
- * 
+ * @class util.selector
+ * @description Select DOM element(s)
+ * @example
+ * var el = _s('input[type=currency]')
+ * el.focus()
  */
 
 var selector = {};
@@ -8,6 +12,7 @@ var selector = {};
     "use strict";
     
 	/**
+	 * @description Select DOM element
 	 * @param {String} CSS selector
 	 * @returns {HTMLElement} 
 	 */
@@ -32,6 +37,7 @@ var selector = {};
 	}
 		
 	/**
+	 * @description Select DOM elements
 	 * @param {String} CSS selector
 	 * @returns {Array}
 	 */

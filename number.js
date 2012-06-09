@@ -1,4 +1,6 @@
 /**
+ * @param {String} as Format string
+ * @param {util.locale} locale Locale
  * @example 
  * var n = Number(0.5001).format('float:2') // 0.50
  * var n = Number(0.5001).format('precision:2') // 0.5

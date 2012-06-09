@@ -1,11 +1,12 @@
 /**
- * @class util.userSettings
+ * 
  */
 
 (function () {
     "use strict";
     
     /**
+     * @class util.userSettings
      * @description User settings in local storage
      * @param {String} prefix Prefix items with this string
      * @returns {Object}
@@ -32,7 +33,7 @@
     
     /**
      * @description Stores a key with a value
-     * @param {Array} ar Array of objects or object with a 'key' and 
+     * @param {Array or Object} ar Array of objects or object with a 'key' and 
      * 'value' property
      */
     util.userSettings.prototype.store = function(ar)

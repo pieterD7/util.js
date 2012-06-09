@@ -1,8 +1,14 @@
 /**
- * File upload field with a new file element after selecting a 
+ * @class util.upload
+ * @description File upload field with a new file element after selecting a 
  * file for IE8
  * @example
- * <input type='file' multiple name='atts[]'/>
+ * &lt;input type='file' multiple name='atts[]'/>
+ * var fs = _sa('input[type=file]')
+	util.forEach(fs, function(f)
+	{
+		util.upload.init(f)
+	})
  */
 
 util.upload = {};
@@ -48,12 +54,3 @@ util.upload = {};
 	}
 	
 })()
-
-util.ready(function()
-{
-	var fs = _sa('input[type=file]')
-	util.forEach(fs, function(f)
-	{
-		util.upload.init(f)
-	})
-})

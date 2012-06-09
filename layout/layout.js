@@ -1,4 +1,12 @@
 /**
+ * @memberOf util
+ * @description Pointer to current layout
+ */
+util.layo = null	
+
+
+/**
+ * @class util.layout
  * @description Base class for layouts
  * @example
  * util.columnlayout._init = function()
@@ -7,13 +15,6 @@
  * this.toString = function(){return "[util.columnlayout]"}
  * }
  */
-
-/**
- * @memberOf util
- * @description Pointer to current layout
- */
-util.layo = null	
-
 util.layout = {
 		
 	/**
@@ -29,7 +30,7 @@ util.layout = {
 	},
 
 	/**
-	 * @description Init or append markup from markup
+	 * @description Init or append items from markup
 	 * @param {String} sel Selector to source markup
 	 */
 	initFromHtml : function(sel)
@@ -56,7 +57,7 @@ util.layout = {
 	/**
 	 * @description Get appropriate item
 	 * @param {String} id Name of the util.content.ContentItem instance
-	 * @returns {util.content.ContentItem instance}
+	 * @returns {util.content.ContentItem}
 	 */
 	getItem : function(id)
 	{

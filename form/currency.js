@@ -1,5 +1,6 @@
 /**
- * 
+ * @class util.currrency
+ * @description Currency input hat
  */
 
 util.currency = {
@@ -17,14 +18,24 @@ util.currency._init = function()
 
 }
 
+/**
+ * @description Set currency
+ * @param {String} currency Currency
+ * @example util.currency.setCurrency('USD')
+ */
 util.currency.setCurrency = function(currency)
 {
 	util.currency.currency = currency
 }
 
-util.currency.initInputTypeCurrency = function()
+/**
+ * @description Inits currency hats
+ * @param {String} sel Selector
+ * @example util.currency.initInputTypeCurrency('input[type=currency]')
+ */
+util.currency.initInputTypeCurrency = function(sel)
 {
-	var curs = _sa('input[type=currency]')
+	var curs = _sa(sel)
 	util.forEach(curs, function(cur)
 	{
 		var c = new HTMLElement(cur)
@@ -72,9 +83,14 @@ util.currency.initInputTypeCurrency = function()
 	})
 }
 
-util.currency.onUpdateLocale = function()
+/**
+ * @description Updates currency hats
+ * @param {String} sel Selector
+ * @example util.currency.onUpdateLocale('input[type=currency]')
+ */
+util.currency.onUpdateLocale = function(sel)
 {
-	var curs = _sa('input[type=currency]')
+	var curs = _sa(sel)
 	util.forEach(curs, function(cur)
 	{
 		var c = new HTMLElement(cur)
@@ -84,6 +100,12 @@ util.currency.onUpdateLocale = function()
 	})
 }
 
+/**
+ * @description Formats currency values based on locale and 
+ * util.dataDecimalSeparator
+ * @param {Number} num Value
+ * @param {Boolean} b Hide currency symbol  
+ */
 util.currency.format = function(num, b)
 {
 	var cur = util.currency.currency + " "
@@ -99,7 +121,3 @@ util.currency.format = function(num, b)
 			RegExp(String(util.dataDecimalSeparator).escapeRegExpSpecialChars()),
 			util.locale.decimalSeparator)
 }
-
-util.ready(function()
-{
-})

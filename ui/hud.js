@@ -1,6 +1,6 @@
 /**
- * @class
- * @description hud
+ * @class 
+ * @description Keyword search
  * @example
  {	"cpath":"kWs %s",
 	"showMax":8,
@@ -44,6 +44,7 @@
     "use strict";
 
     util.hud = function(menu, icons){
+    	this.comb = null
 		this.data = null
 		this.sitemapSel = null
 		this.sitemapColLength = null,
@@ -52,6 +53,7 @@
 		this.icons = icons;
 		this.menu = menu
 		this.node = null
+		this.searchMode = 'AND'
 	};   
     
     util.hud.prototype.setOnGetDictionary = function(cb)
@@ -64,7 +66,10 @@
     
 	/**
 	 * @description initializes the Hud
-	 * @param {string} sel Selector
+	 * @param {String} dictUrl URL to dictionary
+	 * @param {String} sel Selector
+	 * @param {String} itemUrl URL to apply to item click
+	 * @param {String} iconUrl URL to apply to icon click
 	 */
 	util.hud.prototype.getDictionary = function(dictUrl, sel, itemUrl, iconUrl)
 	{
@@ -92,14 +97,15 @@
 						cb()
 				})
 				
-				var opts = util.struct([util.options], {value:0})				
+				var opts = util.struct([util.options], {value:0})	
 				var comb = new util._combobox(
 					opts,
-					function(constraint)
+					function(constraint, mode)
 					{
-						return my.getDictItemsByName(constraint)
+						return my.getDictItemsByName(constraint, mode)
 					}, 
 					{
+						speechEnabled:true,
 						noDataHint: util.lang.hud_no_data_hint,
 						projection:['name', 'infoUrl'],
 						displayText:['name'],
@@ -112,6 +118,7 @@
 					'down',
 					'txt1'
 				)
+				my.comb = comb				
 				util.huds.push(this)
 				var domEl = comb.display(util.lang.hud_intro)
 				my.node = domEl
@@ -134,12 +141,15 @@
 		return false	
 	}
 	
-	util.hud.prototype.getDictItemsByName = function(n)
+	util.hud.prototype.getDictItemsByName = function(n, mode)
 	{
 		try
 		{
+			
+			console.log(" MODE", mode)
 			var my = this
 			var ret = []
+			var ret2 = []
 			var retreg = []
 			var names = String(n).split(' ')
 			var data = this.data
@@ -174,42 +184,51 @@
 			// For each word in query
 			util.forEach(names, function(name, index)
 			{
-				var b = util.forEach(data, function(en)
+				if(!util.trim(name).isEmpty())
 				{
-					if(!en.hudEntry || en.hudEntry === false) return
-					
-					var br = false
-					if(!util.isUndef(name))
+					var b = util.forEach(data, function(en)
 					{
-						if(String(en.name).match(RegExp(String(name).escapeRegExpSpecialChars(), "i")))
+						if(!en.hudEntry || en.hudEntry === false) return
+						
+						var br = false
+						if(!util.isUndef(name))
 						{
-							var a = util.extend(en, {param:en.name})
-							ret.push(a)
-						}
-						else 
-						{
-							br = util.forEach(en.synos, function(syn)
+							if(String(en.name).match(RegExp(String(name).escapeRegExpSpecialChars(), "i")))
 							{
-								if(String(syn).match(RegExp(String(name).escapeRegExpSpecialChars(), "i")))
-								{									
-									var a = util.extend(en, {param:en.name})
-									a = util.extend(a, {name:en.name +  " (" + syn + ")"})
-									ret.push(a)								
-								}
-							})
+								var a = util.extend(en, {param:en.name})
+								ret.push(a)
+							}
+							else 
+							{
+								br = util.forEach(en.synos, function(syn)
+								{
+									if(String(syn).match(RegExp(String(name).escapeRegExpSpecialChars(), "i")))
+									{									
+										var a = util.extend(en, {param:en.name})
+										a = util.extend(a, {name:en.name +  " (" + syn + ")"})
+										ret.push(a)								
+									}
+								})
+							}
 						}
+						return br
+					})
+					if(mode.equals('AND', 'i'))
+					{
+						data = ret
+						ret2 = ret
 					}
-					return br
-				})
-				data = ret
-				ret = []
-				
+					else
+						ret2 = ret2.concat(ret)
+					ret = []
+					
+				}
+
 				// Max words in query
 				if(index > 8)
 					return true			
 			})
-			data = data.concat(retreg)
-			return {json:data}
+			return {json:ret2}
 		}
 		catch(e)
 		{

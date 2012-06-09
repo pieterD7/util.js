@@ -21,6 +21,10 @@ util._lang.en =
 	name: 'Name',
 	country1: 'Country',
 	currency1: 'amount',
-	submit: 'OK'
+	submit: 'OK',
+	btnBack:'back',
+	
+	UTILJS: 'Fast apps',
+	LIST: 'List'
 
 }

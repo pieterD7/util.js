@@ -3,7 +3,7 @@
  * @description Manager of user settings. Provides a method 
  * for boolean settings. This is overruled by a method called "showSettings"
  * in the module returning html markup as a string. Updates the settings in 
- * the modules and in their local storage property called "userSet". Calls 
+ * the modules and in their local storage object. Calls 
  * "onUpdateLocale" if exists in the module. Provides also a method to 
  * restore all default settings. 
  */
@@ -46,6 +46,9 @@ util.setman = {
 
 	/**
 	 * @description Sets the option to the module
+	 * @param {Object} o Checkbox object w/ name set to short name of 
+	 * the module, eg. 'setman', and value set to the numerical value
+	 * of the flag. 
 	 */
 	util.setman.updateSettings = function(o)
 	{
@@ -109,8 +112,9 @@ util.setman = {
 
 	/**
 	 * @description Shows all user editable settings
+	 * @returns {Array} Array of util.content.ContentItem's
 	 */
-	util.setman.settings = function(sel, n)
+	util.setman.settings = function()
 	{
 		var items = []
 		var html = "" 

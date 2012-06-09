@@ -4,7 +4,7 @@
  * last page. Forms need to have an attribute 'name' set to 
  * something. Form fields need to have an attribute 'name' set 
  * to something and can have an attribute 'ontilt' set to 
- * 'no-restore' to prevent values to be restored from saved 
+ * 'no-restore' to prevent values from being restored from saved 
  * data. If a field has a value nothing is restored.
  */
 
@@ -30,8 +30,8 @@ util.tilt = {
         	// Set last url
         	util.tilt.userSet.store([{key:'lastUrl', value:document.location.href}])
         	
-        	// Set last state / tab for now
-        	util.tilt.userSet.store([{key:'lastState', value:util.tablayout.activeTab}])
+        	// Set last state
+        	util.tilt.userSet.store([{key:'lastState', value:util.layo.activeTab || util.layo.currentItem}])
         	
         	// Get all form data
           	var fd = util.tilt.getAllFormsData()
@@ -68,17 +68,15 @@ util.tilt = {
             		util.tilt.setValue(inp, data)
         		}) 
 	    	})
-	    	if(util.tilt.userSet.get('lastState'))
-	    	{
-	    		
-	    	}
-    		if(util.tilt.userSet.get('fixedsplitter.currentItem'))
+	    
+    		if(util.tilt.userSet.get('lastState'))
     		{
-    			var it = util.tilt.userSet.get('fixedsplitter.currentItem')
-    			if(util.fixedsplitter.o && it && !util.fixedsplitter.mode)
-    				util.fixedsplitter.display(it)
+    			var it = util.tilt.userSet.get('lastState')
+
+    			if(!util.fixedsplitter.mode)
+    				util.layo.display(it)
     			else
-    				util.fixedsplitter.display()
+    				util.layo.display()
     		}
     	}
     }

@@ -1,7 +1,7 @@
 // TESTS
 
 util.test = {
-	notify: 0,
+	notify: 1,
 	totalTests:0,
 	totalTestsPassed:0
 }
@@ -140,8 +140,7 @@ util.test.run = function(noti)
 
 	util.test.runTests({
 		tsts:[{test:util.test.assertStr, params:[util.trim('fits in.as many words as    . possible when first word in string is shorter then limit')
-		                             			.toLimitedFormattedText(23), "Fits in. As many words ..."]},
-		      {test:util.test.assertStr, params:[Number(10000).format('integer'), "10,000"]}],
+		                             			.toLimitedFormattedText(23), "Fits in. As many words ..."]}],
 		msg: 'Test8: string formatting'		
 	})	
 	

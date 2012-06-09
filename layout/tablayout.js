@@ -3,29 +3,30 @@
  * @name util.tablayout
  * @description Tab layout
  * @example
-  		<div id='tablayout'>
-  		<!-- Three sample tabs (one hidden) -->	
-  			<div>INTRO</div>
-			<div>DEMO</div>
-			<div style='display:none'>someTab</div>
-			<div>
-				<div><p>Sample text1</p></div>
-			</div>
-			<div>
-				<div><p>Sample text2</p></div>
-			</div>
-			<div>
-				<!-- hidden tab shown by util.tablayout.showTab(3) -->
-				<div id='someID'></div>
-			</div>
-		</div>
-		<script type='text/javascript'>
+  		&lt;div id='tablayout'>
+  		&lt;!-- Three sample tabs (one hidden) -->	
+  			&lt;div>INTRO&lt;/div>
+			&lt;div>DEMO&lt;/div>
+			&lt;div style='display:none'>someTab&lt;/div>
+			&lt;div>
+				&lt;div>&lt;p>Sample text1&lt;/p>&lt;/div>
+			&lt;/div>
+			&lt;div>
+				&lt;div>&lt;p>Sample text2&lt;/p>&lt;/div>
+			&lt;/div>
+			&lt;div>
+				&lt;!-- hidden tab shown by util.tablayout.showTab('someTab') -->
+				&lt;div id='someID'>&lt;/div>
+			&lt;/div&lt;
+		&lt;/div&lt;
+		&lt;script type='text/javascript'>
 		util.ready(function()
 		{
 			util.tablayout.initFromHtml('#tablayout')
-			util.tablayout.display(1)			
+			util.tablayout.initDisplay('#sometagid')
+			util.tablayout.display()			
 		})
-		</script>
+		&lt;/script>
  */
 
 util.tablayout = 
@@ -94,6 +95,7 @@ util.tablayout =
 		{
 				cb(i)
 		})
+		util.tablayout.activeTab = i.name
 	}
 	
 	util.tablayout.displayHeader = function(activeTab)

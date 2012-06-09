@@ -34,10 +34,10 @@ util.dnd.getMimeType = function()
  * @function util.dnd.isDrag
  * @param {Event} e Event or null for window.event
  * @param {Function} cb Callback with first param String set 
- * to start direction of the drag
+ * to direction of the drag
  * @param {Boolean} b Prefer swipe when move is horizontal, optional
  * @description Determines the direction of the drag
- * @returns Nothingo
+ * @returns Nothing
  * @example 
  * var div = util.createElement('div')
  * div.addListener("dragstart", function(e)

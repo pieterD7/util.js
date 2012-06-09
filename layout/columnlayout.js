@@ -1,5 +1,7 @@
 /**
- * 
+ * @class util.columnlayout
+ * @description Layout displaying one of one or more columns w/ swipe 
+ * to next/prev column
  */
 util.columnlayout = {
 	items:[],
@@ -18,6 +20,10 @@ util.columnlayout = {
 		this.toString = function(){return "[util.columnlayout] items=" + this.items.length}
 	}
 
+	/**
+	 * @description Inits html
+	 * @param {String} sel Selector
+	 */
 	util.columnlayout.initDisplay = function(sel)
 	{
 		var o = _s(sel || util.columnlayout.sel)
@@ -72,6 +78,10 @@ util.columnlayout = {
 		return div
 	}
 	
+	/**
+	 * @description Displays next item
+	 * @param {String} dir 'left' or 'right' 
+	 */
 	util.columnlayout.nextItem = function(dir)
 	{
 		var n = false
@@ -118,6 +128,10 @@ util.columnlayout = {
 		}
 	}
 	
+	/**
+	 * @description Displays a column
+	 * @param {String} id Name of util.content.ContentItem. Can be omitted.
+	 */
 	util.columnlayout.display = function(id)
 	{
 		var i = util.columnlayout.getItem(id)

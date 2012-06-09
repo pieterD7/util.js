@@ -1,5 +1,5 @@
 /**
- * @param {String} Unique property, can be omitted
+ * @param {String} id Unique property, can be omitted
  * @returns {Array}
  */
 
@@ -60,9 +60,10 @@ Array.prototype.joinAll = function(cb)
 }
 
 /**
- * @param {Number} form From, can be omitted
+ * @param {Number} from From, can be omitted
  * @param {Number} to To, can be omitted
  * @param {util.options} opt Options, can be omitted
+ * @returns {Object}
  * @example
  * var option = ['optionFoo', 'optionBar', 'optionBaz'].unum()  
  */
@@ -116,6 +117,7 @@ util.forEach = function(ar, cb)
  * @description Finds entries in array by id
  * @param {regexp} name Text to find
  * @param {string} id (Optional) Property to use for matching
+ * @returns {Array} Array of objects
  */
 Array.prototype.find = function(name, id)
 {
@@ -137,6 +139,12 @@ Array.prototype.find = function(name, id)
 	return null
 }
 
+/**
+ * @description Finds entry by name
+ * @param {String} name Name 
+ * @param {String} id Property
+ * @returns {Number} Index
+ */
 Array.prototype.indexOf = function(name, id)
 {
 	var ret = false

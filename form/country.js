@@ -1,14 +1,12 @@
 /**
- * country.js
+ * @class util.country
  * @description Populates select elements with ISO country codes and label 
  * @example
- * <select class='country' placeholder='Please select a country'></select>
- * <script type="text/javascript">
+ * &lt;select class='country' placeholder='Please select a country'>&lt;/select>
  * util.ready(function()
  * {
  * 	util.country.initSelectClassCountry('select.country', 'enus', 'countriesUSA.txt') 
  * })
- * </script>
  */
 
 util.country = {};

@@ -1,11 +1,12 @@
 /**
+ * @class util.fixedsplitter
  * @description Fixed splitter splits screen on screen width > splitwidth
  */
 
 util.fixedsplitter = {
 	items:[],
 	sel:null,
-	splitwidth: 800,
+	splitwidth: 800, 
 	o:null,
 	mode:null,
 	currentItem:null,
@@ -96,6 +97,7 @@ util.fixedsplitter = {
 			div.appendChild(div2)
 			var div4 = util.createElement('div')
 			div4.addClassName('fixedSplitterItemContainer')
+
 			div4.setHtml(item.body)
 			div4.setAttribute('id', item.name)
 			div4.style('display:none;')
@@ -116,6 +118,10 @@ util.fixedsplitter = {
     	util.fixedsplitter.currentItem = false
     }
     
+    /**
+     * @description Displays an item
+     * @param {String} n Name of the item or null
+     */
     util.fixedsplitter.display = function(n)
     {
     	var fireCB = false
@@ -161,6 +167,7 @@ util.fixedsplitter = {
     
     util.fixedsplitter.displayList = function()
     {
+			console.log("displayList")
     	util.fixedsplitter.hide()
   	
     	var o = _s(util.fixedsplitter.sel + ' div')
@@ -173,8 +180,9 @@ util.fixedsplitter = {
     
     util.fixedsplitter.displayListPlusItem = function(n)
     {
+			console.log("displayListPlusItem")
     	var oldBut = _s('.backBtn')
-    	if(oldBut)
+    	if(0 && oldBut)
     		oldBut.node.parentNode.removeChild(oldBut.node)
     	var o = _s(util.fixedsplitter.sel + ' div')
 		if(o)
@@ -183,13 +191,20 @@ util.fixedsplitter = {
     	if(o)
     	{
         	util.fixedsplitter.hide()    		
-    		o.replaceStyle('display:block;')
+    			o.replaceStyle('display:block;')
         	util.fixedsplitter.currentItem = n 		
     	}    	
     }
     
     util.fixedsplitter.displayItem = function(n)
     {
+			console.log("displayItem")
+			if(util.fixedsplitter.mode)
+			{
+				var o = _s(util.fixedsplitter.sel + ' div')
+				if(o)
+					o.replaceStyle('display:none;')
+			}
     	util.fixedsplitter.currentItem = n 	
     	var o = _s(util.fixedsplitter.sel + ' #' + n)
     	if(o && o.node.childNodes[0])
@@ -208,6 +223,7 @@ util.fixedsplitter = {
 			o.addClassName('fixedSplitterListItem')
 		}
     	var oo = _s('.listItemHeader'+i.name)
+			oo.replaceStyle("display:block;")
     	oo.addClassName('fixedSplitterActiveListItem')
     	oo.removeClassName('fixedSplitterListItem')
     }
@@ -239,7 +255,7 @@ util.fixedsplitter = {
     	div.addClassName('backBtnI')
     	o.addClassName('backBtn')
     	o.setAttribute('href', 'javascript:util.fixedsplitter.display()')
-    	o.setHtml(util.lang.btnBack.toFirstCharUppercase())
+    	o.setHtml('Back')
     	div.appendChild(o)
     	return div.getNode()
     }

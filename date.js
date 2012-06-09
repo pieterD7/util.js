@@ -139,7 +139,7 @@ Date.prototype.format = function(format, padd)
 			else
 				s.push(m)
 		}
-		else if(format[c] == 'n')
+		else if(format[c] == 'n' || format[c] == 'i')
 		{
 			var m = this.getMinutes()
 			if(padd && String(m).length == 1)

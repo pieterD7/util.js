@@ -19,6 +19,10 @@ util._lang.nl =
 	name: 'Naam',
 	country1: 'Land',	
 	currency1: 'bedrag',	
-	submit: 'OK'
+	submit: 'OK',
+	btnBack:'terug',
+	
+	UTILJS: 'Het snelste framework voor apps',
+	LIST: 'Lijst'
 	
 }

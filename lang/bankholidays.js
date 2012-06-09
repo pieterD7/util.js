@@ -143,7 +143,7 @@ util.prepare(function()
 })
 
 util.ready(function()
-{
+{	
 	/** this should be called by app in util.ready() */
 	util.holidays.options.set(
 		[util.holidays.flags.regional,

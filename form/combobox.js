@@ -1,5 +1,6 @@
 /**
- * @class
+ * @class util.combobox
+ * @description Combobox with callback on keydown
  * @example
 var comb = new util._combobox(
 	options,
@@ -18,7 +19,7 @@ var comb = new util._combobox(
 	'down',
 	'name'
 )
-var domEl = comb.display(util.lang.combohintlocations)
+var domEl = comb.display('Type to start search')
 _s('.info').appendChild(domEl)
  */
 
@@ -31,6 +32,9 @@ util.combobox = {
 (function () {
     "use strict";
     
+    /**
+     * @description Hides dropdown
+     */
     util.combobox.hide = function()
     {
 		util.forEach(_sa('.combobox_container ol'), function(box)
@@ -40,6 +44,9 @@ util.combobox = {
 		})
     }
     
+    /**
+     * @description Set value to combobox as form element
+     */
     util.combobox.select = function(i, val)
     {
     	var box = util.combobox.cBoxes[i]
@@ -61,6 +68,8 @@ util.combobox = {
 		this.domEl = util.createElement('div')
 		this.options = options
 		this.dropdir = null
+		this.searchMode = 'AND'
+			
 		if(util.isUndef(dropDir))
 		{
 			this.dropDir = 'up'
@@ -85,7 +94,7 @@ util.combobox = {
 		var _l = list.parentNode
 		_l.removeChild(list)
 
-		this.jsondata = util.toJson(this.dataFunc(value))
+		this.jsondata = util.toJson(this.dataFunc(value, this.searchMode))
 		
 		var _list = this._updateList(true)
 		if(this.dropDir == 'up')
@@ -184,6 +193,38 @@ util.combobox = {
 		return list
 	}
 	
+	util._combobox.prototype.onKeyUpListener = function(inp)
+	{
+		var my = this
+		if(util.isObject(this.parentNode))
+		{
+			var n = this.parentNode.childNodes.length
+			my.dropDir == 'up' ? n -= 2 : n -= 1
+			var list = this.parentNode.childNodes[n]
+			my.refresh(this.value, list)
+		}
+		else
+		{
+			var n = inp.node.parentNode.childNodes.length
+			my.dropDir == 'up' ? n -= 2 : n -= 1
+			var list = inp.node.parentNode.childNodes[n]
+			my.refresh(inp.node.value, list)			
+		}		
+	}
+	
+	util._combobox.prototype.onSpeechEvent = function(inp, evnt)
+	{
+		var res = ''
+		util.forEach(event.results, function(ut)
+		{
+			res += ut.utterance + ' '
+		})
+		inp.val(res)
+		this.onKeyUpListener(inp)
+		inp.val('')
+		console.log(res)
+	}
+	
 	util._combobox.prototype.display = function(hint)
 	{
 		var my = this
@@ -192,6 +233,26 @@ util.combobox = {
 		
 		var inp = util.createElement('input')
 		inp.setAttribute('type', 'text')
+
+		util.isSpeechEnabled = 
+			Modernizr.hasEvent('webkitspeechchange', inp.node) || 
+			Modernizr.hasEvent('speechchange', inp.node)
+			
+		if(	this.combProj.speechEnabled && 
+			util.isSpeechEnabled)
+		{
+			inp.setAttribute('x-webkit-speech', '')
+			inp.setAttribute('speech', '')
+			
+			inp.setAttribute('lang', 'en-Hans')
+			
+			inp.addListener('webkitspeechchange', function(evnt)
+			{
+				my.searchMode = 'OR'
+				my.onSpeechEvent(inp, evnt)
+			})			
+		}
+		
 		if(util.isObject(this.parentNode))
 		{
 			this.node = inp
@@ -212,20 +273,7 @@ util.combobox = {
 		
 		inp.addListener('keyup', function()
 		{
-			if(util.isObject(this.parentNode))
-			{
-				var n = this.parentNode.childNodes.length
-				my.dropDir == 'up' ? n -= 2 : n -= 1
-				var list = this.parentNode.childNodes[n]
-				my.refresh(this.value, list)
-			}
-			else
-			{
-				var n = inp.node.parentNode.childNodes.length
-				my.dropDir == 'up' ? n -= 2 : n -= 1
-				var list = inp.node.parentNode.childNodes[n]
-				my.refresh(inp.node.value, list)			
-			}
+			my.onKeyUpListener(inp)
 		})
 		inp.addListener('paste', function(o)
 		{

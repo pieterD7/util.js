@@ -2,7 +2,10 @@
 /**
  * @namespace
  * @description Modular framework for app interfaces
- * Tested and developed on:
+ * Tested and developed w/ on:
+ * - jQuery
+ * - Google Maps v3
+ * 
  * 	- Android 2.2, 2.3.4, 4.0 native browser
 	- Chrome 15-19
 	- Opera 11.60
@@ -11,7 +14,8 @@
 	- Safari 5
 	- IE9
  * 
- * utiljs loader. If available, uses yepnope.js to load the modules.
+ * utiljs loader If available, uses yepnope.js from http://yepnopejs.com/ 
+ * to load the modules.
  * 
  */
 var util = util || {
@@ -160,7 +164,7 @@ var util = util || {
              /* init language */   			
            	'lang/initLang', 'lang/bankholidays',
            	
-           	//'jsjbridge', 'emulator', 
+           	'jsjbridge', 'emulator', 
            	
            	/* App language blueprint */
            	'lang/com_lang', 
@@ -184,14 +188,15 @@ var util = util || {
            	'layout/tablayout',
            	'layout/fixedsplitter',
            	
-           	'crumbs', //'tilt', 
+           	'crumbs', 'tilt', 
+           	'ui/canvas',
            	'ui/langbar',
            	'ui/hud',
            	'ui/toolbar',
            	'ui/button', 
            	'ui/icon',
-           	'ui/canvas',
            	
+           	'app',
            //	'datagrid', 
            	//'apps/maersk',
            	'apps/fractal',
@@ -296,8 +301,8 @@ var util = util || {
 		if(1)
 		{
 			util.isCompatibleUA = true
-			util.isTouchDevice = "onTouchStart" in document.documentElement
-			util.hasLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
+			util.isTouchDevice = ""//"onTouchStart" in document.documentElement
+			util.hasLocalStorage = ""//'localStorage' in window && window['localStorage'] !== null;
 		}
 	},
 	
@@ -341,6 +346,7 @@ var util = util || {
 	
 	
 	/**
+	 * @memberOf util
 	 * @description Prepares mod name (strips pathname)
 	 * @returns {String} name
 	 */
@@ -359,7 +365,9 @@ var util = util || {
 			clearInterval(util._t)
 			
 			util.initLang()
-
+			util.isTouchDevice = Modernizr.touch
+			util.hasLocalStorage = Modernizr.localstorage 
+			
 			util.forEach(util._mods, function(m)
 			{
 				var mm = util.prepareModName(m)
