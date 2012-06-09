@@ -219,9 +219,7 @@
 						ret2 = ret
 					}
 					else
-						ret2 = ret2.concat(ret)
-					ret = []
-					
+						ret2 = ret2.concat(ret)					
 				}
 
 				// Max words in query
