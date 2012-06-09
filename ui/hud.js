@@ -228,7 +228,7 @@
 				if(index > 8)
 					return true			
 			})
-			return {json:ret2}
+			return {json:ret2.concat(retreg)}
 		}
 		catch(e)
 		{
