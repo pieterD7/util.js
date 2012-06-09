@@ -145,8 +145,6 @@
 	{
 		try
 		{
-			
-			console.log(" MODE", mode)
 			var my = this
 			var ret = []
 			var ret2 = []
@@ -186,6 +184,8 @@
 			{
 				if(!util.trim(name).isEmpty())
 				{
+					if(mode.equals('AND', 'i'))
+						ret2 = ret = []
 					var b = util.forEach(data, function(en)
 					{
 						if(!en.hudEntry || en.hudEntry === false) return
@@ -213,10 +213,11 @@
 						}
 						return br
 					})
+					
 					if(mode.equals('AND', 'i'))
 					{
-						data = ret
-						ret2 = ret
+						ret2 = ret2.concat(ret)
+						data = ret2
 					}
 					else
 						ret2 = ret2.concat(ret)					
