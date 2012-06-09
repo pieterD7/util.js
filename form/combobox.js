@@ -277,7 +277,6 @@ util.combobox = {
 		})
 		inp.addListener('paste', function(o)
 		{
-			_s('body').setHtml(o.innerHTML)
 			if(util.isObject(this.parentNode))
 			{
 				var n = this.parentNode.childNodes.length
