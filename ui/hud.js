@@ -226,7 +226,7 @@
 				if(index > 8)
 					return true			
 			})
-			return {json:retreg.concat(ret2)}
+			return {json:retreg.concat(ret2).unique('name')}
 		}
 		catch(e)
 		{
