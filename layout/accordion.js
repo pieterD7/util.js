@@ -53,28 +53,25 @@ util.accordion = {
 
 	util.accordion.handleItemclick = function(e)
 	{
-		util.forEach(e.srcElement.attributes, function(attr)
-		{
-			var targ;
-			if (!e) var e = window.event;
-			if (e.target) targ = e.target;
-			else if (e.srcElement) targ = e.srcElement;
-			if (targ.nodeType == 3) // defeat Safari bug
-				targ = targ.parentNode;
-			var nn = targ.getAttribute("id")
+		var targ;
+		if (!e) var e = window.event;
+		if (e.target) targ = e.target;
+		else if (e.srcElement) targ = e.srcElement;
+		if (targ.nodeType == 3) // defeat Safari bug
+			targ = targ.parentNode;
+		var nn = targ.getAttribute("id")
 
-			if(nn)
+		if(nn)
+		{
+			nn = String(nn).replace(/^click_/, "");
+			var s = _s(util.accordion.sel + " #" + util.accordion.currentItem)
+			if(s) 
 			{
-				nn = String(nn).replace(/^click_/, "");
-				var s = _s(util.accordion.sel + " #" + util.accordion.currentItem)
-				if(s) 
-				{
-					s.removeClassName("accordion-body-active")
-					s.style("display:none")
-				}
-				util.accordion.display(nn);						
+				s.removeClassName("accordion-body-active")
+				s.style("display:none")
 			}
-		})
+			util.accordion.display(nn);						
+		}
 	}
 
 	util.accordion.display = function(id)
