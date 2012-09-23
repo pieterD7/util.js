@@ -95,7 +95,7 @@ util.accordion = {
 		_s("#" + i.name).style("display:block")
 
 		//_s(util.accordion.sel).setHtml('');
-		util.forEach(util.accordion.cb, function(cb){cb()})
+		util.forEach(util.accordion.cb, function(cb){cb(i)})
 	}
 
 	util.accordion.setItem = function(o)
