@@ -3,36 +3,36 @@
  * @name util.tablayout
  * @description Tab layout
  * @example
-  		&lt;div id='tablayout'>
-  		&lt;!-- Three sample tabs (one hidden) -->	
-  			&lt;div>INTRO&lt;/div>
-			&lt;div>DEMO&lt;/div>
-			&lt;div style='display:none'>someTab&lt;/div>
-			&lt;div>
-				&lt;div>&lt;p>Sample text1&lt;/p>&lt;/div>
-			&lt;/div>
-			&lt;div>
-				&lt;div>&lt;p>Sample text2&lt;/p>&lt;/div>
-			&lt;/div>
-			&lt;div>
-				&lt;!-- hidden tab shown by util.tablayout.showTab('someTab') -->
-				&lt;div id='someID'>&lt;/div>
-			&lt;/div&lt;
-		&lt;/div&lt;
-		&lt;script type='text/javascript'>
+  		<div id='tablayout'>
+  		<!-- Three sample tabs (one hidden) -->	
+  			<div>INTRO</div>
+			<div>DEMO</div>
+			<div style='display:none'>someTab</div>
+			<div>
+				<div><p>Sample text1</p></div>
+			</div>
+			<div>
+				<div><p>Sample text2</p></div>
+			</div>
+			<div>
+				<!-- hidden tab shown by util.tablayout.showTab(3) -->
+				<div id='someID'></div>
+			</div>
+		</div>
+		<script type='text/javascript'>
 		util.ready(function()
 		{
 			util.tablayout.initFromHtml('#tablayout')
-			util.tablayout.initDisplay('#sometagid')
-			util.tablayout.display()			
+			util.tablayout.display(1)			
 		})
-		&lt;/script>
+		</script>
  */
 
 util.tablayout = 
 {
 	sel:null,
-	activeTab:0,
+	currentItem:false,
+	dirtyBlocks:[],
 	items:[],
 	cb:[]
 };
@@ -61,13 +61,19 @@ util.tablayout =
 			var i = util.tablayout.getItem()
 			_s(util.tablayout.sel)
 				.appendChild(util.tablayout.displayHeader(i.name))
+//			if(!util.tablayout.currentItem)
+//				util.tablayout.currentItem = i.name;
+			
 			util.forEach(util.tablayout.items, function(item)
 			{
 				var div = util.createElement('div')
 				div.addClassName('itemBody')
 				div.setAttribute('id', item.name)
 				div.setHtml(item.body)
-				div.style('display:none;')
+				if(item.name == i.name)
+					div.style('');	
+				else
+					div.style('display:none;')
 				_s(util.tablayout.sel).appendChild(div)
 			})
 			_s(util.tablayout.sel).replaceStyle('display:block;')
@@ -79,8 +85,18 @@ util.tablayout =
 	 */
 	util.tablayout.display = function(id)
 	{
+		if(!util.tablayout.currentItem)
+		{
+			util.tablayout.initDisplay()
+			_s(util.tablayout.sel).removeChild(_s('.itemHeader').getNode())
+		}
+		else
+		{
+			var i = util.tablayout.getItem(id)
+			_s(util.tablayout.sel).removeChild(_s('.itemHeader').getNode())
+			_s("#" + i.name).style("display:block")
+		}
 		var i = util.tablayout.getItem(id)
-		_s(util.tablayout.sel).removeChild(_s('.itemHeader').getNode())
 		_s(util.tablayout.sel).getNode()
 			.insertBefore(util.tablayout.displayHeader(i.name).getNode(), _s(util.tablayout.sel).getNode().firstChild)
 		var ar = _sa(util.tablayout.sel + ' .itemBody')
@@ -90,12 +106,20 @@ util.tablayout =
 			dd.replaceStyle('display:none;')
 		})
 		var ii = _s(util.tablayout.sel + ' div#' + i.name)
-		ii.replaceStyle('display:block;')
+		if(util.tablayout.dirtyBlocks.find(i.name, "id"))
+		{
+			var block = util.tablayout.dirtyBlocks.find(i.name, "id")
+			ii.setHtml(block[0].content.body)
+			util.tablayout.dirtyBlocks.splice(util.tablayout.dirtyBlocks.indexOf(i.name, "id"),1)
+		}
+		else
+		{
+			ii.replaceStyle('display:block;')
+		}
 		util.forEach(util.tablayout.cb, function(cb)
 		{
 				cb(i)
 		})
-		util.tablayout.activeTab = i.name
 	}
 	
 	util.tablayout.displayHeader = function(activeTab)
@@ -111,13 +135,16 @@ util.tablayout =
 			if(item.name.equals(activeTab))
 			{
 				a.setAttribute('href','javascript:void(0)')
+				sp.addClassName("tabActive");
 			}
 			else
 			{
+				sp.addClassName("tabNotActive");
 				a.setAttribute('href', 
 					'javascript:util.follow("javascript:util.tablayout.display:' + (item.name) + '")')
 			}
-			if(!item.isFromHtml)
+			if(!item.isFromHtml &&
+				item.cssItemHeader)
 			{
 				a.addClassName(item.cssItemHeader)
 			}

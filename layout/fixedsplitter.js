@@ -1,5 +1,4 @@
 /**
- * @class util.fixedsplitter
  * @description Fixed splitter splits screen on screen width > splitwidth
  */
 
@@ -10,6 +9,7 @@ util.fixedsplitter = {
 	o:null,
 	mode:null,
 	currentItem:null,
+	dirtyBlocks:[],
 	toolbar:null
 };
 
@@ -50,8 +50,9 @@ util.fixedsplitter = {
      */
     util.fixedsplitter.initDisplay = function(sel)
     {
-    	util.fixedsplitter.init(sel)
-    	util.fixedsplitter.o.setHtml('')
+    	util.fixedsplitter.init(util.fixedsplitter.sel)
+		if(util.fixedsplitter.o)
+	    	util.fixedsplitter.o.setHtml('')
     	util.fixedsplitter.setMode()
 		var div = util.createElement('div')
 		if(util.fixedsplitter.mode)
@@ -103,8 +104,11 @@ util.fixedsplitter = {
 			div4.style('display:none;')
 			div3.appendChild(div4)
 		})
-		util.fixedsplitter.o.appendChild(div)
-		util.fixedsplitter.o.appendChild(div3)
+		if(util.fixedsplitter.o)
+		{
+			util.fixedsplitter.o.appendChild(div)
+			util.fixedsplitter.o.appendChild(div3)
+		}
 		util.fixedsplitter.initOnResize()
     }
     
@@ -118,12 +122,9 @@ util.fixedsplitter = {
     	util.fixedsplitter.currentItem = false
     }
     
-    /**
-     * @description Displays an item
-     * @param {String} n Name of the item or null
-     */
     util.fixedsplitter.display = function(n)
     {
+		util.fixedsplitter.initDisplay();
     	var fireCB = false
     	var i = util.fixedsplitter.getItem(n)
     	if(util.fixedsplitter.mode && util.isUndef(n))
@@ -155,7 +156,8 @@ util.fixedsplitter = {
       		util.fixedsplitter.setListItemActive(i)  		
     		fireCB = true  		
     	}
-    	util.fixedsplitter.o.replaceStyle('display:block;')
+		if(util.fixedsplitter.o)
+	    	util.fixedsplitter.o.replaceStyle('display:block;')
     	if(fireCB)
     	{
 	    	util.forEach(util.fixedsplitter.cb, function(cb)
@@ -167,7 +169,6 @@ util.fixedsplitter = {
     
     util.fixedsplitter.displayList = function()
     {
-			console.log("displayList")
     	util.fixedsplitter.hide()
   	
     	var o = _s(util.fixedsplitter.sel + ' div')
@@ -180,7 +181,6 @@ util.fixedsplitter = {
     
     util.fixedsplitter.displayListPlusItem = function(n)
     {
-			console.log("displayListPlusItem")
     	var oldBut = _s('.backBtn')
     	if(0 && oldBut)
     		oldBut.node.parentNode.removeChild(oldBut.node)
@@ -198,13 +198,12 @@ util.fixedsplitter = {
     
     util.fixedsplitter.displayItem = function(n)
     {
-			console.log("displayItem")
-			if(util.fixedsplitter.mode)
-			{
-				var o = _s(util.fixedsplitter.sel + ' div')
-				if(o)
-					o.replaceStyle('display:none;')
-			}
+		if(util.fixedsplitter.mode)
+		{
+			var o = _s(util.fixedsplitter.sel + ' div')
+			if(o)
+				o.replaceStyle('display:none;')
+		}
     	util.fixedsplitter.currentItem = n 	
     	var o = _s(util.fixedsplitter.sel + ' #' + n)
     	if(o && o.node.childNodes[0])
@@ -254,7 +253,7 @@ util.fixedsplitter = {
     	var o = util.createElement('a')
     	div.addClassName('backBtnI')
     	o.addClassName('backBtn')
-    	o.setAttribute('href', 'javascript:util.fixedsplitter.display()')
+    	o.setAttribute('href', 'javascript:btnBackPressed()')
     	o.setHtml('Back')
     	div.appendChild(o)
     	return div.getNode()
