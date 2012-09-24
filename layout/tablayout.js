@@ -105,9 +105,11 @@ util.tablayout =
 			var dd = new HTMLElement(d)
 			dd.replaceStyle('display:none;')
 		})
+		var inDirty = false
 		var ii = _s(util.tablayout.sel + ' div#' + i.name)
 		if(util.tablayout.dirtyBlocks.find(i.name, "id"))
 		{
+			var inDirty = true
 			var block = util.tablayout.dirtyBlocks.find(i.name, "id")
 			ii.setHtml(block[0].content.body)
 			util.tablayout.dirtyBlocks.splice(util.tablayout.dirtyBlocks.indexOf(i.name, "id"),1)
@@ -116,10 +118,11 @@ util.tablayout =
 		{
 			ii.replaceStyle('display:block;')
 		}
-		util.forEach(util.tablayout.cb, function(cb)
-		{
+		if(!inDirty) 
+			util.forEach(util.tablayout.cb, function(cb)
+			{
 				cb(i)
-		})
+			})
 	}
 	
 	util.tablayout.displayHeader = function(activeTab)

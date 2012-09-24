@@ -51,8 +51,11 @@ util.accordion = {
 		})
 	}
 
-	util.accordion.handleItemclick = function(e)
+	util.accordion.handleItemclick = function(evnt)
 	{
+		console.log(evnt)
+		var e = evnt
+		var srcEl = evnt.srcElement ? evnt.srcElement.attributes : evnt.originalTarget.attributes
 		var targ;
 		if (!e) var e = window.event;
 		if (e.target) targ = e.target;
@@ -82,9 +85,11 @@ util.accordion = {
 		{
 			_s("#" + item.name).style("display:none")
 		})
+		var inDirty = false
 		var i = util.accordion.getItem(id)
 		if(util.accordion.dirtyBlocks.find(i.name, "id"))
 		{
+			inDirty = true
 			var block = util.accordion.dirtyBlocks.find(i.name, "id")
 			_s("#" + i.name).setHtml(block[0].content.body)
 			util.accordion.dirtyBlocks.splice(util.accordion.dirtyBlocks.indexOf(i.name, "id"),1)
@@ -92,7 +97,7 @@ util.accordion = {
 		_s("#" + i.name).style("display:block")
 
 		//_s(util.accordion.sel).setHtml('');
-		util.forEach(util.accordion.cb, function(cb){cb(i)})
+		if(!inDirty) util.forEach(util.accordion.cb, function(cb){cb(i)})
 	}
 
 	util.accordion.setItem = function(o)
