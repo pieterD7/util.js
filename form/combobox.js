@@ -105,7 +105,10 @@ util._combobox.prototype.refresh = function(value, list)
 	{
 		_l.appendChild(_list.getNode())	
 	}
-	_list.style('display:block;width:' + util.getStyle(_l.childNodes[0], 'width'))
+	_list.style('display:block;position:absolute;margin:0;width:' + 
+			(util.getStyle(_l.childNodes[0], 'width').split("px")[0] - 
+			2*(util.getStyle(_l.childNodes[0], 'padding').split("px")[0]) -
+			2*(util.getStyle(_l.childNodes[0], 'margin').split("px")[0]))+ "px")
 }
 
 util._combobox.prototype._createListItemIcon = function(c)
@@ -159,8 +162,9 @@ util._combobox.prototype._createListItemText = function(c)
 util._combobox.prototype._updateList = function(b)
 {
 	var list = util.createElement('ol')
+	list.addClassName('combobox_list')
 			
-	if(	this.jsondata.json && this.jsondata.json.length > 0 && 
+	if(	b && this.jsondata.json && this.jsondata.json.length > 0 && 
 			util.isObject(this.combProj))
 		{
 			var max = 1
@@ -186,6 +190,7 @@ util._combobox.prototype._updateList = function(b)
 			if(b && this.combProj.noDataHint)
 			{
 				list = util.createElement('ol')
+				list.addClassName('combobox_list')
 				var li = util.createElement('li')
 				list.style("display:block;")
 				li.setHtml(this.combProj.noDataHint)
@@ -266,8 +271,7 @@ util._combobox.prototype.display = function(hint)
 	if(this.name)
 		inp.setAttribute('name', this.name)
 	inp.setAttribute('class', 'combobox_input')
-	inp.addClassName('valueishint')
-	inp.setAttribute('value', hint)
+	inp.setAttribute('placeholder', hint)
 	
 	var list = this._updateList(false)
 
