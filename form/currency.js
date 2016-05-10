@@ -47,10 +47,15 @@ util.currency.initInputTypeCurrency = function(sel)
 			util.eventHandler(function()
 			{
 				var val = _s('input[name=' + name + ']').val()
-				if(!String(val).isEmpty())
+				if(!String(val).isEmpty() && !isNaN(val))
 				{
 					var nval = String(val).replace(RegExp(util.dataDecimalSeparator.escapeRegExpSpecialChars()), util.locale.decimalSeparator)
-						c.val(nval)
+					c.val(nval)
+				}
+				else
+				{
+					c.val('')
+					_s('input[name=' + name + ']').val('')
 				}
 			})
 		})
@@ -112,10 +117,10 @@ util.currency.format = function(num, b)
 	if(!util.isUndef(b) && b)
 		cur = ''
 	if(util.locale.currencyAfterNumber)
-		return String(num).replace(
+		return (String(num).replace(
 			RegExp(String(util.dataDecimalSeparator).escapeRegExpSpecialChars()),
 			util.locale.decimalSeparator)
-			+ " " + cur
+			+ " " + cur).trim()
 	else
 		return cur + String(num).replace(
 			RegExp(String(util.dataDecimalSeparator).escapeRegExpSpecialChars()),
