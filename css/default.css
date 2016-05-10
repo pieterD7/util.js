@@ -230,14 +230,14 @@ input					{margin-top:3px;}
 						display:inline-block;
 						}
 						
-/* Date picker style */																														
+/* Date picker style */	
 .datePickerContainer	{
 						}						
 .datePickerBackground	{
 						background:white;
 						border:1px solid #808080;
-						padding:4px;
 						min-width:17.5em;
+						padding:4px;
 						}
 .datePickerHeaderDay
 						{
@@ -251,6 +251,7 @@ input					{margin-top:3px;}
 						padding-top:4px;
 						padding-bottom:4px;
 						text-align:center;
+						box-sizing: border-box;
 						border: 2px solid #ff8800;
 						}													
 .datePickerDay			{
