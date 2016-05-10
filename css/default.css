@@ -1,3 +1,5 @@
+*						{ font-size:100%;font-family:Helvetica, sans-serif;line-height:1.7em;}
+
 .copy					{
 						display:inline-block;
 						width:400px;
@@ -17,7 +19,6 @@ body					{
 						background: #D3D6B2;
 						}
 #main					{
-						
 						border-left: 1px solid white;
 						border-top: 1px solid white;
 						}
@@ -231,32 +232,7 @@ input					{margin-top:3px;}
 						}
 						
 /* Date picker style */																														
-.datePickerPlus img, .datePickerMin	img
-						{
-						vertical-align:bottom;
-						border:none;
-						}					
-.datePickerSelectedMonth
-						{
-						font-weight:bold;
-						}
-.datePickerSelectedMonth span
-						{
-						margin: 0 4px 0 4px;
-						}			
-.datePickerSelectedMonth span a,
-.datePickerSelectedMonth span a:active,
-.datePickerSelectedMonth span a:visited
-						{
-						color:#515240;
-						}						
-.datePickerRow			{
-						width:220px;
-						margin:0 auto;
-						}			
 .datePickerContainer	{
-						padding-right:4px;
-						text-align:center;
 						}						
 .datePickerBackground	{
 						background:white;
@@ -276,26 +252,47 @@ input					{margin-top:3px;}
 						padding-top:4px;
 						padding-bottom:4px;
 						text-align:center;
-						border: 2px solid #D3D6B2;
-						}												
-div.datePickerSelector:nth-child(7)
-						{
-						text-align:right;
-						}	
+						border: 2px solid #ff8800;
+						}													
 .datePickerDay			{
 						width: 2em;
 						float:left;
 						text-align:center;
 						border: 1px solid white;
-						}							
+						}
+.datePickerDay:hover:not(.datePickerHeaderDay)
+						{
+						border: 1px solid #ff8800;
+						cursor:pointer;
+						}			
+.datePickerRow		{
+							margin: 0 auto;
+							text-align:center;
+						}
+.datePickerRowWeeknumber{
+							width: 18em;
+						}
+.datePickerRowNormal{
+							width: 15em;
+						}
+.datePickerSelectedMonth{
+						text-align:center;
+						}`
+.datePickerSelectedMonth  span	{
+						margin:1em;
+						margin-right:1em;
+						}
 .datePickerDayBreak		{
 						clear:left;
 						float:left;
+						}
+.datePickerWeekCol{
 						border-right: 1px solid #808080;
 						}
 .datePickerSelectedDay	{
-						border: 1px solid #BADB00;
-						}	
+						border: 1px solid red;
+						}																			
+
 /* Button style */
 .textButton				{
 						cursor:pointer;

@@ -14,7 +14,9 @@
 util.datepicker = {
 	dPickers:[],
 	tnode:null,
-	dataFormat:'YYYY-MM-DD',
+	
+	// For use with String().toDate(format)
+	dataFormat:'DD-MM-YYYY',
 	flags:[],
 	options:null,
 	unpublishedFlags:['storepaddeddates'],
@@ -22,8 +24,8 @@ util.datepicker = {
 };
 
 (function () {
-    "use strict";    
-    
+	"use strict";    
+
 	/**
 	 * @constructor
 	 * @name util._datepicker
@@ -51,9 +53,9 @@ util.datepicker = {
 		 * with showholidays
 		 * 3 showholidays Show holidays in dropdown, 
 		 * eg of util.holidays.list 
-	     * 4 enableholidayformat Display as 
-	     * to util.locale.datepickerHolidayFormat 
-	     * if applicable
+		 * 4 enableholidayformat Display as 
+		 * to util.locale.datepickerHolidayFormat 
+		 * if applicable
 		 * 5 expandenabledrag Enables dropdown 
 		 * list to be scrolled by dragging 
 		 * 6 expandshowweeknumber Shows weeknumber 
@@ -88,24 +90,24 @@ util.datepicker = {
 		 'expandenabledrag',	 
 		 
 		 // Shows weeknumber column
-	     'expandshowweeknumber',
-	     
-	     // Select one or more colon separated dates	     
-	     // 'expandselectmultiple', 	
+		 'expandshowweeknumber',
+	
+		 // Select one or more colon separated dates	     
+		 // 'expandselectmultiple', 	
 
-	     // Allow input of dates before now
-	     'allowdatesbeforenow', 	
-	     
-	     // Allow text input as with type=text
-	     'allowtyping',
-	     
-	     // Padd dates to two chars
-	     'padddates',
-	     
-	     // Store padded dates
-	     'storepaddeddates'
-	     
-		  ].unum();
+		 // Allow input of dates before now
+		 'allowdatesbeforenow', 	
+	
+		 // Allow text input as with type=text
+		 'allowtyping',
+		 
+		 // Padd dates to two chars
+		 'padddates',
+		 
+		 // Store padded dates
+		 'storepaddeddates'
+	
+		 ].unum();
 		  
 		  
 		 /**
@@ -176,8 +178,8 @@ util.datepicker = {
 			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
 			
 		this.data.node.value = 	this.data.date.format(
-									util.datepicker.getDatePickerDateFormat(), 
-									this.data.options.get(util.datepicker.flags.padddates))
+			util.datepicker.getDatePickerDateFormat(), 
+			this.data.options.get(util.datepicker.flags.padddates))
 		this.data.format = util.datepicker.getDatePickerDateFormat()
 	}
 	
@@ -193,7 +195,7 @@ util.datepicker = {
 	util._datepicker.prototype.createMonthRow = function(id)
 	{
 		var mdiv = util.createElement('div')
-		mdiv.addClassName('datepickerSelectedMonth')
+		mdiv.addClassName('datePickerSelectedMonth')
 		if(!util.isTouchDevice)
 		{
 			var sp0 = util.createElement('span')
@@ -237,7 +239,7 @@ util.datepicker = {
 		div.addListener('click', function(e)
 		{
 			if (e.preventDefault) e.preventDefault(); 
-            if (e.stopPropagation) e.stopPropagation(); 
+			if (e.stopPropagation) e.stopPropagation(); 
 			selectVal.hide()
 		})	
 		div.setHtml(this.data.date.format(	util.datepicker.getDatePickerDateFormat(), 
@@ -248,7 +250,7 @@ util.datepicker = {
 		delAnc.addListener('click', function(e)
 		{
 			 if (e.preventDefault) e.preventDefault(); 
-             if (e.stopPropagation) e.stopPropagation(); 
+			 if (e.stopPropagation) e.stopPropagation(); 
 		})
 		div.appendChild(delAnc)
 		ret.appendChild(div.node)
@@ -261,7 +263,12 @@ util.datepicker = {
 		for(var c = 0; c < 6; c++)
 		{
 			var d = util.createElement('div')
-			d.setAttribute('class', 'datePickerRow')
+			if( ! util.datepicker.options.get(util.datepicker.flags.expandshowweeknumber))
+				d.addClassName('datePickerRow')
+			if(util.datepicker.options.get(util.datepicker.flags.expandshowweeknumber))
+				d.addClassName("datePickerRowWeeknumber")
+			else
+				d.addClassName("datePickerRowNormal")
 			var start = null
 			util.datepicker.options.get(util.datepicker.flags.expandshowweeknumber)? start = 0 : start = 1;
 			for(var cc = start; cc < 8; cc++)
@@ -274,10 +281,9 @@ util.datepicker = {
 					{
 						dd.setHtml(util.defaultStrings.daysshort[cc-1].toUpperCase())
 					}
-					else
+					if(cc == start)
 					{
-						dd.setHtml('&nbsp;')
-						dd.addClassName('datePickerDayBreak')			
+						dd.addClassName('datePickerDayBreak')
 					}
 					dd.addClassName('datePickerHeaderDay')
 					d.appendChild(dd.node)
@@ -309,11 +315,15 @@ util.datepicker = {
 						dd.addClassName('datePickerSelectedDay')
 					}
 					d.appendChild(dd.node)
+					
+					if(cc == start)
+						dd.addClassName('datePickerDayBreak')
 				}
 				else 
 				{
 					dd.addClassName('datePickerDaySelect datePickerDayBreak')
-					dd.setHtml(new Date(this.data.date.getFullYear(), this.data.date.getMonth() - 1, this.data.date.getDate()+(c-1)*7).getWeek(1))
+					dd.setHtml(new Date(this.data.date.getFullYear(), this.data.date.getMonth(), this.data.date.getDate()+(c-1)*7).getWeek(1))
+					dd.addClassName('datePickerWeekCol')
 					d.appendChild(dd.node)
 				}
 			}
@@ -389,7 +399,7 @@ util.datepicker = {
 					_s("input[name=" + my.data.name + "]").val(dd.format(
 								util.datepicker.datePickerDataFormat,
 								my.data.options.get(util.datepicker.flags.storepaddeddates)))
-					_s('body').node.removeChild(_s('body').node.lastChild)									
+					_s('body').node.removeChild(_s('body').node.lastChild)	
 					my.display(id)
 				}
 			})
@@ -603,13 +613,17 @@ util.datepicker = {
 		util.eventHandler(function()
 		{
 			var dp = util.datepicker.dPickers[i]
-			dp.data.date = new Date(
-					dp.data.date.getFullYear(), 
-					(Number(dp.data.date.getMonth()) + 1),
-					dp.data.date.getDate()
+			var d = new Date(
+				dp.data.date.getFullYear(), 
+				(Number(dp.data.date.getMonth()) + 1),
+				dp.data.date.getDate()
 			)
-			_s('body').node.removeChild(_s('body').node.lastChild)					
-			dp.display(i)				
+			if(d >= new Date() || util.datepicker.options.get(util.datepicker.flags.allowdatesbeforenow))
+			{
+				dp.data.date = d
+				_s('body').node.removeChild(_s('body').node.lastChild)
+				dp.display(i)
+			}				
 		})	
 	}
 
@@ -623,13 +637,17 @@ util.datepicker = {
 		util.eventHandler(function()
 		{		
 			var dp = util.datepicker.dPickers[i]
-			dp.data.date = new Date(
-					dp.data.date.getFullYear(), 
-					(Number(dp.data.date.getMonth()) - 1),
-					dp.data.date.getDate()
+			var d = new Date(
+				dp.data.date.getFullYear(), 
+				(Number(dp.data.date.getMonth()) - 1),
+				dp.data.date.getDate()
 			)
-			_s('body').node.removeChild(_s('body').node.lastChild)					
-			dp.display(i)
+			if(d >= new Date() || util.datepicker.options.get(util.datepicker.flags.allowdatesbeforenow))
+			{
+				dp.data.date = d
+				_s('body').node.removeChild(_s('body').node.lastChild)
+				dp.display(i)
+			}
 		})
 	}
 	
@@ -750,8 +768,8 @@ util.datepicker = {
 					dataValue:obj.value,
 					state:'closed', 
 					date:util.trim(obj.value).isEmpty()? 
-							util.datepicker.nowPlusWorkdays(offset, options) : 
-							new Date(util.datepicker.valueToDate(obj.value)), 
+						util.datepicker.nowPlusWorkdays(offset, options) : 
+						new Date(util.datepicker.valueToDate(obj.value)), 
 					options:options,
 					format:util.datepicker.getDatePickerDateFormat(),
 					formatshort:util.locale.datePickerDateFormatShort})
@@ -881,7 +899,7 @@ util.prepare(function()
 			[util.datepicker.flags.expand,
 			 util.datepicker.flags.incrementworkday,
 			 util.datepicker.flags.expandenabledrag,
-		//	 util.datepicker.flags.expandshowweeknumber,
+			 util.datepicker.flags.expandshowweeknumber,
 			 util.datepicker.flags.showholidays,
 			 util.datepicker.flags.padddates,
 			 util.datepicker.flags.storepaddeddates]
