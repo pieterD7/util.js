@@ -119,17 +119,18 @@ util.forEach = function(ar, cb)
  * @param {string} id (Optional) Property to use for matching
  * @returns {Array} Array of objects
  */
-Array.prototype.find = function(name, id)
+Array.prototype.find = function(name, id, opt)
 {
 	var ret = new Array()
+	var opt = opt || ''
 	util.forEach(this, function(el)
 	{
 		if(util.isUndef(id))
 		{
-			if(String(el).match(RegExp(name)))
+			if(String(el).match(RegExp(name, opt)))
 				ret.push(el)
 		}
-		else if(el[id] && String(el[id]).match(RegExp(name)))
+		else if(el[id] && String(el[id]).match(RegExp(name, opt)))
 		{
 			ret.push(el)
 		}
