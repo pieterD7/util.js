@@ -178,9 +178,11 @@ util.datepicker = {
 		if( isNaN(this.data.date.getMonth()))
 			throw(util.error(util.defaultStrings.error.error_invalidnodevalue))
 			
-		this.data.node.value = 	this.data.date.format(
-			util.datepicker.getDatePickerDateFormat(), 
-			this.data.options.get(util.datepicker.flags.padddates))
+		if(util.datepicker.options.get(util.datepicker.flags.allowdatesbeforenow) ||
+			this.data.date > new Date())
+				this.data.node.value = 	this.data.date.format(
+					util.datepicker.getDatePickerDateFormat(), 
+					this.data.options.get(util.datepicker.flags.padddates))
 		this.data.format = util.datepicker.getDatePickerDateFormat()
 	}
 	
@@ -378,7 +380,7 @@ util.datepicker = {
 		div.appendChild(this.displayWeeks(id))
 		
 		div.style("position:absolute;left:" + pos.x + "px;top:" + pos.y + 
-				"px;width:" + window.getComputedStyle(this.data.node,"").getPropertyValue("width") +
+				"px;" + 
 				";min-height:" + window.getComputedStyle(this.data.node,"").getPropertyValue("height") + 
 				";");
 		div.setAttribute('class', 'datePickerBackground')
@@ -619,12 +621,9 @@ util.datepicker = {
 				(Number(dp.data.date.getMonth()) + 1),
 				dp.data.date.getDate()
 			)
-			if(d >= new Date() || util.datepicker.options.get(util.datepicker.flags.allowdatesbeforenow))
-			{
-				dp.data.date = d
-				_s('body').node.removeChild(_s('body').node.lastChild)
-				dp.display(i)
-			}				
+			dp.data.date = d
+			_s('body').node.removeChild(_s('body').node.lastChild)
+			dp.display(i)
 		})	
 	}
 
@@ -643,12 +642,9 @@ util.datepicker = {
 				(Number(dp.data.date.getMonth()) - 1),
 				dp.data.date.getDate()
 			)
-			if(d >= new Date() || util.datepicker.options.get(util.datepicker.flags.allowdatesbeforenow))
-			{
-				dp.data.date = d
-				_s('body').node.removeChild(_s('body').node.lastChild)
-				dp.display(i)
-			}
+			dp.data.date = d
+			_s('body').node.removeChild(_s('body').node.lastChild)
+			dp.display(i)
 		})
 	}
 	
