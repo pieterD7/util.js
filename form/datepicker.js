@@ -17,6 +17,7 @@ util.datepicker = {
 	
 	// For use with String().toDate(format)
 	dataFormat:'DD-MM-YYYY',
+	
 	flags:[],
 	options:null,
 	unpublishedFlags:['storepaddeddates'],
