@@ -456,7 +456,10 @@ util.datepicker = {
 		{
 			this.data.state = 'closed'
 			this.valueToDate()
-			_s("input[name=" + this.data.name + "]").val(this.data.date.format(util.datepicker.dataFormat))
+			_s("input[name=" + this.data.name + "]").val(
+				this.data.date.format(
+						util.datepicker.dataFormat,
+						util.datepicker.options.get(util.datepicker.flags.storepaddeddates)))
 			_s('body').node.removeChild(_s('body').node.lastChild)
 			this.data.node.setAttribute('style', 'display:inline;')
 		}
