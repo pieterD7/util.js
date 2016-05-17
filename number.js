@@ -1,3 +1,9 @@
+Number.prototype.round = function(decimals)
+{
+	return Number(Math.round(this+'e'+decimals)+'e-'+decimals);
+
+}
+
 /**
  * @param {String} as Format string
  * @param {util.locale} locale Locale
