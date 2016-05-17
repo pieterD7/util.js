@@ -54,6 +54,7 @@ util.setman = {
 	{
 		util.eventHandler(function()
 		{
+			o.name = o.name.replace(/^[_]/, '')
 			switch(o.name)
 			{
 				default:
@@ -93,7 +94,7 @@ util.setman = {
 			isSet ? checked = 'checked' : checked = ''
 			var name = m 
 			var inp =
-				"<input name='" + m + "'" +
+				"<input name='_" + m + "'" +
 				" 	onchange='util.setman.updateSettings(this)' " +
 				" 	type='checkbox' " + checked + 
 				" 	value='" + util[m].flags[i] + "'/>"
@@ -117,7 +118,7 @@ util.setman = {
 	util.setman.settings = function()
 	{
 		var items = []
-		var html = "" 
+		var html = "", html2 = ""
 		util.forEach(util._mods, function(m)
 		{
 			m = util.prepareModName(m)
@@ -129,15 +130,16 @@ util.setman = {
 						default:
 							html = "<br/>" + m.toFirstCharUppercase() + ':'
 							if(util.isFunction(util[m].showSettings))
-								html += util[m].showSettings() + '<br/>'
+								html2 = util[m].showSettings() + '<br/>'
 							else
-								html += util.setman.showSettings(m)
+								html2 = util.setman.showSettings(m)
 						var item = new util.content.ContentItem()
 						item.name = m
 						item.header = m
 						item.icon = util.setman.icon
-						item.body = html
-						items.push(item)
+						item.body = html + html2
+						if(!html2.isEmpty())
+							items.push(item)
 					}
 				}
 		})
