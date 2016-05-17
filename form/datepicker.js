@@ -691,7 +691,7 @@ util.datepicker = {
 		{
 			if(dp.data.state == 'open')
 			{
-				_s('body').node.removeChild(_s('body').node.lastChild)									
+				_s('body').node.removeChild(_s('body').node.lastChild)	
 				dp.data.state = 'closed'
 				setTimeout("util.datepicker.refresh(" + id + ")", 200)
 			}
