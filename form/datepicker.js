@@ -924,10 +924,7 @@ util.datepicker = {
 			dp.data.format = util.datepicker.getDatePickerDateFormat()
 			dp.data.node.value = dp.data.date.format(
 				dp.data.format,
-				dp.data.options.get(util.datepicker.flags.padddates))
-			_s("input[name=" + dp.data.name + "]").val(dp.data.date.format(
-				util.datepicker.datePickerDataFormat,
-				dp.data.options.get(util.datepicker.flags.storepaddeddates)))		
+				dp.data.options.get(util.datepicker.flags.padddates))	
 		})
 	}
 })()
