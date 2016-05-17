@@ -13,7 +13,6 @@
  */
 util.datepicker = {
 	dPickers:[],
-	tnode:null,
 	
 	// For use with String().toDate(format)
 	dataFormat:'DD-MM-YYYY',
