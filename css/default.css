@@ -1,4 +1,20 @@
 *						{ font-size:100%;font-family:Helvetica, sans-serif;line-height:1.7em;}
+.box-shadow-menu {
+						position: relative;
+						padding-right: 2em;
+}
+.box-shadow-menu:before {
+						content: "";
+						position: absolute;
+						left: 0;
+						top: 0.25em;
+						width: 1em;
+						height: 0.15em;
+						background: red;
+						box-shadow: 
+							0 0.35em 0 0 red,
+							0 0.7em 0 0 red;
+						}
 .copy					{
 						display:inline-block;
 						width:400px;
@@ -7,7 +23,9 @@
 .copy a:visited,
 .copy a:active,
 .copy a:link			{color:black;}
-
+a img					{
+						vertical-align:text-top;
+						}
 html					{
 						font-family: 'Asap', Verdana, sans-serif;
 						font-size:14px;
@@ -20,6 +38,8 @@ body					{
 #main					{
 						border-left: 1px solid white;
 						border-top: 1px solid white;
+						}
+form					{
 						}
 h1						{
 						margin:8px 0 4px 16px;
@@ -36,8 +56,11 @@ ul li a, ul li a:active, ul li a:visited,
 						{
 						color:black;
 						font-weight:bold;
-						}						
-input	
+						}
+.info					{
+						display:inline-block;
+						}
+input:not(input[type=checkbox])	
 						{
 						width:180px;
 						margin: 4px 2px;
@@ -61,8 +84,6 @@ select.country			{
 input[type=currency]	{
 						}
 input[type=submit]		{
-						width:inherit;
-						float:right;
 						margin-right:20px;
 						padding: 4px 10px 4px 10px;
 						}
@@ -71,6 +92,9 @@ input[type=checkbox]	{
 						}
 .sitemapCol				{
 						float:left;
+						}
+.combobox_list{
+						background:white;
 						}
 #hud .combobox_input	{
 						}
@@ -245,7 +269,7 @@ input					{margin-top:3px;}
 						background:#f7f7f7;
 						font-weight:bold;
 						}						
-.datePickerSelector		{
+.datePickerSelector	{
 						float:left;
 						width:100%;
 						padding-top:4px;
@@ -253,7 +277,11 @@ input					{margin-top:3px;}
 						text-align:center;
 						box-sizing: border-box;
 						border: 2px solid #ff8800;
-						}													
+						}
+.datePickerSelector span{
+						float:right;
+						margin-right:1em;
+						}
 .datePickerDay			{
 						width: 2em;
 						float:left;
@@ -277,9 +305,9 @@ input					{margin-top:3px;}
 						}
 .datePickerSelectedMonth{
 						text-align:center;
-						}`
-.datePickerSelectedMonth  span	{
-						margin:1em;
+						}
+.datePickerSelectedMonth span{
+						margin-left:1em;
 						margin-right:1em;
 						}
 .datePickerDayBreak		{
@@ -412,10 +440,24 @@ input					{margin-top:3px;}
 						opacity:0.8;
 						padding:2px;
 						}
+.text-right			{
+						text-align:right;
+						}
+.right				{
+						float:right;
+						}
+.left					{
+						float:left;
+						}
+.input-field		{
+						line-height:3em;
+						}
+.w50					{
+						width:50%;
+						}
 /* Toolbar style */
 .toolbar				{
 						border-radius:4px;
-						width:97%;
 						padding:2px;
 						}
 #toolbar				{
