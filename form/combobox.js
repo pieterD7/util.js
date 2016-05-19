@@ -58,7 +58,7 @@ util.combobox.select = function(i, val)
 util.combobox._init = function()
 {
 	this.flags = [ 
-	  'selectOnClick'
+	  'selectonclick'
 	  ].unum()   
 	this.options = new util.struct([util.options], {value:0})	
 	
@@ -153,7 +153,7 @@ util._combobox.prototype._createListItemText = function(c)
 			url = url.replace(/%/, this.jsondata.json[c][this.combProj.itemUrlParams[ii]])
 		}
 	}
-	if(util.combobox.options.get(util.combobox.flags.selectOnClick))
+	if(util.combobox.options.get(util.combobox.flags.selectonclick))
 		item.setAttribute('href', 'javascript:util.combobox.select('+ this.id + ', "' + 
 				this.jsondata.json[c][this.combProj.displayText[0]]  + '")')
 	else
@@ -328,7 +328,7 @@ util._combobox.prototype.display = function(hint)
 			util.combobox.options.data.value = localOpt
 		else
 			util.combobox.options.set(
-			[util.combobox.flags.selectOnClick])
+			[util.combobox.flags.selectonclick])
 	})
 
 })()
