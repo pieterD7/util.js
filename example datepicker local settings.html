@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+   <title>App demo</title>
+   <link rel="stylesheet" type='text/css' href='utiljs/css/default.css'/>
+   <meta name="viewport" content="width=device-width, user-scalable=no"/>
+   <style type='text/css'>
+   .hide{
+      display:none;
+   }
+   </style>
+   <script type='text/javascript'>
+   var utilConfig = {
+      region:'EMEA',       // APAC, NCSA
+      debug:true,
+      defLocale:'en',      // Should be in region
+      locales:['nl', 'en'] 
+   }
+   </script>
+   <script type='text/javascript' src='utiljs/loader.js'></script>
+   <script type='text/javascript'>
+
+   function hidePages()
+   {
+       var p = _sa(".page")
+       util.forEach(p, function(o)
+       {
+          var el = new HTMLElement(o)
+          el.addClassName('hide')
+       })
+   }
+
+   function showSettings()
+   {
+      hidePages()
+      _s(".settings").toggleClass('hide')
+
+      var c = new util.crumb('settings', function(){showSettings()})
+      util.crumbs.push(c)
+      util.crumbs.display(".crumbs")
+   }
+
+   function showHome()
+   {
+      hidePages()
+      _s(".home").toggleClass('hide')
+   }
+
+   util.ready(function(){
+
+      util.datepicker.initInputTypeDate('.datepicker')
+
+      util.currency.initInputTypeCurrency('.currency')
+
+      var comb = new util._combobox(
+         {},
+         function(constraint)
+         {
+            var people = [{name:"Pieter"}, {name:"Fred"}, {name:"Jan"}, {name:'Xander'}]
+            var fnd = people.find(constraint, 'name', 'i')
+            return {'json': fnd}
+         }, 
+         {
+            noDataHint: 'Nothing found',
+            projection:['name'],
+            displayText:['name'],
+            maxLength:2,
+            itemUrl:"javascript:selectPerson('%')",
+            itemUrlParams:['name']
+         },
+         'down',
+         'combo1'
+      )
+      var domEl = comb.display(util.lang['hintCombobox'])
+      _s('.info').appendChild(domEl)
+
+
+      util.crumbs.setCrumbSeparator("&nbsp;->&nbsp;")
+
+      var c = new util.crumb('home', function(){showHome()})
+      util.crumbs.push(c)
+
+      util.crumbs.display(".crumbs")
+
+
+       var content = util.setman.settings()
+       util.forEach(content, function(o)
+       {
+           _s(".settings").appendHtml(o.body)
+       })
+   })
+   </script>
+</head>
+<body>
+   <div><!-- Debug messages will be shown here --></div>
+   <div class='toolbar'>
+		<div class='crumbs w50 left'></div>
+      <div class='text-right w50 right'>
+         <a href='javascript:showSettings()' class='box-shadow-menu'><!-- Hamburger menu --></a>
+      </div>
+   </div>
+
+   <div class='settings page hide'><!-- To be populated by setMan --></div>
+
+   <div class='home page'>
+      <form action='?'>
+         <!-- Demo form fields -->
+         <div class='info left'></div>
+         <div class='left'><input class='datepicker' name='date0' value='12-06-2016'></input></div>
+         <div class='left'><input class='datepicker' name='date1' rel='offsetDays:1'></input></div>
+         <div class='left'><input class='datepicker' name='date2' rel='offsetDays:2'></input></div>
+         <div class='left'><input class='currency' name='currency' rel='currency:$'></input></div>
+         <div class='left input-field'><select class='country' name='country1'></select></div>
+         <div class='input-field'><input type='submit'></input></div>
+      </form>
+   </div>
+</body>
+</html>
