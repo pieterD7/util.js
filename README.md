@@ -27,7 +27,7 @@
 
 	Because app interfaces are written for specific HTML5 browsers I felt the 
 	need to write a lightweight js lib with page elements rather than pages. Utiljs
-	has loading problems: a function of util can be called before being it is fully 
+	has loading problems: a function of util can be called before being fully 
 	initialized causing an error. It can be solved by putting the files you want 
 	to use in one file and rewrite the loader.
 
