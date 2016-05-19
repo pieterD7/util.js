@@ -131,7 +131,7 @@ util.currency.format = function(num, b, currency)
 	if(!util.isUndef(b) && b)
 		cur = ''
 	else if (!util.isUndef(currency))
-		cur = currency + ' '
+		cur = currency + ' ' 
 		
 	if(util.locale.currencyAfterNumber)
 		return (String(num).replace(
