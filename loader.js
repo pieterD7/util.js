@@ -1,23 +1,16 @@
-
-/**
- * @namespace
+/* @namespace
  * @description Modular framework for app interfaces
- * Tested and developed w/ on:
- * - jQuery
- * - Google Maps v3
- * 
+ * Tested and developed on:
  * 	- Android 2.2, 2.3.4, 4.0 native browser
-	- Chrome 15-19
+	- Chrome 15-18
 	- Opera 11.60
 	- Opera Mini Simulator 4.2
 	- Opera Mobile Emulator 11.5
 	- Safari 5
 	- IE9
  * 
- * utiljs loader If available, uses yepnope.js from http://yepnopejs.com/ 
- * to load the modules.
- * 
  */
+
 var util = util || {
 
 	/**
@@ -78,128 +71,69 @@ var util = util || {
 	
 	/* modules */
 	_mods: [
-	        
-	        /* modules */
-	        'array', 'validations', 
-	        'io', 'number', 
-	        'struct', 'options',
-	        'http', 'selector', 
-	        'date', 'time', 
-	        'unum',  'debug',  
-	        'event', 'sprintf',
-	        'json', 'string',
-	        
-	        // from http://sizzlejs.com/
-	        'external/sizzle',
-	        
-	        // from http://modernizr.com
-	        'external/modernizr',
-	        
+           'app',	        
+
+           /* modules */
+           'array', 'validations', 
+           'io', 'number', 
+           'struct', 'options',
+           'http', 'selector', 
+           'date', 'time', 
+           'unum',  'debug',  
+           'event', 'sprintf',
+           'json', 'string',
+           'element',
+           
+           // from http://sizzlejs.com/
+           //'external/sizzle',
+           
+           // from http://modernizr.com
+           //'external/modernizr',
+           
            	/* the js part of the 960 grid layout 
            	 * from http://adapt.960.gs */
-           	'external/adapt',
-	        
-	        /* default language based on utilConfig or 'en' */
-	        'lang/' + 
-           	(	typeof utilConfig != 'undefined' && typeof utilConfig.defLocale != 'undefined' ? 
-           			utilConfig.defLocale : 
-           				(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-           				utilConfig.locale : 
-           					'en')) + 
-           	'/lang_' +
-           	(	typeof utilConfig != 'undefined' && 
-                typeof utilConfig.defLocale != 'undefined' ? 
-                	utilConfig.defLocale : 
-                	(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                			utilConfig.locale : 
-                				'en')),
-             
-            'lang/' + 
-            (	typeof utilConfig != 'undefined' && 
-                     typeof utilConfig.defLocale != 'undefined' ? 
-                         	utilConfig.defLocale : 
-                         	(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                         			utilConfig.locale : 
-                         				'en')) + 
-            '/locale_' + 
-            (	typeof utilConfig != 'undefined' && 
-            		 typeof utilConfig.defLocale != 'undefined' ? 
-            				 utilConfig.defLocale : 
-            				(typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                             utilConfig.locale : 
-                             'en')), 
+           	//'external/adapt',
 
-             'lang/' + 
-             (	typeof utilConfig != 'undefined' && 
-            		 typeof utilConfig.defLocale != 'undefined' ? 
-            				 utilConfig.defLocale : 
-                             (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                             utilConfig.locale : 
-                            'en')) + 
-             '/def_' + 
-             (	typeof utilConfig != 'undefined' && 
-                      typeof utilConfig.defLocale != 'undefined' ? 
-                    		  utilConfig.defLocale : 
-                    	     (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                             utilConfig.locale : 
-                             'en')), 
+            'lang/bankholidays',
 
-                             
-              'lang/' + (	typeof utilConfig != 'undefined' && 
-            		 typeof utilConfig.defLocale != 'undefined' ? 
-            				 utilConfig.defLocale : 
-                             (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                             utilConfig.locale : 
-                            'en')) + 
-              
-              
-              '/bankholidays_' +                               
-              	(	typeof utilConfig != 'undefined' && 
-                        typeof utilConfig.defLocale != 'undefined' ? 
-                               utilConfig.defLocale : 
-                               (typeof utilConfig != 'undefined' && typeof utilConfig.locale != 'undefined' ? 
-                                utilConfig.locale : 
-                                'en')),                             
-                             
              /* init language */   			
-           	'lang/initLang', 'lang/bankholidays',
+           	'lang/initLang', 
            	
-           	'jsjbridge', 'emulator', 
+            //'emulator', 'jsjbridge',  
            	
            	/* App language blueprint */
            	'lang/com_lang', 
            	
            	/* modules for browsers */
-           	'content',
+           	//'contentfromhtml',
            	'css', 'theme', 
           	'dnd', 'chatbox',   
            	'cpath', 'menu',
            	'setman', 'icons', 
+            'content',
            	
            	'form/datepicker', 
            	'form/currency',
            	'form/upload',
            	'form/combobox',
            	'form/country',
-           	'form/placeholder',
+           //	'form/placeholder',
            	         
            	'layout/layout',
            	'layout/columnlayout',
            	'layout/tablayout',
            	'layout/fixedsplitter',
+            'layout/accordion',
            	
-           	'crumbs', 'tilt', 
-           	'ui/canvas',
+           	'crumbs', //'tilt', 
            	'ui/langbar',
            	'ui/hud',
            	'ui/toolbar',
            	'ui/button', 
            	'ui/icon',
            	
-           	'app',
            //	'datagrid', 
-           	//'apps/maersk',
-           	'apps/fractal',
+           	//'apps/fractal',
   
            	
            	/* html5 local storage */
@@ -301,8 +235,8 @@ var util = util || {
 		if(1)
 		{
 			util.isCompatibleUA = true
-			util.isTouchDevice = ""//"onTouchStart" in document.documentElement
-			util.hasLocalStorage = ""//'localStorage' in window && window['localStorage'] !== null;
+			util.isTouchDevice = "onTouchStart" in document.documentElement
+			util.hasLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
 		}
 	},
 	
@@ -321,7 +255,7 @@ var util = util || {
 			{
 				ms.push(util.getBaseUrl() + mods[c] + '.js')
 			}
-			
+
 			yepnope({
 				load:ms, 
 				complete:util.initWaitForLanguageLoaded})
@@ -329,24 +263,25 @@ var util = util || {
 		else if(util.isCompatibleUA)
 		{
 			var base = ''
-				url = util.getBaseUrl()
-				for(var c = 0; c < util._mods.length; c++)
-				{
-					this.loadScript(url + util._mods[c])
-				}
+			url = util.getBaseUrl()
+
+			for(var c = 0; c < utilConfig.locales.length; c++)
+			{
+				this.loadScript(url + 'lang/' + utilConfig.locales[c] + '/def_' + utilConfig.locales[c])
+				this.loadScript(url + 'lang/' + utilConfig.locales[c] + '/bankholidays_' + utilConfig.locales[c])
+				this.loadScript(url + 'lang/' + utilConfig.locales[c] + '/lang_' + utilConfig.locales[c])
+				this.loadScript(url + 'lang/' + utilConfig.locales[c] + '/locale_' + utilConfig.locales[c])
+			}
+
+			for(var c = 0; c < util._mods.length; c++)
+			{
+				this.loadScript(url + util._mods[c])
+			}
 			util._t = setInterval("util.waitForLoadCompleted();", 50)
 		}
 	},
 	
-	
-	initWaitForLanguageLoaded: function()
-	{
-		util._t = setInterval("util.waitForLoadCompleted();", 50)		
-	},
-	
-	
 	/**
-	 * @memberOf util
 	 * @description Prepares mod name (strips pathname)
 	 * @returns {String} name
 	 */
@@ -360,14 +295,13 @@ var util = util || {
 	 */
 	waitForLoadCompleted: function()	
 	{
-		if(document.readyState === 'complete')
+		if(document.readyState === 'complete' &&
+			util.finishloading)
 		{
 			clearInterval(util._t)
 			
 			util.initLang()
-			util.isTouchDevice = Modernizr.touch
-			util.hasLocalStorage = Modernizr.localstorage 
-			
+
 			util.forEach(util._mods, function(m)
 			{
 				var mm = util.prepareModName(m)
@@ -429,7 +363,7 @@ var util = util || {
 
 util.steady = function(cb)
 {
-	if(document.documentElement.readyState === 'complete' &&
+	if(document.readyState === 'complete' &&
 		util.isFunction(cb))
 			cb()
 	else
@@ -442,7 +376,7 @@ util.steady = function(cb)
  */
 util.ready = function(cb)
 {
-	if(document.documentElement.readyState === 'complete' &&
+	if(document.readyState === 'complete' &&
 		util.isFunction(cb))
 			cb()
 	else
