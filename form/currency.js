@@ -14,6 +14,9 @@ util.currency._init = function()
 {
 	this.flags =
 		[ 'marknegativevalues'].unum()
+
+	this.userSet = new util.userSettings('currency')		
+		
 	this.options = new util.struct([util.options], {value:0})
 
 }
@@ -126,3 +129,12 @@ util.currency.format = function(num, b)
 			RegExp(String(util.dataDecimalSeparator).escapeRegExpSpecialChars()),
 			util.locale.decimalSeparator)
 }
+util.prepare(function()
+{	
+	var localOpt = util.currency.userSet.get('options')
+	if(localOpt)
+		util.currency.options.data.value = localOpt
+	else
+		util.currency.options.set(
+		[util.currency.flags.marknegativevalues])
+})	

@@ -60,7 +60,9 @@ util.combobox._init = function()
 	this.flags = [ 
 	  'selectOnClick'
 	  ].unum()   
-	this.options = new util.struct([util.options], {value:0})		  
+	this.options = new util.struct([util.options], {value:0})	
+	
+	this.userSet = new util.userSettings('combobox')		
 }
 
 util._combobox = function(options, jsjQuery, combProj, dropDir, name)
@@ -318,4 +320,15 @@ util._combobox.prototype.display = function(hint)
 		}
 		return combCont
 	}
+
+	util.prepare(function()
+	{	
+		var localOpt = util.combobox.userSet.get('options')
+		if(localOpt)
+			util.combobox.options.data.value = localOpt
+		else
+			util.combobox.options.set(
+			[util.combobox.flags.selectonclick])
+	})
+
 })()
