@@ -14,7 +14,7 @@ util.crumb = function(langId, cb){
 	{
 		return "<a 	class='crumb' " +
 				"	href='javascript:util.crumbs.follow(" + this.n + ")'>" + 
-				util.lang[this.langId] + "</a>"		
+				(util.lang[this.langId] || this.langId) + "</a>"		
 	}
 }
 
