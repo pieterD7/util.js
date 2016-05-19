@@ -13,6 +13,7 @@
  */
 util.datepicker = {
 	dPickers:[],
+	tnode:null,
 	
 	// For use with String().toDate(format)
 	dataFormat:'DD-MM-YYYY',
@@ -691,7 +692,7 @@ util.datepicker = {
 		{
 			if(dp.data.state == 'open')
 			{
-				_s('body').node.removeChild(_s('body').node.lastChild)	
+				_s('body').node.removeChild(_s('body').node.lastChild)									
 				dp.data.state = 'closed'
 				setTimeout("util.datepicker.refresh(" + id + ")", 200)
 			}
@@ -924,7 +925,10 @@ util.datepicker = {
 			dp.data.format = util.datepicker.getDatePickerDateFormat()
 			dp.data.node.value = dp.data.date.format(
 				dp.data.format,
-				dp.data.options.get(util.datepicker.flags.padddates))	
+				dp.data.options.get(util.datepicker.flags.padddates))
+			_s("input[name=" + dp.data.name + "]").val(dp.data.date.format(
+				util.datepicker.datePickerDataFormat,
+				dp.data.options.get(util.datepicker.flags.storepaddeddates)))		
 		})
 	}
 })()

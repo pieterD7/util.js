@@ -29,7 +29,9 @@ util.debug = {
 		var n = 0
 		util.forEach(util._mods, function(mod)
 		{
-			if(	util.isObject(util[mod]) && 
+			var mod = util.prepareModName(mod)
+
+			if(util.isObject(util[mod]) && 
 				util.isObject(util[mod].options))
 			{
 				if(!n++ == 0)
@@ -91,7 +93,6 @@ util.debug.log = function(err)
 	var state = 0
 	if(util.isFunction(util.debug.getAppState))
 		state = util.debug.getAppState()
-	
 	var htmlstr = '<div class="debugMsgHeader">' + util.defaultStrings.debugHeader  + '</div>' +
 	'<div class="debugMsgText">' + err + '<br/>' + 
 	document.location.pathname.split('/').slice(2).join('/') + '<br/>' +
@@ -101,7 +102,7 @@ util.debug.log = function(err)
 	if(util.isObject(utilConfig) && utilConfig.debug)
 	{
 		console.log(err + " " + (err.stack || err.message))
-		if(err instanceof util.error && 
+		if(/*err instanceof util.error && */
 			util.isString(util.debug.msgContainerSel) &&
 			_s(util.debug.msgContainerSel))
 			_s(util.debug.msgContainerSel)
