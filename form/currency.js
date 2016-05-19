@@ -44,6 +44,12 @@ util.currency.initInputTypeCurrency = function(sel)
 		var c = new HTMLElement(cur)
 		var name = c.getNode().getAttribute('name')
 		
+		var currency = util.currency.currency
+		var rel = c.parseRelAttribute()
+		if(!util.isUndef(rel.currency))
+			currency = rel.currency
+		c.setAttribute('currency', currency)
+		
 		// Add onfocus handler
 		c.addListener('focus', function()
 		{
@@ -67,15 +73,16 @@ util.currency.initInputTypeCurrency = function(sel)
 		c.addListener('blur', function()
 		{
 			util.eventHandler(function()
-			{			
+			{		
+				var currency = c.node.getAttribute('currency') || util.currency.currency
 				_s('input[name=' + name + ']').val(
 					util.trim(
 						String(c.val())
 							.replace(RegExp(String(util.locale.decimalSeparator).escapeRegExpSpecialChars()), util.dataDecimalSeparator)
-							.replace(RegExp(util.currency.currency), '')))
+							.replace(RegExp(currency), '')))
 				c.val(util.trim(
 					util.currency.format(
-						String(_s('input[name=' + name + ']').val()))))
+						String(_s('input[name=' + name + ']').val()), false, currency)))
 			})
 		})		
 		
@@ -84,7 +91,7 @@ util.currency.initInputTypeCurrency = function(sel)
 		hid.setAttribute('type', 'hidden')
 		hid.setAttribute('name', name)
 		hid.val(c.val())
-		c.val(util.currency.format(c.val()))
+		c.val(util.currency.format(c.val(), false, currency))
 		c.setAttribute('name', '')
 		c.setAttribute('rel', name)
 		c.getNode().parentNode.appendChild(hid.getNode())
@@ -103,8 +110,12 @@ util.currency.onUpdateLocale = function(sel)
 	{
 		var c = new HTMLElement(cur)
 		var name = c.getNode().getAttribute('rel')
+		var currency = util.currency.currency
+		var cur = c.node.getAttribute('currency')
+		if(!util.isUndef(cur))
+			currency = cur
 		var hid = _s('input[name=' + name + ']')
-		c.val(util.currency.format(hid.val()))
+		c.val(util.currency.format(hid.val(), false, currency))
 	})
 }
 
@@ -114,13 +125,13 @@ util.currency.onUpdateLocale = function(sel)
  * @param {Number} num Value
  * @param {Boolean} b Hide currency symbol  
  */
-util.currency.format = function(num, b)
+util.currency.format = function(num, b, currency)
 {
-	var cur = util.currency.currency + " "
+	var cur = " "
 	if(!util.isUndef(b) && b)
 		cur = ''
-	else if (!util.isUndef(currency))
-		cur = currency + ' ' 
+	else
+		cur = currency + ' '
 		
 	if(util.locale.currencyAfterNumber)
 		return (String(num).replace(
