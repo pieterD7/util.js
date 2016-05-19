@@ -41,8 +41,11 @@ util.crumbs.push = function(crumb)
 {
 	if(crumb instanceof util.crumb)
 	{
-		crumb.n = this._crumbs.length
-		this._crumbs.push(crumb)
+		if(util.crumbs.find(crumb.langId) === false)
+		{
+			crumb.n = this._crumbs.length
+			this._crumbs.push(crumb)
+		}
 	}
 }
 
@@ -72,6 +75,17 @@ util.crumbs.follow = function(n)
 		util.crumbs.pop()
 	}
 	util.crumbs.display(util.crumbs._sel)	
+}
+
+util.crumbs.find = function(langId)
+{
+	var ret = false
+	util.crumbs._crumbs.forEach(function(crumb, i)
+	{
+		if(crumb.langId == langId)
+			ret = crumb
+	})
+	return ret
 }
 
 util.crumbs.display = function(sel)
