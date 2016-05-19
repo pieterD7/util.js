@@ -151,7 +151,7 @@ util._combobox.prototype._createListItemText = function(c)
 			url = url.replace(/%/, this.jsondata.json[c][this.combProj.itemUrlParams[ii]])
 		}
 	}
-	if(util.combobox.options.get(util.combobox.flags.slelectOnClick))
+	if(util.combobox.options.get(util.combobox.flags.selectOnClick))
 		item.setAttribute('href', 'javascript:util.combobox.select('+ this.id + ', "' + 
 				this.jsondata.json[c][this.combProj.displayText[0]]  + '")')
 	else
