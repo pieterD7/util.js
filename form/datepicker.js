@@ -159,9 +159,9 @@ util.datepicker = {
 	 *  @description return date object based on node value 
 	 *  and util.datepicker.dataFormat
 	 */
-	util.datepicker.valueToDate = function(val)
+	util.datepicker.valueToDate = function(val, dataFormat)
 	{
-		var d = String(val).toDate(util.datepicker.dataFormat)
+		var d = String(val).toDate(dataFormat)
 		if(isNaN(d.getMonth()))
 			throw util.error(util.defaultStrings.error.error_invalidnodevalue + ':' + val)
 		return d
@@ -480,7 +480,7 @@ util.datepicker = {
 			this.valueToDate()
 			_s("input[name=" + this.data.name + "]").val(
 				this.data.date.format(
-					util.datepicker.dataFormat,
+					this.data.dataFormat,
 					util.datepicker.options.get(util.datepicker.flags.storepaddeddates)))
 		}
 	}
@@ -557,7 +557,7 @@ util.datepicker = {
 					dp.data.options.get(util.datepicker.flags.padddates))	
 			_s("input[name=" + dp.data.name + "]").val(
 				dp.data.date.format(
-						util.datepicker.dataFormat, 
+						dp.data.dataFormat, 
 						dp.data.options.get(util.datepicker.flags.storepaddeddates)))
 		}
 	}
@@ -775,7 +775,10 @@ util.datepicker = {
 			var rel = obj2.parseRelAttribute()
 			if(!util.isUndef(rel.offsetDays))
 				offset = rel.offsetDays
-			
+			var dataFormat = util.datepicker.dataFormat
+			if(!util.isUndef(rel.dataFormat))
+				dataFormat = rel.dataFormat
+
 			var options = new util.struct([util.options], {value:util.datepicker.options.data.value})
 			var dp = new util.struct(
 				[util._datepicker], 
@@ -787,16 +790,17 @@ util.datepicker = {
 					state:'closed', 
 					date:util.trim(obj.value).isEmpty()? 
 						util.datepicker.nowPlusWorkdays(offset, options) : 
-						new Date(util.datepicker.valueToDate(obj.value)), 
+						new Date(util.datepicker.valueToDate(obj.value, dataFormat)), 
 					options:options,
+					dataFormat:dataFormat,
 					format:util.datepicker.getDatePickerDateFormat(),
 					formatshort:util.locale.datePickerDateFormatShort})
 			
 			dp.tnode = obj2
 			el.val(dp.data.date.format(
-					util.datepicker.dataFormat,
+					dataFormat,
 					dp.data.options.get(util.datepicker.flags.storepaddeddates)))
-			
+
 			if(	!String(obj2.value).isEmpty() && 
 				dp.data.options.get(util.datepicker.flags.expand) && 
 				!dp.data.options.get(util.datepicker.flags.expandonfocus))
@@ -857,7 +861,7 @@ util.datepicker = {
 				{
 					util.eventHandler(function()
 					{
-						dp.tnode.node.placeholder = util.datepicker.dataFormat
+						dp.tnode.node.placeholder = dp.data.dataFormat
 						dp.tnode.node.value = ''
 					})
 				})
@@ -867,10 +871,10 @@ util.datepicker = {
 					{
 						if(dp.tnode.node.value)
 						{
-							dp.data.date = util.datepicker.valueToDate(dp.tnode.node.value)
+							dp.data.date = util.datepicker.valueToDate(dp.tnode.node.value, dp.data.dataFormat)
 							dp.tnode.node.value = dp.data.date.format(util.datepicker.getDatePickerDateFormat())
 							_s("input[name=" + dp.data.name + "]").val(dp.data.date.format(
-								util.datepicker.dataFormat,
+								dp.data.dataFormat,
 								dp.data.options.get(util.datepicker.flags.storepaddeddates)))
 						}
 						else
@@ -927,7 +931,7 @@ util.datepicker = {
 				dp.data.format,
 				dp.data.options.get(util.datepicker.flags.padddates))
 			_s("input[name=" + dp.data.name + "]").val(dp.data.date.format(
-				util.datepicker.datePickerDataFormat,
+				dp.data.dataFormatt,
 				dp.data.options.get(util.datepicker.flags.storepaddeddates)))		
 		})
 	}
