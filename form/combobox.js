@@ -241,9 +241,12 @@ util._combobox.prototype.display = function(hint)
 	var inp = util.createElement('input')
 	inp.setAttribute('type', 'text')
 
-	util.isSpeechEnabled = 
-		Modernizr.hasEvent('webkitspeechchange', inp.node) || 
-		Modernizr.hasEvent('speechchange', inp.node)
+	if(typeof Modernizr != 'undefined')
+	{
+		util.isSpeechEnabled = 
+			Modernizr.hasEvent('webkitspeechchange', inp.node) || 
+			Modernizr.hasEvent('speechchange', inp.node)
+	}
 		
 	if(	this.combProj.speechEnabled && 
 		util.isSpeechEnabled)
@@ -274,8 +277,6 @@ util._combobox.prototype.display = function(hint)
 	inp.setAttribute('placeholder', hint)
 	
 	var list = this._updateList(false)
-
-	util.placeholder.addListeners(inp, hint)
 	
 	inp.addListener('keyup', function()
 	{
