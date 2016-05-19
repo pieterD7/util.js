@@ -26,11 +26,10 @@
 	Introduction:
 
 	Because app interfaces are written for specific HTML5 browsers I felt the 
-	need to write a lightweight js lib with page elements rather than pages. The 
-	names have been taken from JQuery for desktops and if you dive into the 
-	structure you can think of util.js in a Dojo-like manner. It's a bit of 
-	modular and is made primarily for abstracting app natural language specific 
-	data structures, in short: for displaying text. 
+	need to write a lightweight js lib with page elements rather than pages. Utiljs
+	has loading problems: a function of util can be called before being it is fully 
+	initialized causing an error. It can be solved by putting the files you want 
+	to use in one file and rewrite the loader.
 
 
 	Util.js was tested w/ on :
