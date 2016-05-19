@@ -77,6 +77,7 @@ util.crumbs.follow = function(n)
 util.crumbs.display = function(sel)
 {
 	var ret = ''
+	this.setSel(sel)
 	this._crumbs.forEach(function(crumb, i)
 	{
 		ret += crumb.display()
