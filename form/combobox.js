@@ -240,6 +240,7 @@ util._combobox.prototype.display = function(hint)
 	
 	var inp = util.createElement('input')
 	inp.setAttribute('type', 'text')
+	inp.setAttribute('autocomplete', 'off')
 
 	if(typeof Modernizr != 'undefined')
 	{
