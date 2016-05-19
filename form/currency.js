@@ -114,7 +114,7 @@ util.currency.onUpdateLocale = function(sel)
  * @param {Number} num Value
  * @param {Boolean} b Hide currency symbol  
  */
-util.currency.format = function(num, b, currency)
+util.currency.format = function(num, b)
 {
 	var cur = util.currency.currency + " "
 	if(!util.isUndef(b) && b)
