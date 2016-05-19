@@ -328,7 +328,7 @@ util._combobox.prototype.display = function(hint)
 			util.combobox.options.data.value = localOpt
 		else
 			util.combobox.options.set(
-			[util.combobox.flags.selectonclick])
+			[util.combobox.flags.selectOnClick])
 	})
 
 })()
