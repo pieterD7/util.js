@@ -60,7 +60,7 @@ util.combobox._init = function()
 	this.flags = [ 
 	  'selectOnClick'
 	  ].unum()   
-	this.options = new util.struct([util.options], {value:1})		  
+	this.options = new util.struct([util.options], {value:0})		  
 }
 
 util._combobox = function(options, jsjQuery, combProj, dropDir, name)
@@ -155,7 +155,7 @@ util._combobox.prototype._createListItemText = function(c)
 		item.setAttribute('href', 'javascript:util.combobox.select('+ this.id + ', "' + 
 				this.jsondata.json[c][this.combProj.displayText[0]]  + '")')
 	else
-		item.setAttribute('href', url)
+		item.setAttribute('href', "javascript:util.eventHandler(function(){" + url + "})")
 
 	return item
 }
