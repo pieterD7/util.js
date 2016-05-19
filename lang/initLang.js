@@ -16,29 +16,32 @@ util.curLang = ''
 
 util.getBestUserLang = function()
 {
-	    if ( navigator.language ) {
-	        return navigator.language;
-	    }
-	    else if ( navigator.userLanguage ) {
-	        return navigator.userLanguage;
-	    }	    
-	    else if ( navigator.browserLanguage ) {
-	        return navigator.browserLanguage;
-	    }
-	    else if ( navigator.systemLanguage ) {
-	        return navigator.systemLanguage;
-	    }
-	    return 'en'
+	if( navigator.languages)
+		return navigator.languages[0]
+	else if ( navigator.language ) {
+		return navigator.language;
+	}
+	else if ( navigator.userLanguage ) {
+		return navigator.userLanguage;
+	}
+	else if ( navigator.browserLanguage ) {
+		return navigator.browserLanguage;
+	}
+	else if ( navigator.systemLanguage ) {
+		return navigator.systemLanguage;
+	}
+	return 'en'
 }
 
 util.initLang = function()
 {
 	var region = 'EMEA'
 	var ulang = this.getBestUserLang()	
-	ulang = typeof utilConfig != 'undefined' && 
+	
+	/*ulang = typeof utilConfig != 'undefined' && 
 			typeof utilConfig.defLocale != 'undefined' ? utilConfig.defLocale : 'en'
 	var url = util.getBaseUrl()
-	var locales = ['en']
+	var locales = ['en']*/	
 
 	if(	typeof utilConfig != 'undefined' &&
 		typeof utilConfig.region != 'undefined')
@@ -61,7 +64,17 @@ util.initLang = function()
 		util.loadScript(s)
 	})
 
-	ulang = String(ulang).replace(/[-]/, '')
+	var ulang2 = '', ulang3 = ''
+	ulang2 = String(ulang).replace(/[-]/, '')
+	ulang3 = String(ulang).replace(/[-].+/, '')
+
+	if(util.isObject(util._lang[ulang2]))
+		ulang = ulang2
+	else if(util.isObject(util._lang[ulang3]))
+			ulang = ulang3
+	else
+		ulang = utilConfig.defLocale	
+	
 	if(util.isObject(util._lang[ulang]))
 	{
 		/* this is only true if ulang eq utilConfig.defLocale 
