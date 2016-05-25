@@ -249,6 +249,7 @@
 			}
 		}
 		
+		var t
 		while(t = tags.pop())
 			formatted += '</' + t + '>'
 			
