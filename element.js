@@ -1,6 +1,17 @@
 (function () {
 	"use strict";
 
+	/**
+	 * @constructor
+	 * @description 
+	 * IE doesn't allow prototype extensions for the 
+	 * built in Object so we need a crossbrowser workaround.
+	 * */
+	HTMLElement = function(o)
+	{
+		this.node = o
+		return this
+	}
 	
 	/**
 	 * 
