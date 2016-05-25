@@ -31,9 +31,9 @@
 	- util
 	- _s
 	- _sa
-	Utiljs still has loading problems: a function of util can be called before being fully 
-	initialized causing an error. It can be solved by putting the files you want 
-	to use in one file and rewrite the loader.
+	Utiljs still has loading problems: a function of util can be called before being 
+	fully initialized causing an error. It can be solved by putting the files you 
+	want to use in one file and rewrite the loader.
 
 
 	Util.js was tested w/ on :
@@ -57,7 +57,7 @@
 	languages & formats, string formatting, number & currency formatting 
 		
 	Implementation:
-=====
+
 	<script type="text/javascript">
 	var utilConfig = {
 		debug:true,
@@ -69,7 +69,6 @@
 
 	</script>
 	<script type='text/javascript' src='pathToUtil/loader.js'></script>
-======
 
 	String formatting:
 	
