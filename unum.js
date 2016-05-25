@@ -33,9 +33,9 @@
 		}	
 			
 		if(util.isObject(opt.regexp))
-			regexp = opt.regexp
+			var regexp = opt.regexp
 		else
-			regexp = new RegExp()	
+			var regexp = new RegExp()	
 	
 		if(!util.isUndef(opt.useLowercase))
 			if(opt.useLowercase)
@@ -130,7 +130,7 @@
 			if(c > max) ret += '0'
 			else
 			{
-				code = util.unum._unumNext(str, max - c)
+				var code = util.unum._unumNext(str, max - c)
 				ret += String.fromCharCode(code)
 			}
 		}
