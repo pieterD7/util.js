@@ -88,7 +88,7 @@ util.datepicker = {
 		// 'enableholidayformat',	
 		 
 		 // Enables dropdown list to be scrolled by dragging 
-		 'expandenabledrag',	 
+		 //'expandenabledrag',	 
 		 
 		 // Shows weeknumber column
 		 'expandshowweeknumber',
@@ -392,7 +392,7 @@ util.datepicker = {
 				";");
 		div.setAttribute('class', 'datePickerBackground')
 		div.setAttribute('draggable', "true")
-		_s('body').appendChild(div.node)
+		_s('body .page.current').appendChild(div.node)
 	
 		var my = this
 		util.forEach(_sa(".datePickerDaySelect"), function(_el)
@@ -408,13 +408,13 @@ util.datepicker = {
 						dd > new Date())
 					{
 						my.data.date = dd
-						_s('body').node.removeChild(_s('body').node.lastChild)	
+						_s('body .page.current').node.removeChild(_s('body .page.current').node.lastChild)	
 						my.display(id)
 					}
 				})
 			})
 		})	
-		if(util.datepicker.options.get(
+		/*if(util.datepicker.options.get(
 				util.datepicker.flags.expandenabledrag))
 		{
 			var my = this
@@ -449,7 +449,7 @@ util.datepicker = {
 					})
 				})
 			})
-		}	
+		}*/	
 	}
 
 	/**
@@ -462,7 +462,7 @@ util.datepicker = {
 		if(this.data.state == 'open')
 		{
 			this.data.state = 'closed'
-			_s('body').node.removeChild(_s('body').node.lastChild)
+			_s('body .page.current').node.removeChild(_s('body .page.current').node.lastChild)
 			this.data.node.setAttribute('style', 'display:inline;')
 		}
 	}
@@ -604,7 +604,7 @@ util.datepicker = {
 					dp.data.date.getMonth(),
 					Number(dp.data.date.getDate()) + 7
 			)
-			_s('body').node.removeChild(_s('body').node.lastChild)					
+			_s('body').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})
 	}
@@ -624,7 +624,7 @@ util.datepicker = {
 					dp.data.date.getMonth(),
 					Number(dp.data.date.getDate()) - 7
 			)
-			_s('body').node.removeChild(_s('body').node.lastChild)					
+			_s('body').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})
 	}
@@ -645,7 +645,7 @@ util.datepicker = {
 				dp.data.date.getDate()
 			)
 			dp.data.date = d
-			_s('body').node.removeChild(_s('body').node.lastChild)
+			_s('body').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})	
 	}
@@ -666,7 +666,7 @@ util.datepicker = {
 				dp.data.date.getDate()
 			)
 			dp.data.date = d
-			_s('body').node.removeChild(_s('body').node.lastChild)
+			_s('body').node.removeChild(_s('body .page,current').node.lastChild)
 			dp.display(i)
 		})
 	}
@@ -692,7 +692,7 @@ util.datepicker = {
 		{
 			if(dp.data.state == 'open')
 			{
-				_s('body').node.removeChild(_s('body').node.lastChild)									
+				_s('body').node.removeChild(_s('body .page.current').node.lastChild)
 				dp.data.state = 'closed'
 				setTimeout("util.datepicker.refresh(" + id + ")", 200)
 			}
@@ -926,6 +926,8 @@ util.datepicker = {
 	{
 		util.forEach(util.datepicker.dPickers, function(dp)
 		{
+			dp.data.options = util.datepicker.options
+			
 			dp.data.format = util.datepicker.getDatePickerDateFormat()
 			dp.data.node.value = dp.data.date.format(
 				dp.data.format,
@@ -946,7 +948,6 @@ util.prepare(function()
 		util.datepicker.options.set(
 			[util.datepicker.flags.expand,
 			 util.datepicker.flags.incrementworkday,
-			 util.datepicker.flags.expandenabledrag,
 			 util.datepicker.flags.expandshowweeknumber,
 			 util.datepicker.flags.showholidays,
 			 util.datepicker.flags.padddates,
