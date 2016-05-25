@@ -604,7 +604,7 @@ util.datepicker = {
 					dp.data.date.getMonth(),
 					Number(dp.data.date.getDate()) + 7
 			)
-			_s('body').node.removeChild(_s('body .page.current').node.lastChild)
+			_s('body .page.current').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})
 	}
@@ -624,7 +624,7 @@ util.datepicker = {
 					dp.data.date.getMonth(),
 					Number(dp.data.date.getDate()) - 7
 			)
-			_s('body').node.removeChild(_s('body .page.current').node.lastChild)
+			_s('body .page.current').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})
 	}
@@ -645,7 +645,7 @@ util.datepicker = {
 				dp.data.date.getDate()
 			)
 			dp.data.date = d
-			_s('body').node.removeChild(_s('body .page.current').node.lastChild)
+			_s('body .page.current').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})	
 	}
@@ -666,7 +666,7 @@ util.datepicker = {
 				dp.data.date.getDate()
 			)
 			dp.data.date = d
-			_s('body').node.removeChild(_s('body .page,current').node.lastChild)
+			_s('body .page.current').node.removeChild(_s('body .page.current').node.lastChild)
 			dp.display(i)
 		})
 	}
