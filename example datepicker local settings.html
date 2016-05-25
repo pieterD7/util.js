@@ -101,7 +101,7 @@
 <body>
    <div><!-- Debug messages will be shown here --></div>
    <div class='toolbar'>
-		<div class='crumbs w50 left'></div>
+      <div class='crumbs w50 left'></div>
       <div class='text-right w50 right'>
          <a href='javascript:showSettings()' class='box-shadow-menu'><!-- Hamburger menu --></a>
       </div>
@@ -109,14 +109,15 @@
 
    <div class='settings page hide'><!-- To be populated by setMan --></div>
 
-   <div class='home page'>
+   <div class='home page current'>
       <form action='?'>
          <!-- Demo form fields -->
          <div class='info left'></div>
          <div class='left'><input class='datepicker' name='date0' value='12-06-2016'></input></div>
          <div class='left'><input class='datepicker' name='date1' rel='offsetDays:1'></input></div>
          <div class='left'><input class='datepicker' name='date2' rel='offsetDays:2'></input></div>
-         <div class='left'><input class='currency' name='currency' rel='currency:$'></input></div>
+         <div class='left'><input class='currency' name='currency1' rel='currency:$'></input></div>
+         <div class='left'><input class='currency' name='currency2'></input></div>
          <div class='input-field'><input type='submit'></input></div>
       </form>
    </div>
