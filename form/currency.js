@@ -83,6 +83,12 @@ util.currency.initInputTypeCurrency = function(sel)
 				c.val(util.trim(
 					util.currency.format(
 						String(_s('input[name=' + name + ']').val()), false, currency)))
+						
+				if(util.currency.options.get(util.currency.flags.marknegativevalues) &&
+					_s('input[name=' + name + ']').val() < 0)
+					c.style('color:red;')
+				else
+					c.style('color:black;')
 			})
 		})		
 		
