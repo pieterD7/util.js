@@ -17,8 +17,8 @@ util.dnd._init = function()
 {
 	// Unum some flags
 	this.flags = [
-	              'swipeleft'	// Option for lefthanded people
-	              ].unum()
+	'swipeleft'	// Option for lefthanded people
+	].unum()
 	// Init options object
 	this.options = new util.struct([util.options], {value:0})
 	// Locale storage
@@ -222,4 +222,10 @@ util.dnd.dropArea = function(el, cb)
 
 util.prepare(function()
 {
+	var localOpt = util.dnd.userSet.get('options')
+	if(localOpt)
+		util.dnd.options.data.value = localOpt
+	else
+		util.dnd.options.set(
+		[util.dnd.flags.swipeleft])
 })
