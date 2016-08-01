@@ -87,8 +87,10 @@ util.initLang = function()
 			util.defaultStrings = util._defaultStrings[ulang]
 			for(var i in strings)
 			{	
-				var o = _s(strings[i].sel)
-					if(util.isObject(o))
+				var o = _sa(strings[i].sel)
+				util.forEach(o, function(o){
+					o = new HTMLElement(o)
+					if(util.isObject(o.node))
 					{
 						if(strings[i].html && o != 'store')
 							o.setHtml(strings[i].html)
@@ -99,6 +101,7 @@ util.initLang = function()
 						else if(o == 'store')
 							util.storeString(strings[i], ulang)
 					}
+				})
 			}	
 			util.lang = util._lang[ulang]
 			util.selectedLocale = ulang
